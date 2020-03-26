@@ -58,6 +58,7 @@
                     </div>
                     <div class="header-login">
                         <div>
+                            <!-- v-if login.id 는 login.id가 존재하면 true 존재하지 않으면 false를 반환한다 -->
                             <button v-if="login.id">{{login.name}}님 환영합니다</button>
                             <button v-else @click="moveRegister">회원가입</button>
                         </div>
@@ -126,6 +127,7 @@
                     location.href = "login.html";
                 },
                 logout() {
+                    //로그아웃시 세션제거하기
                     sessionStorage.removeItem("login");
                     location.href = "layout.html";
                 }

@@ -36,6 +36,7 @@
             <div>나이 <input type="text" v-model="age"></div>
             <div>휴대폰번호 <input type="text" v-model="phoneNumber"></div>
             <div>주소 <input type="text" v-model="address"></div>
+            <!-- disabled를 활용: idCheck가 성공적으로 되어있을때에만 v-bind:disabled 를 활성화 한다  -->
             <div> <button :disabled="registerButton" v-on:click="register">회원가입하기 </button></div>
         </div>
     </div>
@@ -66,6 +67,7 @@
                     axios.post("http://localhost:8081/api/user/idCheck", params)
                         .then(res => {
                             console.log(res.data);
+                            //컨트롤러단에서 OK or FAIL을 반환한다.
                             if (res.data === "OK") {
                                 this.colorStatus = false;
                                 this.status = "사용할 수 있는 아이디입니다"

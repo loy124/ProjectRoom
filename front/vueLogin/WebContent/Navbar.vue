@@ -1,4 +1,6 @@
+
 <template>
+  <!-- 해당 공간은 vue-cli 방식에서 component방식으로 넘겨줘서 spring의 tiles 처럼 해당 부분을 컴포넌트화 시켜서 붙일수 있다.-->
   <div>
     <div id="header-top">
       <div class="header-container">

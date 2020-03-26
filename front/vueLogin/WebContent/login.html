@@ -31,6 +31,7 @@
             },
             methods: {
                 login() {
+                    //post방식에서 통신하기위한 parameter
                     let params = new URLSearchParams();
                     params.append('userId', this.userId);
                     params.append('userPassword', this.userPassword);
