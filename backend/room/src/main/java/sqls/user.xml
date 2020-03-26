@@ -17,7 +17,7 @@ select * from USER
 
   <!-- 세션에 담기 위한 용도 -->
   <select id="login" parameterType="bit.com.a.user.UserDto" resultType="bit.com.a.user.UserDto">
-SELECT id, user_id, auth FROM USER WHERE user_id = #{userId}, user_password = #{userPassword}
+SELECT id, user_id FROM USER WHERE user_id = #{userId}, user_password = #{userPassword}
 </select>
 
   <!-- 추후 비밀번호검색 -->

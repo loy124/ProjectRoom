@@ -32,17 +32,17 @@ public class UserDto {
 
 	private String auth;
 
-	private LocalDateTime registeredAt;
+	private String registeredAt;
 
 	private String registeredBy;
 
-	private LocalDateTime updatedAt;
+	private String updatedAt;
 
 	private String updatedBy;
 
 	private String profileImage;
 
-	private LocalDateTime unRegisteredAt;
+	private String unRegisteredAt;
 
 	private String unRegisteredBy;
 

@@ -43,11 +43,11 @@ public class BrokerDto {
 
 	private String originalCertification;
 
-	private LocalDateTime registeredAt;
+	private String registeredAt;
 
 	private String registeredBy;
 
-	private LocalDateTime updatedAt;
+	private String updatedAt;
 
 	private String updatedBy;
 
@@ -55,7 +55,7 @@ public class BrokerDto {
 
 	private String originalProfileImage;
 
-	private LocalDateTime unRegisteredAt;
+	private String unRegisteredAt;
 
 	private String unRegisteredBy;
 
