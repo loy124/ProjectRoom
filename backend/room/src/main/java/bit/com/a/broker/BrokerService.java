@@ -30,4 +30,7 @@ public class BrokerService {
 	public BrokerDto getInformation(BrokerDto user) {
 		return brokerDao.getInformation(user);
 	}
+	public Integer idCheck(BrokerDto user){
+		return brokerDao.idCheck(user);
+	}
 }

@@ -8,9 +8,12 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface UserDao {
+	
 	public int register(UserDto user);
 
 	public List<UserDto> getMemberList();
+
+	public Integer idCheck(UserDto user);
 
 	public UserDto login(UserDto user);
 

@@ -16,8 +16,8 @@
 <body>
 
     <div id="app">
-        <input v-model="id">
-        <input v-model="pwd">
+        <input v-model="userId">
+        <input v-model="userPassword">
         <button @click="login">로그인하기</button>
     </div>
     <script>
@@ -25,19 +25,21 @@
             el: "#app",
             data() {
                 return {
-                    id: "",
-                    pwd: ""
+                    userId: '',
+                    userPassword: ''
                 }
             },
             methods: {
                 login() {
                     let params = new URLSearchParams();
-                    params.append('id', this.id);
-                    params.append('pwd', this.pwd);
+                    params.append('userId', this.userId);
+                    params.append('userPassword', this.userPassword);
                     axios.post("http://localhost:8081/api/user/login", params)
                         .then(res => {
                             console.log("로그인 성공");
-                            sessionStorage.setItem("login", res.data);
+                            console.log(res.data);
+                            sessionStorage.setItem("login", JSON.stringify(res.data));
+                            location.href = "layout.html";
                         })
                         .catch(error => console.log(error));
                 }

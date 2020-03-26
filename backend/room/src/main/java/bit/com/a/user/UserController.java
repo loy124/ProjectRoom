@@ -25,7 +25,7 @@ public class UserController {
 		number = userService.register(user);
 		System.out.println(number);
 
-		return number > 0 ? "ok" : "false";
+		return number > 0 ? "OK" : "FAIL";
 	}
 
 	// 관리자 단에서 멤버관리를 위한 용도
@@ -37,7 +37,15 @@ public class UserController {
 	// 로그인
 	@PostMapping("/login")
 	public UserDto login(UserDto user) {
+		System.out.println(user.toString());
 		return userService.login(user);
+	}
+
+	// 아이디 체크
+	@PostMapping("/idCheck")
+	public String idCheck(UserDto user){
+		int number = userService.idCheck(user);
+		return number > 0 ? "FAIL" : "OK";
 	}
 
 	// 유저의 정보를 가져오기 위한용도

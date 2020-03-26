@@ -58,10 +58,12 @@
                     </div>
                     <div class="header-login">
                         <div>
-                            <button @click="moveRegister">회원가입</button>
+                            <button v-if="login.id">{{login.name}}님 환영합니다</button>
+                            <button v-else @click="moveRegister">회원가입</button>
                         </div>
                         <div>
-                            <button @click="moveLogin">로그인</button>
+                            <button v-if="login.id" @click="logout">로그아웃</button>
+                            <button v-else @click="moveLogin">로그인</button>
                         </div>
                     </div>
                 </div>
@@ -104,11 +106,17 @@
             el: "#app",
             data() {
                 return {
-
+                    login: ""
                 }
             },
             mounted() {
+                //json 형태로 변환
+                // session에는 무조건 스트링식으로 값이 들어가기 때문에 login시 JSON.stringify를 통해서 json을 String 값으로 변해서 넣어주고
+                // 이곳에서 가져올때는 JSON.parse를 통해 json화 시킨다
+                this.login = JSON.parse(sessionStorage.getItem("login"));
+                // 모든값을 배열로 저장
 
+                console.log(this.login);
             },
             methods: {
                 moveRegister() {
@@ -116,6 +124,10 @@
                 },
                 moveLogin() {
                     location.href = "login.html";
+                },
+                logout() {
+                    sessionStorage.removeItem("login");
+                    location.href = "layout.html";
                 }
             }
 

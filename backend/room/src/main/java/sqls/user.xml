@@ -11,19 +11,23 @@ INSERT INTO USER(user_id, user_password, name, email, age, phone_number, address
  VALUES(#{userId},#{userPassword}, #{name}, #{email}, #{age}, #{phoneNumber}, #{address}, 3, NOW(), 'ADMIN') 
 </insert>
 
+  <select id="idCheck" parameterType="bit.com.a.user.UserDto" resultType="java.lang.Integer">
+  select COUNT(*) from USER where user_id = #{userId}
+  </select>
+
   <select id="getMemberList" resultType="bit.com.a.user.UserDto">
 select * from USER
-</select>
+  </select>
 
   <!-- 세션에 담기 위한 용도 -->
   <select id="login" parameterType="bit.com.a.user.UserDto" resultType="bit.com.a.user.UserDto">
-SELECT id, user_id FROM USER WHERE user_id = #{userId}, user_password = #{userPassword}
-</select>
+  SELECT id, user_id, name, auth FROM USER WHERE user_id = #{userId} AND user_password = #{userPassword}
+  </select>
 
   <!-- 추후 비밀번호검색 -->
   <select id="getInformation" parameterType="bit.com.a.user.UserDto" resultType="bit.com.a.user.UserDto">
 SELECT * FROM USER WHERE id = #{id}
-</select>
+  </select>
 
 
 </mapper>

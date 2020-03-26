@@ -30,4 +30,8 @@ public class UserService {
 	public UserDto getInformation(UserDto user) {
 		return userDao.getInformation(user);
 	}
+
+	public Integer idCheck(UserDto user){
+		return userDao.idCheck(user);
+	}
 }
