@@ -15,7 +15,7 @@ public class UserController {
 	UserService userService;
 
 	// 회원가입
-	localhost/api/user/resgister @PostMapping("/register")
+	@PostMapping("/register")
 
 	public String register(UserDto user) {
 		System.out.println("컨트롤러");
