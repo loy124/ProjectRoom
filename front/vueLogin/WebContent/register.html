@@ -1,0 +1,101 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+        .flex {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .red {
+            color: red;
+        }
+        
+        .blue {
+            color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="flex">
+            <div>아이디 <input type="text" v-model="id"> <button v-on:click="idCheck">id
+                    check</button>
+                <span v-if="colorStatus" style="color:red">{{status}}</span>
+                <span v-else style="color:blue">{{status}}</span>
+            </div>
+            <div>비밀번호 <input type="password" v-model="pwd"></div>
+            <div>이름 <input type="text" v-model="name"></div>
+            <div>이메일 <input type="text" v-model="email"></div>
+            <div> <button :disabled="registerButton" v-on:click="register">회원가입하기 </button></div>
+        </div>
+    </div>
+
+
+    <script>
+        const httpAddress = "http://localhost:3000/";
+        const app = new Vue({
+            el: "#app",
+            data() {
+                return {
+                    id: "",
+                    pwd: "",
+                    name: "",
+                    email: "",
+                    status: "",
+                    colorStatus: true,
+                    registerButton: true,
+                }
+            },
+            methods: {
+                idCheck() {
+                    console.log("check id");
+                    console.log(this.id);
+                    let params = new URLSearchParams();
+                    params.append('id', this.id);
+                    axios.post("http://localhost:3000/idCheck", params)
+                        .then(res => {
+                            console.log(res.data);
+                            if (res.data === "FAIL") {
+                                this.colorStatus = false;
+                                this.status = "사용할 수 있는 아이디입니다"
+                                this.registerButton = false;
+
+                            } else {
+                                this.colorStatus = true;
+                                this.status = "사용할 수 없는 아이디입니다."
+                            }
+                        })
+                },
+                register() {
+                    console.log("회원가입하기");
+                    let params = new URLSearchParams();
+                    params.append('id', this.id);
+                    params.append('pwd', this.password);
+                    params.append('name', this.name);
+                    params.append('email', this.email);
+                    axios.post(httpAddress + "addMember", params)
+                        .then(res => {
+                            console.log(res.data);
+                            if (res.data === "OK") {
+                                alert("회원가입에 성공하였습니다.")
+                                locaiton.href = "login.html";
+                            } else {
+                                alert("회원가입에 실패하였습니다.")
+                                locaiton.href = "login.html";
+                            }
+                        });
+                }
+            }
+
+        });
+    </script>
+</body>
+
+</html>

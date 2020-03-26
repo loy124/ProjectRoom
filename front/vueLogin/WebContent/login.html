@@ -1,0 +1,49 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>layout07</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <link rel="stylesheet" href="./css/layout.css">
+    <!-- import CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- import JavaScript -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+        <input v-model="id">
+        <input v-model="pwd">
+        <button @click="login">로그인하기</button>
+    </div>
+    <script>
+        const app = new Vue({
+            el: "#app",
+            data() {
+                return {
+                    id: "",
+                    pwd: ""
+                }
+            },
+            methods: {
+                login() {
+                    let params = new URLSearchParams();
+                    params.append('id', this.id);
+                    params.append('pwd', this.pwd);
+                    axios.post("http://localhost:8081/api/user/login", params)
+                        .then(res => {
+                            console.log("로그인 성공");
+                            sessionStorage.setItem("login", res.data);
+                        })
+                        .catch(error => console.log(error));
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
