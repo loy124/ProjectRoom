@@ -1,7 +1,12 @@
 <template>
   <ModalRegister>
     <div slot="header">
-      <div class="register-header">회원가입</div>
+      <div @click="SET_REGISTER_MODAL(false)" class="register-header">
+        <span>회원가입</span>
+        <div class="close-button">
+          <img src="../assets/close.png" />
+        </div>
+      </div>
     </div>
     <hr />
     <div slot="body">
@@ -9,7 +14,7 @@
         <div class="register-information-wrapper">
           <div class="register-title">이메일(아이디)</div>
           <div class="register-input-wrapper">
-            <input class="register-input register-email" />
+            <input v-model="id" class="register-input register-email" />
             <span class="space">@</span>
             <input v-if="selectEtc" class="register-email-domain-input" />
             <select v-model="selectedDomain" class="register-input register-email-domain">
@@ -26,37 +31,38 @@
         <div class="register-information-wrapper">
           <div class="register-title">비밀번호</div>
           <div class="register-input-wrapper">
-            <input class="register-input" />
+            <input v-model="password" class="register-input" type="password" />
           </div>
         </div>
         <div class="register-information-wrapper">
           <div class="register-title">비밀번호확인</div>
           <div class="register-input-wrapper">
-            <input class="register-input" />
+            <input v-model="passwordCheck" class="register-input" type="password" />
           </div>
         </div>
 
         <div class="register-information-wrapper">
           <div class="register-title">이름</div>
           <div class="register-input-wrapper">
-            <input class="register-input" />
+            <input v-model="name" class="register-input" />
           </div>
         </div>
 
         <div class="register-information-wrapper">
           <div class="register-title">나이</div>
           <div class="register-input-wrapper">
-            <input class="register-input" />
+            <input v-model="age" class="register-input" />
+            <span v-if="age" class="space-age">만 {{age - 1}}세</span>
           </div>
         </div>
         <div class="register-information-wrapper">
           <div class="register-title">휴대폰 번호</div>
           <div class="register-input-wrapper">
-            <input class="register-input register-input-phone" value="010" />
+            <input v-model="phone1" class="register-input register-input-phone" value="010" />
             <span class="space">-</span>
-            <input class="register-input register-input-phone" />
+            <input v-model="phone2" class="register-input register-input-phone" />
             <span class="space">-</span>
-            <input class="register-input register-input-phone" />
+            <input v-model="phone3" class="register-input register-input-phone" />
           </div>
         </div>
 
@@ -69,21 +75,29 @@
       </div>
     </div>
     <div slot="footer">
-      <button class="register-button">이메일 회원가입</button>
+      <div class="register-button">이메일 회원가입</div>
     </div>
   </ModalRegister>
 </template>
 
 <script>
 import ModalRegister from "./ModalRegister";
+import { mapMutations } from "vuex";
 export default {
   components: {
     ModalRegister
   },
   data() {
     return {
+      id: "",
+      password: "",
+      passwordCheck: "",
+      name: "",
+      age: 0,
       selectedDomain: "",
-
+      phone1: "",
+      phone2: "",
+      phone3: "",
       emailDomain: {
         naver: "naver.com",
         google: "gmail.com",
@@ -98,16 +112,29 @@ export default {
       return this.selectedDomain === "직접입력" ? true : false;
     }
   },
-  methods: {}
+  methods: {
+    ...mapMutations(["SET_REGISTER_MODAL"])
+  }
 };
 </script>
 
-<style>
+<style scoped>
 * {
   color: black;
 }
 
+.close-button > img {
+  cursor: pointer;
+  width: 20px;
+  height: auto;
+}
+
 .register-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: none;
+  background: transparent;
   text-align: left;
   margin-bottom: 20px;
   padding-bottom: 5px;
@@ -133,6 +160,13 @@ export default {
   color: #222222;
 }
 .space {
+  margin: 0 7px;
+  font-size: 14px;
+  color: #888888;
+}
+
+.space-age {
+  width: 60px;
   margin: 0 7px;
   font-size: 14px;
   color: #888888;
@@ -192,5 +226,9 @@ select::-ms-expand {
   color: white;
   font-size: 17px;
   margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 </style>

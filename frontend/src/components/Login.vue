@@ -1,6 +1,9 @@
 <template>
   <Modal>
     <div slot="header">
+      <div @click="SET_REGISTER_MODAL(false)" class="close-button">
+        <img src="../assets/close.png" />
+      </div>
       <div class="login-title">로그인</div>
     </div>
     <div slot="body">
@@ -9,19 +12,22 @@
         <input class="login-password" placeholder="비밀번호" />
       </div>
       <div class="login-check-wrapper">
-        <div><input type="checkbox" />아이디저장</div>
+        <div>
+          <input type="checkbox" />아이디저장
+        </div>
         <button class="find-password-button">비밀번호 찾기</button>
       </div>
       <div class="login-button-wrapper">
-        <div><button class="login-button">로그인</button></div>
+        <div>
+          <button class="login-button">로그인</button>
+        </div>
         <div>
           <!-- <button>로그인</button>
-          <button>로그인</button> -->
+          <button>로그인</button>-->
         </div>
         <div class="register-wrapper">
-          아직 회원이 아니세요?<button class="register-button">
-            이메일로 회원가입
-          </button>
+          아직 회원이 아니세요?
+          <button @click="SET_REGISTER_MODAL(true)" class="register-button">이메일로 회원가입</button>
         </div>
       </div>
     </div>
@@ -37,21 +43,33 @@
 </template>
 
 <script>
-import Modal from './Modal';
+import Modal from "./Modal";
+import { mapSate, mapMutations } from "vuex";
 export default {
   components: {
-    Modal,
+    Modal
   },
   data() {
     return {};
   },
-  methods: {},
+  computed: {},
+  methods: {
+    ...mapMutations(["SET_REGISTER_MODAL"])
+  }
 };
 </script>
 
-<style>
+<style scoped>
 * {
   color: black;
+}
+.close-button {
+  text-align: right;
+  cursor: pointer;
+}
+.close-button > img {
+  width: 20px;
+  height: auto;
 }
 
 .login-input-wrapper {
@@ -85,11 +103,13 @@ export default {
   font-size: 14px;
 }
 .find-password-button {
+  cursor: pointer;
   border: 0;
   color: #444444;
 }
 
 .login-button {
+  cursor: pointer;
   width: 100%;
   height: 60px;
   background-color: #1a5ae8;
@@ -105,6 +125,7 @@ export default {
 }
 
 .register-button {
+  cursor: pointer;
   margin-left: 6px;
   color: #1564f9;
   border: 0;
@@ -115,6 +136,7 @@ export default {
   text-align: center;
 }
 .move-broker-button {
+  cursor: pointer;
   margin-top: 10px;
   padding: 10px 20px;
   border: 1px solid #888888;

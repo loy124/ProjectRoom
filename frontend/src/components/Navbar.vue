@@ -48,12 +48,13 @@
       <!-- 로그인시 -->
       <div v-else class="header-login">
         <div class="header-login-item header-login-item1">
-          <button>회원가입</button>
+          <button @click="SET_LOGIN_MODAL(true)">회원가입 및 로그인</button>
         </div>
-        <div class="header-login-item header-login-item2">
+        <!-- <div class="header-login-item header-login-item2">
           <button>로그인</button>
-          <!-- <Login /> -->
-          <Register />
+          -->
+          <Login v-if="loginModal" />
+          <Register v-if="registerModal" />
         </div>
       </div>
     </div>
@@ -61,14 +62,14 @@
 </template>
 
 <script>
-import Login from './Login';
-import Register from './Register';
-import axios from 'axios';
-import { mapState, mapMutations } from 'vuex';
+import Login from "./Login";
+import Register from "./Register";
+import axios from "axios";
+import { mapState, mapMutations } from "vuex";
 export default {
   components: {
     Login,
-    Register,
+    Register
   },
   data() {
     //로그인 데이터
@@ -76,15 +77,16 @@ export default {
   },
   mounted() {},
   computed: {
-    ...mapState(['loginData']),
-    // ...mapMutations(['SET_LOGIN']),
+    ...mapState(["loginData", "loginModal", "registerModal"])
+    // ...mapMutations(["SET_LOGIN_MODAL"])
   },
   methods: {
+    ...mapMutations(["SET_LOGIN", "SET_LOGIN_MODAL", "SET_REGISTER_MODAL"]),
     getLoginData() {
       // this.loginData = localStorage.getItem('login');
       // this.SET_LOGIN(this.loginData);
-    },
-  },
+    }
+  }
 };
 </script>
 
