@@ -34,14 +34,18 @@
         <div class="register-information-wrapper">
           <div class="register-title">비밀번호</div>
           <div class="register-input-wrapper">
-            <input v-model="password" class="register-input" type="password" />
+            <input
+              v-model="userPassword"
+              class="register-input"
+              type="password"
+            />
           </div>
         </div>
         <div class="register-information-wrapper">
           <div class="register-title">비밀번호확인</div>
           <div class="register-input-wrapper">
             <input
-              v-model="passwordCheck"
+              v-model="userPasswordCheck"
               class="register-input"
               type="password"
             />
@@ -111,8 +115,8 @@ export default {
   data() {
     return {
       id: '',
-      password: '',
-      passwordCheck: '',
+      userPassword: '',
+      userPasswordCheck: '',
       name: '',
       age: 0,
       selectedDomain: '',
@@ -152,10 +156,10 @@ export default {
   methods: {
     ...mapMutations(['SET_REGISTER_MODAL']),
     registerUser() {
-      /*
       //최소 1개의 숫자혹은 특수문자를 포함해야 함
+      /*
       const passwordCheckReg = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{6,20}$/;
-      let passwordValidation = passwordCheckReg.test(this.password);
+      let passwordValidation = passwordCheckReg.test(this.userPassword);
       if (this.id === '' || this.selectedDomain === '') {
         //vue-toasted 라이브러리 사용 error 메세지 띄워줌
         this.$toasted.show('이메일이 공백입니다. 다시 입력해주세요', {
@@ -164,14 +168,23 @@ export default {
           duration: 2500,
         });
         return;
-      } else if (this.password !== this.passwordCheck) {
+      } else if (this.userPassword !== this.userPasswordCheck) {
         this.$toasted.show('비밀번호가 일치하지 않습니다. 다시 입력해주세요', {
           type: 'error',
           position: 'top-right',
           duration: 2500,
         });
         //비밀번호 초기화
-        this.password = this.passwordCheck = '';
+        this.userPassword = this.userPasswordCheck = '';
+        return;
+      } else if (this.userPassword === '' || this.userPasswordCheck === '') {
+        this.$toasted.show('비밀번호를 입력해주세요', {
+          type: 'error',
+          position: 'top-right',
+          duration: 2500,
+        });
+        //비밀번호 초기화
+        this.userPassword = this.userPasswordCheck = '';
         return;
       } else if (this.name === '') {
         this.$toasted.show('이름을 입력해주세요', {
@@ -181,6 +194,20 @@ export default {
         });
         return;
         //휴대폰번호 비어있을때
+      } else if (this.age === 0) {
+        this.$toasted.show('나이를 입력해주세요', {
+          type: 'error',
+          position: 'top-right',
+          duration: 2500,
+        });
+        return;
+      } else if (this.age < 15) {
+        this.$toasted.show('15세 미만은 가입할 수 없습니다', {
+          type: 'error',
+          position: 'top-right',
+          duration: 2500,
+        });
+        return;
       } else if (
         this.phone1 === '' ||
         this.phone2 === '' ||
@@ -193,18 +220,57 @@ export default {
         });
         return;
       }
-*/
+
       //! 정규식만들어둠 추후 적용
-      // else if (passwordValidation === false) {
-      //   this.$toasted.show('최소 1개의 숫자혹은 특수문자를 포함해야합니다.', {
-      //     type: 'error',
-      //     position: 'top-right',
-      //     duration: 2500,
-      //   });
-      // }
+      else if (passwordValidation === false) {
+        this.$toasted.show('최소 1개의 숫자혹은 특수문자를 포함해야합니다.', {
+          type: 'error',
+          position: 'top-right',
+          duration: 2500,
+        });
+        return;
+      } */
 
       //!axios 호출(util의 axios에 있음)
-      request('get', 'user/getMemberList').then(res => console.log(res));
+      const userId = this.id + '@' + this.selectedDomain;
+      const phoneNumber = this.phone1 + '-' + this.phone2 + '-' + this.phone3;
+
+      // console.log(userId, phoneNumber);
+      let params = new URLSearchParams();
+      params.append('userId', userId);
+      params.append('userPassword', this.userPassword);
+      params.append('name', this.name);
+      params.append('age', this.age);
+      //email 파라미터와 아이디를 동일시화
+      params.append('email', userId);
+      params.append('phoneNumber', phoneNumber);
+
+      request('post', 'user/register', params)
+        .then(res => {
+          console.log(res);
+          if (res === 'OK') {
+            this.$toasted.show('회원가입이 완료되었습니다.', {
+              type: 'success',
+              position: 'top-right',
+              duration: 2500,
+            });
+            this.SET_REGISTER_MODAL(false);
+          } else {
+            this.$toasted.show('중복된 아이디입니다', {
+              type: 'error',
+              position: 'top-right',
+              duration: 2500,
+            });
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          this.$toasted.show('중복된 아이디입니다', {
+            type: 'error',
+            position: 'top-right',
+            duration: 2500,
+          });
+        });
     },
   },
 };
@@ -258,7 +324,7 @@ export default {
 }
 
 .space-age {
-  width: 60px;
+  width: 80px;
   margin: 0 7px;
   font-size: 14px;
   color: #888888;
@@ -295,9 +361,6 @@ select {
 
 select::-ms-expand {
   display: none;
-}
-
-.register-email-domain {
 }
 
 .register-email-domain-input {

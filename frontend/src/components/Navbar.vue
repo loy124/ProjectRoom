@@ -4,11 +4,9 @@
     <div id="header-top">
       <div class="header">
         <div class="header-left">
-          <div>
-            <button>
-              <img src="../assets/logo.png" />
-            </button>
-          </div>
+            <div>
+              <img  src="../assets/logo.png" />
+            </div>    
           <div class="header-left-site-button1">
             <button>프로중개사이트</button>
           </div>
@@ -40,9 +38,10 @@
 
       <!-- 로그인 세션이 있을시에 -->
       <div v-if="loginData" class="header-login">
-        <div class="header-login-item header-login-item2">
-          <button>님 환영합니다</button>
-        </div>
+        <div class="header-login-item header-login-item1">
+          <button>{{loginData.name}}님 환영합니다</button>
+           <button @click="logout">로그아웃</button>
+        </div> 
       </div>
 
       <!-- 로그인시 -->
@@ -58,13 +57,12 @@
         </div>
       </div>
     </div>
-  </div>
+  </!-->
 </template>
 
 <script>
 import Login from "./Login";
 import Register from "./Register";
-import axios from "axios";
 import { mapState, mapMutations } from "vuex";
 export default {
   components: {
@@ -85,6 +83,11 @@ export default {
     getLoginData() {
       // this.loginData = localStorage.getItem('login');
       // this.SET_LOGIN(this.loginData);
+    },
+      logout(){
+      console.log("test");
+      sessionStorage.removeItem("login");
+      this.SET_LOGIN("");
     }
   }
 };
@@ -103,13 +106,20 @@ export default {
 .header-left {
   display: flex;
   align-items: center;
+  height: 70px;
 }
 
 .header-left-site-button1 {
+  display: flex;
+  align-items: flex-start;
   margin-left: 20px;
+  min-width: 90px;
 }
 
 .header-left-site-button2 {
+  min-width: 90px;
+  display: flex;
+  align-items: flex-start;
 }
 .vertical-line {
   display: inline-block;
@@ -139,6 +149,7 @@ export default {
 }
 
 .header-menu-item {
+  min-width: 40px;
   margin-left: 35px;
 }
 
@@ -149,6 +160,9 @@ export default {
 .header-login {
   display: flex;
   margin-left: 50px;
+}
+.header-login-item  {
+  min-width: 120px;
 }
 .header-login-item > button {
   margin-left: 8px;
@@ -162,7 +176,7 @@ button {
 }
 
 img {
-  height: 63px;
+  height: 70px;
   /* height: auto; */
 }
 </style>

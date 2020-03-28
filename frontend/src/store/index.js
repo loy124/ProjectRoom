@@ -8,6 +8,7 @@ export default new Vuex.Store({
         loginData: '',
         loginModal: false,
         registerModal: false,
+        localPath: '/', //경로를 저장
     },
     mutations: {
         SET_LOGIN(state, data) {
@@ -22,6 +23,9 @@ export default new Vuex.Store({
             state.loginModal = false;
             //회원가입창 열어주기
             state.registerModal = data;
+        },
+        SET_LOCAL_PATH(state, data) {
+            state.localPath = data;
         },
     },
     actions: {},
