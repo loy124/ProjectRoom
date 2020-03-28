@@ -1,7 +1,7 @@
 import axios from 'axios';
 const DOMAIN = 'http://localhost:8081/api/';
 
-export default request = (method, url, data) => {
+export const request = (method, url, data) => {
     return axios({
             method: method,
             url: DOMAIN + url,
