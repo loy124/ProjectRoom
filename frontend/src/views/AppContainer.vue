@@ -3,7 +3,7 @@
     <!-- <div id="header"></div> -->
     <!-- //header -->
     <div id="banner">
-      <slot name="banner" class="container">banner</slot>
+      <slot name="banner" class="container ">banner</slot>
     </div>
     <!-- banner -->
     <div id="contents">
@@ -77,13 +77,13 @@ button {
 
 #banner {
   height: 450px;
-
   background: #ffff;
+ 
 }
 
-#contents {
-  height: 880px;
-}
+/* #contents {
+  /* height: 880px; 
+} */
 
 /* #footer {
   height: 220px;
@@ -102,8 +102,8 @@ button {
      } */
 
 #content1 {
-  height: 90px;
-  line-height: 90px;
+  height: 350px;
+  /* line-height: 350px; */
   background-color: #26c6da;
 }
 

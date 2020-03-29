@@ -95,6 +95,7 @@ export default {
 
 <style scoped>
 .header-container {
+  position: relative;
   background-color: #fff;
   padding: 0 20px;
   display: flex;
@@ -102,6 +103,7 @@ export default {
   height: 70px;
   color: #888888;
   border-bottom:1px solid rgb(235, 235, 235);
+  z-index: 99999;
 }
 
 .header-left {

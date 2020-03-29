@@ -12,7 +12,7 @@
   </div>-->
   <div id="app">
     <!-- <div id="header"></div> -->
-    <Navbar></Navbar>
+    <Navbar style="z-index:99999;"></Navbar>
     <!-- <div id="header-nav">
                 <div class="container">header-nav</div>
     </div>-->
