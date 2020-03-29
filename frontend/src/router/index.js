@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
+import AppContainer from '../views/AppContainer.vue';
 import Toasted from 'vue-toasted';
 
 Vue.use(Toasted);
@@ -8,8 +8,8 @@ Vue.use(VueRouter);
 
 const routes = [{
         path: '/',
-        name: 'Home',
-        component: Home,
+        name: 'AppContainer',
+        component: AppContainer,
     },
     {
         path: '/about',
