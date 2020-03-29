@@ -86,21 +86,21 @@ export default {
   color: #42b983;
 } */
 
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 button {
   background-color: #fff;
-  /* border: 0; */
+
 }
-/* 전체 레이아웃 */
+
 
 #app {
   font-size: 20px;
   color: #fff;
-  /* text-align: center; */
+
 }
 
 #header {
@@ -115,7 +115,7 @@ button {
 
 #contents {
   height: 880px;
-}
+} */
 
 /* #footer {
   height: 220px;
@@ -133,7 +133,7 @@ button {
          background: #80deea;
      } */
 
-#content1 {
+/* #content1 {
   height: 90px;
   line-height: 90px;
   background-color: #26c6da;
@@ -149,7 +149,7 @@ button {
   height: 380px;
   line-height: 380px;
   background-color: #00acc1;
-}
+} */
 
 /* #footer {
   height: 220px;
@@ -166,11 +166,11 @@ button {
   background-color: #00838f;
 } */
 /* 컨테이너 */
-
+/* 
 .container {
   width: 1100px;
   margin: 0 auto;
   height: inherit;
   background: rgba(0, 0, 0, 0.3);
-}
+} */
 </style>

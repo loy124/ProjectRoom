@@ -39,7 +39,7 @@ export default {};
 
 <style scoped>
 #footer {
-  /* height: 340px; */
+  min-height: 340px;
   background-color: #373737;
 }
 #footer-nav {

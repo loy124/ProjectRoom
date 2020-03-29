@@ -1,15 +1,17 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import AppContainer from '../views/AppContainer.vue';
+import Main from '../views/Main.vue';
 import Toasted from 'vue-toasted';
+import VueTypedJs from 'vue-typed-js';
 
 Vue.use(Toasted);
 Vue.use(VueRouter);
+Vue.use(VueTypedJs);
 
 const routes = [{
         path: '/',
-        name: 'AppContainer',
-        component: AppContainer,
+        name: 'Main',
+        component: Main,
     },
     {
         path: '/about',

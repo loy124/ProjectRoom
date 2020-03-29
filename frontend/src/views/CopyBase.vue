@@ -2,9 +2,7 @@
   <div id="app">
     <!-- //footer -->
     <AppContainer>
-      <div slot="banner" class="container">
-        <MainBanner />
-      </div>
+      <div slot="banner" class="container">aa</div>
       <div slot="content1" class="container">aa1</div>
       <div slot="content2" class="container">aa2</div>
       <div slot="content3" class="container">aa3</div>
@@ -13,12 +11,10 @@
 </template>
 <script>
 import AppContainer from "./AppContainer";
-import MainBanner from "../components/banner/MainBanner";
 export default {
   name: "app",
   components: {
-    AppContainer,
-    MainBanner
+    AppContainer
   },
   data() {
     return {};
@@ -27,7 +23,6 @@ export default {
 };
 </script>
 <style scoped>
-/* 
 * {
   margin: 0;
   padding: 0;
@@ -35,17 +30,16 @@ export default {
 }
 button {
   background-color: #fff;
-  
-} */
+  /* border: 0; */
+}
 /* 전체 레이아웃 */
 
-/* #app {
+#app {
   font-size: 20px;
   color: #fff;
-   text-align: center; 
-} */
+  /* text-align: center; */
+}
 
-/*
 #header {
   height: 140px;
 }
@@ -54,9 +48,9 @@ button {
   height: 450px;
   line-height: 450px;
   background: #4dd0e1;
-} */
+}
 
-/* #contents {
+#contents {
   height: 880px;
 }
 
@@ -76,7 +70,7 @@ button {
   height: 380px;
   line-height: 380px;
   background-color: #00acc1;
-} */
+}
 
 /* #footer-nav {
   height: 60px;
@@ -89,13 +83,12 @@ button {
   line-height: 160px;
   background-color: #00838f;
 } */
-
 /* 컨테이너 */
-/* 
+
 .container {
   width: 1100px;
   margin: 0 auto;
   height: inherit;
   background: rgba(0, 0, 0, 0.3);
-} */
+}
 </style>

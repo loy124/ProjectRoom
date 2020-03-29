@@ -3,18 +3,18 @@
     <!-- <div id="header"></div> -->
     <!-- //header -->
     <div id="banner">
-      <div class="container">banner</div>
+      <slot name="banner" class="container">banner</slot>
     </div>
     <!-- banner -->
     <div id="contents">
       <div id="content1">
-        <div slot="content1" class="container">content1</div>
+        <slot name="content1" class="container">content1</slot>
       </div>
       <div id="content2">
-        <div slot="content2" class="container">content2</div>
+        <slot name="content2" class="container">content2</slot>
       </div>
       <div id="content3">
-        <div slot="content3" class="container">content3</div>
+        <slot name="content3" class="container">content3</slot>
       </div>
     </div>
     <!-- //contents -->
@@ -24,12 +24,12 @@
 </template>
 <script>
 export default {
-  name: "app",
+  name: 'app',
   components: {},
   data() {
     return {};
   },
-  mounted() {}
+  mounted() {},
 };
 </script>
 <style>
@@ -40,7 +40,7 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-
+/* 
 #nav {
   padding: 30px;
 }
@@ -77,8 +77,8 @@ button {
 
 #banner {
   height: 450px;
-  line-height: 450px;
-  background: #4dd0e1;
+
+  background: #ffff;
 }
 
 #contents {
@@ -136,6 +136,6 @@ button {
   width: 1100px;
   margin: 0 auto;
   height: inherit;
-  background: rgba(0, 0, 0, 0.3);
+  /* background: rgba(0, 0, 0, 0.3); */
 }
 </style>

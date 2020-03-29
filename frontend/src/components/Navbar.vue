@@ -101,6 +101,7 @@ export default {
   justify-content: space-between;
   height: 70px;
   color: #888888;
+  border-bottom:1px solid rgb(235, 235, 235);
 }
 
 .header-left {
