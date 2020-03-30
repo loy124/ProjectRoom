@@ -3,7 +3,7 @@
     <!-- <div id="header"></div> -->
     <!-- //header -->
     <div id="banner">
-      <slot name="banner" class="container ">banner</slot>
+      <slot name="banner" class="container">banner</slot>
     </div>
     <!-- banner -->
     <div id="contents">
@@ -24,12 +24,12 @@
 </template>
 <script>
 export default {
-  name: 'app',
+  name: "app",
   components: {},
   data() {
     return {};
   },
-  mounted() {},
+  mounted() {}
 };
 </script>
 <style>
@@ -78,7 +78,6 @@ button {
 #banner {
   height: 450px;
   background: #ffff;
- 
 }
 
 /* #contents {
@@ -102,20 +101,19 @@ button {
      } */
 
 #content1 {
-  height: 350px;
+  height: 420px;
   /* line-height: 350px; */
-  background-color: #26c6da;
+  background-color: #fff;
 }
 
 #content2 {
-  height: 480px;
-  line-height: 480px;
-  background-color: #00bcd4;
+  height: 560px;
+  /* line-height: 480px; */
 }
 
 #content3 {
   height: 380px;
-  line-height: 380px;
+
   background-color: #00acc1;
 }
 /* 

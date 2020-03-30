@@ -157,7 +157,7 @@ export default {
     ...mapMutations(['SET_REGISTER_MODAL']),
     registerUser() {
       //최소 1개의 숫자혹은 특수문자를 포함해야 함
-      /*
+      
       const passwordCheckReg = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{6,20}$/;
       let passwordValidation = passwordCheckReg.test(this.userPassword);
       if (this.id === '' || this.selectedDomain === '') {
@@ -229,7 +229,7 @@ export default {
           duration: 2500,
         });
         return;
-      } */
+      } 
 
       //!axios 호출(util의 axios에 있음)
       const userId = this.id + '@' + this.selectedDomain;

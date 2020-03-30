@@ -5,8 +5,18 @@
       <div slot="banner" class="container">
         <MainBanner />
       </div>
-      <div slot="content1" class="container">aa1</div>
-      <div slot="content2" class="container">aa2</div>
+      <div slot="content1" class="container">
+        <EasySearchRoom />
+      </div>
+      <div slot="content2" class="container">
+        <div class="room-selector">
+          <router-link class="room-selector1" :to="`/`">최근 본방</router-link>
+          <div class="line-divider"></div>
+          <router-link class="room-selector2" :to="`/keep`">찜한 방</router-link>
+        </div>
+        <div class="room-selector-title">최근에 본 방과 찜한 방을 볼 수 있어요</div>
+        <router-view />
+      </div>
       <div slot="content3" class="container">aa3</div>
     </AppContainer>
   </div>
@@ -14,88 +24,64 @@
 <script>
 import AppContainer from "./AppContainer";
 import MainBanner from "../components/banner/MainBanner";
+import EasySearchRoom from "../components/content1/EasySearchRoom";
 export default {
   name: "app",
   components: {
     AppContainer,
-    MainBanner
+    MainBanner,
+    EasySearchRoom
   },
   data() {
-    return {};
+    return {
+      clickedSelector: true
+    };
+  },
+  methods: {
+    clickSelector() {
+      !this.clickedSelector;
+    }
   },
   mounted() {}
 };
 </script>
 <style scoped>
-/* 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-button {
-  background-color: #fff;
-  
-} */
-/* 전체 레이아웃 */
-
-/* #app {
-  font-size: 20px;
-  color: #fff;
-   text-align: center; 
-} */
-
-/*
-#header {
-  height: 140px;
-}
-
-#banner {
-  height: 450px;
-  line-height: 450px;
-  background: #4dd0e1;
-} */
-
-/* #contents {
-  height: 880px;
-}
-
-#content1 {
-  height: 90px;
-  line-height: 90px;
-  background-color: #26c6da;
-}
-
-#content2 {
-  height: 480px;
-  line-height: 480px;
-  background-color: #00bcd4;
-}
-
-#content3 {
-  height: 380px;
-  line-height: 380px;
-  background-color: #00acc1;
-} */
-
-/* #footer-nav {
-  height: 60px;
-  line-height: 60px;
-  background-color: #0097a7;
-}
-
-#footer-info {
-  height: 160px;
-  line-height: 160px;
-  background-color: #00838f;
-} */
-
-/* 컨테이너 */
-/* 
-.container {
+.room-selector {
+  border-top: 1px solid #cccccc;
+  padding-top: 80px;
+  display: flex;
+  align-items: center;
   width: 1100px;
   margin: 0 auto;
-  height: inherit;
-  background: rgba(0, 0, 0, 0.3);
-} */
+}
+.room-selector1 {
+  text-decoration: none;
+  color: #cccccc;
+  font-size: 28px;
+}
+
+.line-divider {
+  display: block;
+  width: 1px;
+  height: 30px;
+  background-color: #cccccc;
+  content: "";
+  margin: 0 20px;
+}
+
+.room-selector2 {
+  text-decoration: none;
+  color: #cccccc;
+  font-size: 28px;
+}
+.router-link-exact-active {
+  color: black;
+  font-weight: bold;
+}
+.room-selector-title {
+  margin-top: 8px;
+  color: black;
+  font-weight: 100;
+  font-size: 16px;
+}
 </style>

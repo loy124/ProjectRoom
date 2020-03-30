@@ -2,6 +2,7 @@ package bit.com.a;
 
 import java.util.Properties;
 
+import javax.servlet.annotation.MultipartConfig;
 import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -39,6 +40,8 @@ public class DatabaseConfig {
 		
 		return (SqlSessionFactory)sqlSessionFactoryBean.getObject();
 	}
+	
+	
 	
 	@Bean
 	public SqlSessionTemplate sqlSession(SqlSessionFactory sqlSessionFactory) {

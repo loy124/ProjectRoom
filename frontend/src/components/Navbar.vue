@@ -155,6 +155,9 @@ export default {
   min-width: 40px;
   margin-left: 35px;
 }
+.header-menu-item > button:hover {
+  cursor: pointer;
+}
 
 .header-menu-item > button {
   color: rgb(34, 34, 34);
@@ -163,6 +166,7 @@ export default {
 .header-login {
   display: flex;
   margin-left: 50px;
+  
 }
 .header-login-item  {
   min-width: 120px;
@@ -171,6 +175,7 @@ export default {
   margin-left: 8px;
   color: #888888;
   font-size: 13px;
+  cursor: pointer;
 }
 
 button {
