@@ -17,7 +17,9 @@
         <div class="room-selector-title">최근에 본 방과 찜한 방을 볼 수 있어요</div>
         <router-view />
       </div>
-      <div slot="content3" class="container">aa3</div>
+      <div slot="content3" class="container">
+        <Menu />
+      </div>
     </AppContainer>
   </div>
 </template>
@@ -25,12 +27,14 @@
 import AppContainer from "./AppContainer";
 import MainBanner from "../components/banner/MainBanner";
 import EasySearchRoom from "../components/content1/EasySearchRoom";
+import Menu from "../components/content3/Menu";
 export default {
   name: "app",
   components: {
     AppContainer,
     MainBanner,
-    EasySearchRoom
+    EasySearchRoom,
+    Menu
   },
   data() {
     return {

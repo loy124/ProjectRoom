@@ -114,7 +114,7 @@ button {
 #content3 {
   height: 380px;
 
-  background-color: #00acc1;
+  background-color: #fff;
 }
 /* 
 #footer-nav {
