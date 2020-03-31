@@ -40,7 +40,7 @@ export default {
     return {
       recentDatas: [
         {
-          img: require("../../assets/room1.jpg"),
+          img: require("../../assets/room2.jpg"),
           type: "원룸",
           deposit: "월세 300/40",
           floor: "2층 17평",
@@ -48,7 +48,7 @@ export default {
           heart: true
         },
         {
-          img: require("../../assets/room3.jpg"),
+          img: require("../../assets/room5.jpg"),
           type: "쓰리룸",
           deposit: "전세 3억",
           floor: "2층 32평",
@@ -56,7 +56,71 @@ export default {
           heart: false
         },
         {
-          img: require("../../assets/room6.jpg"),
+          img: require("../../assets/room4.jpg"),
+          type: "원룸",
+          deposit: "월세 300/38",
+          floor: "2층 15평",
+          content: "귀가길 안전한 역세권 방",
+          heart: true
+        },
+        {
+          img: require("../../assets/room3.jpg"),
+          type: "쓰리룸",
+          deposit: "매매 2억 30000",
+          floor: "2층 50평",
+          content: "남향, 일렬주차, 전세, 투자금 2천",
+          heart: false
+        },
+        {
+          img: require("../../assets/room2.jpg"),
+          type: "원룸",
+          deposit: "월세 300/40",
+          floor: "2층 17평",
+          content: "야옹이",
+          heart: true
+        },
+        {
+          img: require("../../assets/room5.jpg"),
+          type: "쓰리룸",
+          deposit: "전세 3억",
+          floor: "2층 32평",
+          content: "깔끔하게 리모델링 된 주차걱정 없는 3룸 2억에 모십니다",
+          heart: false
+        },
+        {
+          img: require("../../assets/room4.jpg"),
+          type: "원룸",
+          deposit: "월세 300/38",
+          floor: "2층 15평",
+          content: "귀가길 안전한 역세권 방",
+          heart: true
+        },
+        {
+          img: require("../../assets/room3.jpg"),
+          type: "쓰리룸",
+          deposit: "매매 2억 30000",
+          floor: "2층 50평",
+          content: "남향, 일렬주차, 전세, 투자금 2천",
+          heart: false
+        },
+        {
+          img: require("../../assets/room2.jpg"),
+          type: "원룸",
+          deposit: "월세 300/40",
+          floor: "2층 17평",
+          content: "야옹이",
+          heart: true
+        },
+        {
+          img: require("../../assets/room5.jpg"),
+          type: "쓰리룸",
+          deposit: "전세 3억",
+          floor: "2층 32평",
+          content: "깔끔하게 리모델링 된 주차걱정 없는 3룸 2억에 모십니다",
+          heart: false
+        },
+        {
+          img: require("../../assets/room4.jpg"),
           type: "원룸",
           deposit: "월세 300/38",
           floor: "2층 15평",
@@ -87,7 +151,6 @@ export default {
 .recent-room-container {
   margin-top: 20px;
   color: black;
-  display: block;
 }
 .recent-room-wrapper {
   display: flex;
@@ -100,14 +163,14 @@ export default {
   opacity: 0.6;
 }
 
-.recent-room:not(:first-child) {
-  /* margin-left: 20px; */
-}
 .recent-image-wrapper {
   position: relative;
+  width: 280px;
   height: 186px;
 }
 .recent-image {
+  width: 100%;
+  height: 186px;
 }
 .heart-image {
   cursor: pointer;

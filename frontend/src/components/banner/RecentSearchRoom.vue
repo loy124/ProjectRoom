@@ -87,7 +87,6 @@ export default {
 .recent-room-container {
   margin-top: 20px;
   color: black;
-  display: block;
 }
 .recent-room-wrapper {
   display: flex;
@@ -95,13 +94,10 @@ export default {
 .recent-room {
   width: 280px;
   cursor: pointer;
+  margin: 5px 10px 5px 0;
 }
 .recent-room:hover {
   opacity: 0.6;
-}
-
-.recent-room:not(:first-child) {
-  /* margin-left: 20px; */
 }
 .recent-image-wrapper {
   position: relative;

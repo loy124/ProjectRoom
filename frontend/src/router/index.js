@@ -1,8 +1,11 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Main from '../views/Main.vue';
+import Attention from '../views/Attention.vue';
 import RecentSearchRoom from '../components/content2/RecentSearchRoom.vue';
 import KeepRoom from '../components/content2/KeepRoom.vue';
+import KeepRoomBanner from '../components/banner/KeepRoom.vue';
+import RecentRoomBanner from '../components/banner/RecentSearchRoom.vue';
 import Toasted from 'vue-toasted';
 import VueTypedJs from 'vue-typed-js';
 
@@ -32,6 +35,20 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "about" */ '../views/About.vue'),
+    },
+    {
+        path: '/attention',
+        name: Attention,
+        component: Attention,
+        children: [{
+                path: '/',
+                component: RecentRoomBanner,
+            },
+            {
+                path: '/attention/keep',
+                component: KeepRoomBanner,
+            },
+        ],
     },
     {
         path: '/*',

@@ -90,24 +90,31 @@ export default {
 }
 .recent-room-wrapper {
   display: flex;
+  width: 1180px;
+  height: 100%;
+  flex-wrap: wrap;
 }
 .recent-room {
   width: 280px;
   cursor: pointer;
+
+  padding-bottom: 40px;
 }
 .recent-room:hover {
   opacity: 0.6;
 }
 
 .recent-room:not(:first-child) {
-  margin-left: 20px;
+  /* margin-left: 20px; */
 }
 .recent-image-wrapper {
   position: relative;
+  width: 280px;
   height: 186px;
 }
 .recent-image {
   width: 100%;
+  height: 186px;
 }
 .heart-image {
   cursor: pointer;

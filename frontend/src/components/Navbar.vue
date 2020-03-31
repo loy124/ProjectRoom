@@ -4,9 +4,11 @@
     <div id="header-top">
       <div class="header">
         <div class="header-left">
-            <div>
-              <img  src="../assets/logo.png" />
-            </div>    
+          <div>
+            <router-link class="room-selector1" :to="`/`">
+              <img src="../assets/logo.png" />
+            </router-link>
+          </div>
           <div class="header-left-site-button1">
             <button>프로중개사이트</button>
           </div>
@@ -26,7 +28,9 @@
           <button>분양</button>
         </div>
         <div class="header-menu-item header-menu-item2">
-          <button>관심목록</button>
+          <router-link class="room-selector1" :to="`/attention`">
+            <button class="router-item">관심목록</button>
+          </router-link>
         </div>
         <div class="header-menu-item header-menu-item3">
           <button>방내놓기</button>
@@ -40,8 +44,8 @@
       <div v-if="loginData" class="header-login">
         <div class="header-login-item header-login-item1">
           <button>{{loginData.name}}님 환영합니다</button>
-           <button @click="logout">로그아웃</button>
-        </div> 
+          <button @click="logout">로그아웃</button>
+        </div>
       </div>
 
       <!-- 로그인시 -->
@@ -51,10 +55,9 @@
         </div>
         <!-- <div class="header-login-item header-login-item2">
           <button>로그인</button>
-          -->
-          <Login v-if="loginModal" />
-          <Register v-if="registerModal" />
-        </div>
+        -->
+        <Login v-if="loginModal" />
+        <Register v-if="registerModal" />
       </div>
     </div>
   </div>
@@ -84,7 +87,7 @@ export default {
       // this.loginData = localStorage.getItem('login');
       // this.SET_LOGIN(this.loginData);
     },
-      logout(){
+    logout() {
       console.log("test");
       sessionStorage.removeItem("login");
       this.SET_LOGIN("");
@@ -102,7 +105,7 @@ export default {
   justify-content: space-between;
   height: 70px;
   color: #888888;
-  border-bottom:1px solid rgb(235, 235, 235);
+  border-bottom: 1px solid rgb(235, 235, 235);
   z-index: 99999;
 }
 
@@ -162,13 +165,15 @@ export default {
 .header-menu-item > button {
   color: rgb(34, 34, 34);
 }
+.router-item {
+  cursor: pointer;
+}
 
 .header-login {
   display: flex;
   margin-left: 50px;
-  
 }
-.header-login-item  {
+.header-login-item {
   min-width: 120px;
 }
 .header-login-item > button {

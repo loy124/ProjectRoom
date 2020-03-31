@@ -12,7 +12,9 @@
       </vue-typed-js>
     </div>
     <div class="room-search-wrapper">
-      <div class="room-search-icon"><img src="../../assets/search.png" /></div>
+      <div class="room-search-icon">
+        <img src="../../assets/search.png" />
+      </div>
       <input @focus="SET_SEARCH_MODAL(true)" @blur="SET_SEARCH_MODAL(false)" />
       <div class="searchButton">방찾기</div>
       <div class="modal">
@@ -23,22 +25,22 @@
 </template>
 
 <script>
-import ModalSearch from '../../components/ModalSearch';
-import { mapState, mapMutations } from 'vuex';
-('vuex');
+import ModalSearch from "../../components/ModalSearch";
+import { mapState, mapMutations } from "vuex";
+("vuex");
 export default {
   components: {
-    ModalSearch,
+    ModalSearch
   },
   data() {
     return {};
   },
   computed: {
-    ...mapState(['searchModal']),
+    ...mapState(["searchModal"])
   },
   methods: {
-    ...mapMutations(['SET_SEARCH_MODAL']),
-  },
+    ...mapMutations(["SET_SEARCH_MODAL"])
+  }
 };
 </script>
 
@@ -49,6 +51,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-bottom: 100px;
 }
 .banner-type {
   height: 125px;

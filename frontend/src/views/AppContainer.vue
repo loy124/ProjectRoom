@@ -32,7 +32,7 @@ export default {
   mounted() {}
 };
 </script>
-<style>
+<style scoped>
 /* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -76,8 +76,9 @@ button {
 }
 
 #banner {
-  height: 450px;
+  /* height: 450px; */
   background: #ffff;
+  display: block;
 }
 
 /* #contents {
@@ -107,8 +108,10 @@ button {
 }
 
 #content2 {
-  height: 560px;
+  height: 460px;
+  /* overflow: hidden; */
   /* line-height: 480px; */
+  margin-bottom: 40px;
 }
 
 #content3 {
