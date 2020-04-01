@@ -36,6 +36,7 @@ const routes = [{
         component: () =>
             import ( /* webpackChunkName: "about" */ '../views/About.vue'),
     },
+
     {
         path: '/attention',
         name: Attention,
