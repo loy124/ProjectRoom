@@ -15,6 +15,8 @@ public class GalleryService {
   GalleryDao galleryDao;
 
   public int upload(GalleryDto galleryDto) {
+    System.out.println("dao");
+    System.out.println(galleryDto.toString());
     return galleryDao.upload(galleryDto);
   }
 
