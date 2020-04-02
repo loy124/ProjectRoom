@@ -1,7 +1,7 @@
 .DS_Store
 node_modules
 /dist
-
+application.properties
 # local env files
 .env.local
 .env.*.local
@@ -53,3 +53,4 @@ build/
 ### VS Code ###
 .vscode/
 *.yml
+/.metadata/

@@ -23,4 +23,36 @@ public class GalleryDto {
         + imgFullPath + "'" + "}";
   }
 
+  public Long getId() {
+    return this.id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public String getTitle() {
+    return this.title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  public String getFilePath() {
+    return this.filePath;
+  }
+
+  public void setFilePath(String filePath) {
+    this.filePath = filePath;
+  }
+
+  public String getImgFullPath() {
+    return this.imgFullPath;
+  }
+
+  public void setImgFullPath(String imgFullPath) {
+    this.imgFullPath = imgFullPath;
+  }
+
 }
