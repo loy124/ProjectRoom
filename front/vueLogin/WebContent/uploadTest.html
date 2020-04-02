@@ -27,6 +27,14 @@
                 </label>
                 <button v-on:click="submitFile()">Submit</button>
             </div>
+
+            <div>
+                이미지 리스트 받아오기
+                <div v-for="(galleryData, index) in galleryDatas" :key="index">
+                    {{galleryData.title}}
+                    <img style="width: 120px;" :src="galleryData.file_path">
+                </div>
+            </div>
         </div>
 
     </div>
@@ -38,7 +46,16 @@
                 return {
                     title: "",
                     file: "",
+                    galleryDatas: []
                 }
+            },
+            mounted() {
+                axios.get('http://localhost:8081/api/gallery/getImageList')
+                    .then(res => {
+                        console.log(res.data);
+                        this.galleryDatas = res.data
+                    })
+                    .catch(error => console.log(error));
             },
             methods: {
 

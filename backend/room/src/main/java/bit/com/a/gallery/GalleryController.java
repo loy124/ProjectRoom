@@ -1,9 +1,11 @@
 package bit.com.a.gallery;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,9 +31,14 @@ public class GalleryController {
   @PostMapping("/upload")
   public String execWrite(GalleryDto galleryDto, MultipartFile file) throws IOException {
     String imgPath = s3Service.upload(file);
-    galleryDto.setFilePath(imgPath);
+    galleryDto.setFilePath("https://" + "dixo0q5vi6g16.cloudfront.net" + "/" + imgPath);
 
     return galleryService.upload(galleryDto) > 0 ? "OK" : "FAIL";
+  }
+
+  @GetMapping("/getImageList")
+  public List<GalleryDto> getImageList() {
+    return galleryService.getImageList();
   }
 
   // @PostMapping("/upload")

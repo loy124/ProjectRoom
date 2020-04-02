@@ -8,4 +8,8 @@
     INSERT INTO gallery(title, file_path) VALUES(#{title}, #{filePath})
   </insert>
 
+  <select id="getImageList" resultType="bit.com.a.gallery.GalleryDto">
+    SELECT file_path, title from gallery
+  </select>
+
 </mapper>
