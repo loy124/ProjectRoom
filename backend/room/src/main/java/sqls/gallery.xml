@@ -12,4 +12,8 @@
     SELECT file_path, title from gallery
   </select>
 
+  <!-- <select id="updateImage" parameterType="bit.com.a.gallery.GalleryDto">
+    Update gallery set where 
+  </select> -->
+
 </mapper>

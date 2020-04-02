@@ -6,6 +6,9 @@ import RecentSearchRoom from '../components/content2/RecentSearchRoom.vue';
 import KeepRoom from '../components/content2/KeepRoom.vue';
 import KeepRoomBanner from '../components/banner/KeepRoom.vue';
 import RecentRoomBanner from '../components/banner/RecentSearchRoom.vue';
+import Mypage from '../views/MyPage.vue';
+import Profile from '../components/banner/Profile.vue';
+
 import Toasted from 'vue-toasted';
 import VueTypedJs from 'vue-typed-js';
 
@@ -27,6 +30,7 @@ const routes = [{
             },
         ],
     },
+
     {
         path: '/about',
         name: 'About',
@@ -50,6 +54,15 @@ const routes = [{
                 component: KeepRoomBanner,
             },
         ],
+    },
+    {
+        path: '/mypage',
+        name: 'Mypage',
+        component: Mypage,
+        children: [{
+            path: '/',
+            component: Profile,
+        }, ],
     },
     {
         path: '/*',

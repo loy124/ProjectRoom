@@ -43,7 +43,10 @@
       <!-- 로그인 세션이 있을시에 -->
       <div v-if="loginData" class="header-login">
         <div class="header-login-item header-login-item1">
-          <button>{{loginData.name}}님 환영합니다</button>
+          <router-link style="border:none;" class="attention-select-item" :to="`/mypage`">
+            <button>{{loginData.name}}님 환영합니다</button>
+          </router-link>
+
           <button @click="logout">로그아웃</button>
         </div>
       </div>

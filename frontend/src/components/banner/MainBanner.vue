@@ -46,6 +46,7 @@ export default {
 
 <style scoped>
 .banner-container {
+  padding-top: 80px;
   height: 100%;
   display: flex;
   flex-direction: column;

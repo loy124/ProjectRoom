@@ -31,9 +31,12 @@ public class GalleryController {
   private S3Service s3Service;
 
   @PostMapping("/upload")
-  public String execWrite(GalleryDto galleryDto, MultipartFile file) throws IOException {
-    String imgPath = s3Service.upload(file);
+  public String execWrite(GalleryDto galleryDto, MultipartFile files) throws IOException {
+    System.out.println(files);
+    // for (int i = 0; i < files.length; i++) {
+    String imgPath = s3Service.upload(galleryDto.getFilePath(), files);
     galleryDto.setFilePath("https://" + "dixo0q5vi6g16.cloudfront.net" + "/" + imgPath);
+    // }
     return galleryService.upload(galleryDto) > 0 ? "OK" : "FAIL";
   }
 
