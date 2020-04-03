@@ -2,7 +2,7 @@
   <EtcContainer class="container">
     <div slot="banner">
       <div class="mypage-container">
-        <div class="mypage-title">MY 다방</div>
+        <div class="mypage-title">MY 구해방</div>
         <div class="mypage-select-wrapper">
           <!-- <div class="mypage-select-item">최근본방</div> -->
           <router-link class="mypage-select-item" :to="`/mypage/`">정보수정</router-link>

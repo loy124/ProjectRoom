@@ -67,7 +67,7 @@ export default {
   },
   computed: {},
   methods: {
-    ...mapMutations(["SET_REGISTER_MODAL", "SET_LOGIN"]),
+    ...mapMutations(["SET_REGISTER_MODAL", "SET_LOGIN", "SET_PROFILE_IMAGE"]),
     //로그인 아이디 localStorage 저장
     setLoginSave() {
       if (this.loginSave === false) {
@@ -109,7 +109,7 @@ export default {
           );
           return;
         } else {
-          console.log(res);
+          // console.log(res);
           //로그인정보 세션에 저장
           this.$toasted.show(`${res.name}님 환영합니다`, {
             type: "success",
@@ -124,6 +124,8 @@ export default {
           //vuex 에 저장하기
           this.SET_LOGIN(res);
           this.SET_REGISTER_MODAL(false);
+
+          this.SET_PROFILE_IMAGE(res.profile_image);
         }
       });
     }

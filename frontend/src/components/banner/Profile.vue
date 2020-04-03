@@ -12,21 +12,21 @@
 
     <div class="profile-information-wrapper">
       <div class="profile-wrapper">
-        <div class="profile-title">본인성명</div>
+        <div class="profile-title">닉네임</div>
         <div>
-          <input class="profile-input" v-bind:value="loginData.name" />
+          <input class="profile-input" v-model="name" />
         </div>
       </div>
       <div class="profile-wrapper">
         <div class="profile-title">이메일 주소</div>
         <div>
-          <input class="profile-input" v-bind:value="loginData.user_id" />
+          <input class="profile-input" v-model="userId" />
         </div>
       </div>
       <div class="profile-wrapper">
         <div class="profile-title">휴대폰 번호</div>
         <div>
-          <input class="profile-input-phone" :value="loginData.phone_number" />
+          <input class="profile-input-phone" v-model="phoneNumber" />
           <!-- <span class="profile-phone-divider">-</span>
           <input class="profile-input-phone" />
           <span class="profile-phone-divider">-</span>
@@ -37,7 +37,7 @@
     <div class="profile-button-container">
       <div class="profile-button-wrapper">
         <button class="profile-cancel-button">취소</button>
-        <button class="profile-apply-button">확인</button>
+        <button class="profile-apply-button" @click="updateUser">확인</button>
       </div>
       <button class="secession-button">회원탈퇴</button>
     </div>
@@ -51,23 +51,22 @@ import { mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {
+      name: "",
+      userId: "",
       file: "",
-      profileImage: ""
+      phoneNumber: ""
     };
   },
   mounted() {
-    console.log(this.loginData);
-    //로그인 데이터가 존재할때
-    if (this.loginData) {
-      // console.log(this.loginData.profile_image.split("-")[0]);
-      this.profileImage = this.loginData.profile_image.split("-")[0];
-    }
+    this.name = this.loginData.name;
+    this.userId = this.loginData.user_id;
+    this.phoneNumber = this.loginData.phone_number;
   },
   computed: {
-    ...mapState(["loginData"])
+    ...mapState(["loginData", "profileImage"])
   },
   methods: {
-    ...mapMutations(["SET_LOGIN"]),
+    ...mapMutations(["SET_LOGIN", "SET_PROFILE_IMAGE"]),
     profileUpload() {
       console.log(this.$refs.file.files[0]);
       this.file = this.$refs.file.files[0];
@@ -77,14 +76,39 @@ export default {
       requestFile("POST", "user/updateProfile", formData)
         .then(res => {
           console.log(res);
-        })
-        //vuex 정보 갱신하기및 라우터 이동
-        .then(res => {
-          this.profileImage = this.loginData.profile_image.split("-")[0];
+          let params = new URLSearchParams();
+          console.log(this.loginData);
+          console.log(this.loginData.user_id);
+          params.append("id", this.loginData.id);
+          //세션및 vuex 업데이트
+          request("POST", "user/getInformation", params)
+            .then(data => {
+              console.log("완료");
+              sessionStorage.setItem("login", JSON.stringify(data));
+              this.SET_LOGIN(data);
+              this.SET_PROFILE_IMAGE(data.profile_image);
+            })
+            .catch(error => {
+              console.log(error);
+            });
         })
         .catch(error => {
           console.log(error);
         });
+    },
+
+    // updateUser
+    updateUser() {
+      let params = new URLSearchParams();
+      params.append("id", this.loginData.id);
+      params.append("name", this.name);
+      params.append("userId", this.userId);
+      params.append("phoneNumber", this.phoneNumber);
+      console.log(this.loginData.id);
+      request("post", "user/updateUser", params).then(res => {
+        console.log(res);
+        console.log("성공적 으로 수정이 완료되었습니다");
+      });
     }
   }
 };
@@ -168,6 +192,7 @@ export default {
   width: 218px;
   height: 50px;
   font-size: 15px;
+  cursor: pointer;
 }
 .profile-apply-button {
   margin-left: 20px;
@@ -178,6 +203,7 @@ export default {
   color: #fff;
   background-color: #1564f9;
   font-size: 15px;
+  cursor: pointer;
 }
 
 .secession-button {

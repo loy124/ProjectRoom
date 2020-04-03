@@ -20,4 +20,7 @@ public interface UserDao {
 	public UserDto getInformation(UserDto user);
 
 	public Integer updateProfile(UserDto user);
+
+	public Integer updateUser(UserDto user);
+
 }

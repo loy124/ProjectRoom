@@ -5,7 +5,12 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        loginData: JSON.parse(sessionStorage.getItem('login')),
+        loginData: !sessionStorage.getItem('login') ?
+            '' :
+            JSON.parse(sessionStorage.getItem('login')),
+        profileImage: !sessionStorage.getItem('login') ?
+            '' :
+            JSON.parse(sessionStorage.getItem('login')).profile_image,
         loginModal: false,
         registerModal: false,
         localPath: '/', //경로를 저장,
@@ -14,6 +19,9 @@ export default new Vuex.Store({
     mutations: {
         SET_LOGIN(state, data) {
             state.loginData = data;
+        },
+        SET_PROFILE_IMAGE(state, data) {
+            state.profileImage = data;
         },
         SET_LOGIN_MODAL(state, data) {
             state.loginModal = data;

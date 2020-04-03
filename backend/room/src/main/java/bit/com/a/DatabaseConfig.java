@@ -19,37 +19,29 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 public class DatabaseConfig {
 
 	@Bean
-	public SqlSessionFactory sqlSessionFactory(DataSource dataSource)throws Exception {
+	public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
 		System.out.println("DatabaseConfig sqlSessionFactory");
-		
-		
+
 		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
 		Properties prop = new Properties();
-	    prop.setProperty("mapUnderscoreToCamelCase", "true");
+		prop.setProperty("mapUnderscoreToCamelCase", "true");
 		sqlSessionFactoryBean.setDataSource(dataSource);
-		 sqlSessionFactoryBean.setConfigurationProperties(prop);
+		sqlSessionFactoryBean.setConfigurationProperties(prop);
 		/*
 		 * sqlSessionFactoryBean.getObject().getConfiguration().
 		 * setMapUnderscoreToCamelCase(true);
-		 */		
-		 
+		 */
+
 		Resource myBatisConfig = new PathMatchingResourcePatternResolver().getResource("classpath:mybatis-config.xml");
 		sqlSessionFactoryBean.setConfigLocation(myBatisConfig);
-		Resource[] arrResource = new PathMatchingResourcePatternResolver().getResources("classpath:sqls/*.xml");          
+		Resource[] arrResource = new PathMatchingResourcePatternResolver().getResources("classpath:sqls/*.xml");
 		sqlSessionFactoryBean.setMapperLocations(arrResource);
-		
-		return (SqlSessionFactory)sqlSessionFactoryBean.getObject();
+
+		return (SqlSessionFactory) sqlSessionFactoryBean.getObject();
 	}
-	
-	
-	
+
 	@Bean
 	public SqlSessionTemplate sqlSession(SqlSessionFactory sqlSessionFactory) {
 		return new SqlSessionTemplate(sqlSessionFactory);
 	}
 }
-
-
-
-
-

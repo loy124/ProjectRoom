@@ -59,8 +59,8 @@ public class UserController {
 	// 마이페이지 정보 가져오기등
 	@PostMapping("/getInformation")
 	public UserDto getInformation(UserDto user) {
-
-		return userService.login(user);
+		System.out.println("넘어왔습니다");
+		return userService.getInformation(user);
 	}
 
 	// 프로필 업데이트
@@ -72,4 +72,10 @@ public class UserController {
 		return number > 0 ? "OK" : "FAIL";
 	}
 
+	@PostMapping("/updateUser")
+	public String updateUser(UserDto user) {
+		System.out.println(user.toString());
+		int number = userService.updateUser(user);
+		return number > 0 ? "OK" : "FAIL";
+	}
 }

@@ -38,4 +38,9 @@ public class UserService {
 	public Integer updateProfile(UserDto user) {
 		return userDao.updateProfile(user);
 	}
+
+	public Integer updateUser(UserDto user) {
+		System.out.println("옵니까?");
+		return userDao.updateUser(user);
+	}
 }

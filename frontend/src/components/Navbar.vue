@@ -79,9 +79,7 @@ export default {
     //로그인 데이터
     return {};
   },
-  mounted() {
-    console.log(JSON.parse(sessionStorage.getItem("login")));
-  },
+  mounted() {},
   computed: {
     ...mapState(["loginData", "loginModal", "registerModal"])
     // ...mapMutations(["SET_LOGIN_MODAL"])
