@@ -23,7 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class S3Service {
 
-  public static final String CLOUD_FRONT_DOMAIN_NAME = "dixo0q5vi6g16.cloudfront.net";
+  public static final String CLOUD_FRONT_DOMAIN_NAME = "https://" + "dixo0q5vi6g16.cloudfront.net" + "/";
 
   private AmazonS3 s3Client;
 

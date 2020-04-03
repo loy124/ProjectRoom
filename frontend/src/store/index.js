@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        loginData: '',
+        loginData: JSON.parse(sessionStorage.getItem('login')),
         loginModal: false,
         registerModal: false,
         localPath: '/', //경로를 저장,

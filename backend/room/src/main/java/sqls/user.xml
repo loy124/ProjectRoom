@@ -19,15 +19,19 @@ INSERT INTO USER(user_id, user_password, name, email, age, phone_number, address
 select * from USER
   </select>
 
-  <!-- 세션에 담기 위한 용도 -->
+  <!-- 세션및 vuex에 담기 위한 용도 -->
   <select id="login" parameterType="bit.com.a.user.UserDto" resultType="bit.com.a.user.UserDto">
-  SELECT id, user_id, name, auth FROM USER WHERE user_id = #{userId} AND user_password = #{userPassword}
+  SELECT id, user_id, name, auth, profile_image FROM USER WHERE user_id = #{userId} AND user_password = #{userPassword}
   </select>
 
   <!-- 추후 비밀번호검색 -->
   <select id="getInformation" parameterType="bit.com.a.user.UserDto" resultType="bit.com.a.user.UserDto">
 SELECT * FROM USER WHERE id = #{id}
   </select>
+
+  <update id="updateProfile" parameterType="bit.com.a.user.UserDto">
+    update USER set profile_image = #{profileImage} where user_id = #{userId}
+  </update>
 
 
 </mapper>

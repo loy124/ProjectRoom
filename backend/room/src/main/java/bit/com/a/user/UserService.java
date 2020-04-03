@@ -31,7 +31,11 @@ public class UserService {
 		return userDao.getInformation(user);
 	}
 
-	public Integer idCheck(UserDto user){
+	public Integer idCheck(UserDto user) {
 		return userDao.idCheck(user);
+	}
+
+	public Integer updateProfile(UserDto user) {
+		return userDao.updateProfile(user);
 	}
 }

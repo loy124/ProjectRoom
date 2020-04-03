@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface UserDao {
-	
+
 	public int register(UserDto user);
 
 	public List<UserDto> getMemberList();
@@ -18,4 +18,6 @@ public interface UserDao {
 	public UserDto login(UserDto user);
 
 	public UserDto getInformation(UserDto user);
+
+	public Integer updateProfile(UserDto user);
 }

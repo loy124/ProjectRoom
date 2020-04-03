@@ -13,6 +13,21 @@ export const request = (method, url, data) => {
         });
 };
 
+export const requestFile = (method, url, data) => {
+    return axios({
+            method: method,
+            url: DOMAIN + url,
+            data: data,
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
+        .then(result => result.data)
+        .catch(error => {
+            console.log(error);
+        });
+};
+
 // export const request = {
 //     registerUser() {
 //         return request('post', 'user/register');

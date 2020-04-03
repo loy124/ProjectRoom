@@ -5,7 +5,7 @@
       <div class="header">
         <div class="header-left">
           <div>
-            <router-link class="room-selector1" :to="`/`">
+            <router-link style="border:none" class="room-selector1" :to="`/`">
               <img src="../assets/logo.png" />
             </router-link>
           </div>
@@ -79,7 +79,9 @@ export default {
     //로그인 데이터
     return {};
   },
-  mounted() {},
+  mounted() {
+    console.log(JSON.parse(sessionStorage.getItem("login")));
+  },
   computed: {
     ...mapState(["loginData", "loginModal", "registerModal"])
     // ...mapMutations(["SET_LOGIN_MODAL"])
@@ -94,6 +96,7 @@ export default {
       console.log("test");
       sessionStorage.removeItem("login");
       this.SET_LOGIN("");
+      this.$router.push("/");
     }
   }
 };
