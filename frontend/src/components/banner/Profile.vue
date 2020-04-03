@@ -76,27 +76,36 @@ export default {
       requestFile("POST", "user/updateProfile", formData)
         .then(res => {
           console.log(res);
-          let params = new URLSearchParams();
           console.log(this.loginData);
           console.log(this.loginData.user_id);
-          params.append("id", this.loginData.id);
+
           //세션및 vuex 업데이트
-          request("POST", "user/getInformation", params)
-            .then(data => {
-              console.log("완료");
-              sessionStorage.setItem("login", JSON.stringify(data));
-              this.SET_LOGIN(data);
-              this.SET_PROFILE_IMAGE(data.profile_image);
-            })
-            .catch(error => {
-              console.log(error);
-            });
+          this.updateInformation();
+          this.$toasted.show("프로필 업로드가 완료되었습니다.", {
+            type: "success",
+            position: "top-right",
+            duration: 2500
+          });
+          this.SET_PROFILE_IMAGE(data.profile_image);
         })
         .catch(error => {
           console.log(error);
         });
     },
-
+    updateInformation() {
+      let params = new URLSearchParams();
+      params.append("id", this.loginData.id);
+      request("POST", "user/getInformation", params)
+        .then(data => {
+          if (data !== "") {
+            sessionStorage.setItem("login", JSON.stringify(data));
+            this.SET_LOGIN(data);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
     // updateUser
     updateUser() {
       let params = new URLSearchParams();
@@ -108,6 +117,20 @@ export default {
       request("post", "user/updateUser", params).then(res => {
         console.log(res);
         console.log("성공적 으로 수정이 완료되었습니다");
+        if (res === "OK") {
+          this.$toasted.show("회원 정보 수정이 완료되었습니다", {
+            type: "success",
+            position: "top-right",
+            duration: 2500
+          });
+          this.updateInformation();
+        } else {
+          this.$toasted.show("회원 정보 수정에 실패하였습니다", {
+            type: "error",
+            position: "top-right",
+            duration: 2500
+          });
+        }
       });
     }
   }
