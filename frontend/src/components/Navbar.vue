@@ -33,7 +33,13 @@
           </router-link>
         </div>
         <div class="header-menu-item header-menu-item3">
-          <button>방내놓기</button>
+          <router-link
+            style="border: none;"
+            class="room-selector1"
+            :to="`/sellRoom`"
+          >
+            <button>방내놓기</button>
+          </router-link>
         </div>
         <div class="header-menu-item header-menu-item4">
           <button>알림</button>

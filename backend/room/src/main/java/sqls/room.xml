@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- bit.com.a.dao.BbsDao -->
+<mapper namespace="bit.com.a.room.RoomDao">
+
+<!-- 성공적!!  -->
+<!--  	 <insert id="addroom" parameterType="bit.com.a.room.RoomDto"  useGeneratedKeys="true" keyProperty="id">
+	 INSERT INTO ROOM(deposit)
+	  VALUES(#{deposit}) 
+	 </insert>
+	 
+	  <insert id="addRoomOption" parameterType="bit.com.a.room.RoomOptionDto"  useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO ROOM_OPTION(tv)
+		VALUES(#{tv})
+	 </insert> -->
+ 
+ 
+ 
+ 
+  <!-- now() = SYSOUT -->
+ <!-- 방올리기 페이지  -->
+ 	 <insert id="addroom" parameterType="bit.com.a.room.RoomDto"  useGeneratedKeys="true" keyProperty="id">
+	 INSERT INTO ROOM(title, content, address_detail, room_type, room_count, 
+	 				  deposit, lease, supply_space ,room_space, move_day, payment_type,
+	 				 floor, month_rent, del, created_at )
+	  VALUES(#{title}, #{content}, #{addressDetail}, #{roomType}, #{roomCount}, 
+	  				  #{deposit}, #{lease}, #{supplySpace}, #{roomSpace}, #{moveDay}, #{paymentType},
+	  				#{floor}, #{monthRent}, 0, NOW())  
+	 </insert>
+	 
+ 
+<!-- 	 <insert id="addRoom" parameterType="bit.com.a.room.RoomDto"  useGeneratedKeys="true" keyProperty="id">
+	 INSERT INTO ROOM(title, content, address_detail, room_type, room_count, deposit, room_space, move_day, payment_type,
+	  floor, month_rent, del, DONG_id, BROKER_id, created_at, created_by)
+	  VALUES(#{title}, #{content}, #{addressDetail}, #{roomType}, #{roomCount}, 
+	  #{deposit}, #{roomSpace}, #{moveDay}, #{paymentType},
+	  #{floor}, #{monthRent}, 0, #{DONGId}, #{BROKERId}, NOW(), #{userId})  
+	 </insert>
+	  -->
+	  
+	 <insert id="addRoomOption" parameterType="bit.com.a.room.RoomOptionDto"  useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO ROOM_OPTION(tv, airconditioner, refrigerator, aircleaner, bed, microwave, washer)
+		VALUES(#{tv}, #{airconditioner},#{refrigerator},#{aircleaner},#{bed},#{microwave},#{washer})
+	 </insert> 
+<!-- // 방올리기 페이지  -->  
+  
+</mapper>

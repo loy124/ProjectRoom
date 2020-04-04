@@ -1,17 +1,23 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import Toasted from 'vue-toasted';
+import VueTypedJs from 'vue-typed-js';
+import Notifications from 'vue-notification';
+
+//view 쪽
 import Main from '../views/Main.vue';
 import Attention from '../views/Attention.vue';
+import Mypage from '../views/MyPage.vue';
+import SellRoom from '../views/SellRoom.vue';
+//컴포넌트쪽
 import RecentSearchRoom from '../components/content2/RecentSearchRoom.vue';
 import KeepRoom from '../components/content2/KeepRoom.vue';
 import KeepRoomBanner from '../components/banner/KeepRoom.vue';
 import RecentRoomBanner from '../components/banner/RecentSearchRoom.vue';
-import Mypage from '../views/MyPage.vue';
 import Profile from '../components/banner/Profile.vue';
+import RoomWrite from '../components/banner/RoomWrite.vue';
 
-import Toasted from 'vue-toasted';
-import VueTypedJs from 'vue-typed-js';
-
+Vue.use(Notifications);
 Vue.use(Toasted);
 Vue.use(VueRouter);
 Vue.use(VueTypedJs);
@@ -62,6 +68,15 @@ const routes = [{
         children: [{
             path: '/',
             component: Profile,
+        }, ],
+    },
+    {
+        path: '/sellRoom',
+        name: 'SellRoom',
+        component: SellRoom,
+        children: [{
+            path: '/',
+            component: RoomWrite,
         }, ],
     },
     {

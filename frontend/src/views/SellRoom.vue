@@ -1,20 +1,18 @@
 <template>
   <EtcContainer class="container">
     <div slot="banner">
-      <div class="mypage-container">
-        <div class="mypage-title">MY 구해방</div>
-        <div class="mypage-select-wrapper">
-          <!-- <div class="mypage-select-item">최근본방</div> -->
-          <router-link class="mypage-select-item" :to="`/mypage/`"
+      <div class="sell-room-container">
+        <div class="sell-room-title">방내놓기</div>
+        <div class="sell-room-select-wrapper">
+          <!-- <div class="sell-room-select-item">최근본방</div> -->
+          <router-link class="sell-room-select-item" :to="`/sellRoom/`"
             >정보수정</router-link
           >
-          <router-link class="mypage-select-item" :to="`aa`"
+          <router-link class="sell-room-select-item" :to="`aa`"
             >연락한 부동산</router-link
           >
-          <router-link class="mypage-select-item" :to="`bb`"
-            >내가 쓴 리뷰</router-link
-          >
-          <!-- <div class="mypage-select-item">찜한 방</div> -->
+
+          <!-- <div class="sell-room-select-item">찜한 방</div> -->
         </div>
         <!-- router view 넣기 -->
         <router-view />
@@ -22,30 +20,27 @@
     </div>
   </EtcContainer>
 </template>
-<script scoped>
-import EtcContainer from './EtcContainer';
+
+<script>
+import EtcContainer from '../views/EtcContainer';
 export default {
-  name: 'app',
   components: {
     EtcContainer,
   },
-  data() {
-    return {};
-  },
-  mounted() {},
 };
 </script>
+
 <style>
-.mypage-container {
+.sell-room-container {
   margin-top: 60px;
   padding-bottom: 80px;
 }
-.mypage-title {
+.sell-room-title {
   color: black;
   text-align: center;
   font-size: 33px;
 }
-.mypage-select-wrapper {
+.sell-room-select-wrapper {
   margin-top: 60px;
   display: flex;
   justify-content: space-between;
@@ -53,7 +48,7 @@ export default {
   /* border-bottom: 1px solid #dddddd; */
 }
 
-.mypage-select-item {
+.sell-room-select-item {
   color: black;
   text-decoration: none;
   font-weight: 100;
