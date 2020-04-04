@@ -33,9 +33,9 @@ public class BrokerController {
 		return brokerService.getMemberList();
 	}
 
-	//아이디 체크
+	// 아이디 체크
 	@PostMapping("/idCheck")
-	public String idCheck(BrokerDto user){
+	public String idCheck(BrokerDto user) {
 		int number = brokerService.idCheck(user);
 		return number > 0 ? "FAIL" : "OK";
 	}
@@ -45,7 +45,6 @@ public class BrokerController {
 	public BrokerDto login(BrokerDto user) {
 		return brokerService.login(user);
 	}
-
 
 	// 유저의 정보를 가져오기 위한용도
 	// 마이페이지 정보 가져오기등

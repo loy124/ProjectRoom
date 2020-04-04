@@ -8,29 +8,34 @@
   <insert id="register" parameterType="bit.com.a.broker.BrokerDto" useGeneratedKeys="true" keyProperty="id">
 INSERT INTO BROKER(broker_id, broker_password, name, email, age, phone_number, address,
  auth, registered_at, registered_by)
- VALUES(#{userId},#{userPassword}, #{name}, #{email}, #{age}, #{phoneNumber}, #{address}, 3, NOW(), 'ADMIN') 
+ VALUES(#{brokerId},#{brokerPassword}, #{name}, #{email}, #{age}, #{phoneNumber}, #{address}, 4, NOW(), 'ADMIN') 
 </insert>
 
   <!-- 파일업로드를 추가한 회원가입을 구현해야 한다. -->
-
   <select id="getMemberList" resultType="bit.com.a.broker.BrokerDto">
-select * from BROKER
-</select>
+	select * from BROKER
+  </select>
 
   <!-- 세션에 담기 위한 용도 -->
   <select id="login" parameterType="bit.com.a.broker.BrokerDto" resultType="bit.com.a.broker.BrokerDto">
-SELECT id, broker_id, auth, name FROM BROKER WHERE broker_id = #{brokerId} AND broker_password = #{brokerPassword}
+SELECT id, broker_id, auth, name
+FROM BROKER
+WHERE broker_id = #{brokerId} AND broker_password = #{brokerPassword}
 </select>
 
 
   <select id="idCheck" parameterType="bit.com.a.broker.BrokerDto" resultType="java.lang.Integer">
-  select COUNT(*) from BROKER where broker_id = #{brokerId}
+  select COUNT(*) 
+  from BROKER
+  where broker_id = #{brokerId}
   </select>
 
 
   <!-- 추후 비밀번호검색 -->
   <select id="getInformation" parameterType="bit.com.a.broker.BrokerDto" resultType="bit.com.a.broker.BrokerDto">
-  SELECT * FROM BROKER WHERE id = #{id}
+  SELECT * 
+  FROM BROKER 
+  WHERE id = #{id}
 </select>
 
 

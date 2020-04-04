@@ -94,7 +94,10 @@ export default {
       console.log("test");
       sessionStorage.removeItem("login");
       this.SET_LOGIN("");
-      this.$router.push("/");
+      //중복 이동 방지
+      if (this.$route.path !== "/") {
+        this.$router.push("/");
+      }
     }
   }
 };

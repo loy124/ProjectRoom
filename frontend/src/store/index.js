@@ -15,6 +15,7 @@ export default new Vuex.Store({
         registerModal: false,
         localPath: '/', //경로를 저장,
         searchModal: false,
+        selectRegister: '',
     },
     mutations: {
         SET_LOGIN(state, data) {
@@ -38,6 +39,9 @@ export default new Vuex.Store({
         },
         SET_SEARCH_MODAL(state, data) {
             state.searchModal = data;
+        },
+        SET_SELECT_REGISTER(state, data) {
+            state.selectRegister = data;
         },
     },
     actions: {},

@@ -1,10 +1,25 @@
 <template>
   <Modal>
     <div slot="header">
-      <div @click="SET_REGISTER_MODAL(false)" class="close-button">
-        <img src="../assets/close.png" />
+      <div class="header-top-wrapper">
+        <div class="login-selector">
+          <div
+            @click="loginSelect"
+            class="login-selector-user"
+            :class="{selectedLogin : loginSelector}"
+          >일반 회원</div>
+          <div
+            @click="brokerlLoginSelect"
+            class="login-selector-broker"
+            :class="{selectedLogin : !loginSelector}"
+          >공인 중개사</div>
+        </div>
+        <div @click="SET_REGISTER_MODAL(false)" class="close-button">
+          <img src="../assets/close.png" />
+        </div>
       </div>
-      <div class="login-title">로그인</div>
+      <div v-if="loginSelector" class="login-title">로그인(일반 회원)</div>
+      <div v-else class="login-title">로그인(공인중개사)</div>
     </div>
     <div slot="body">
       <div class="login-input-wrapper">
@@ -21,7 +36,8 @@
       </div>
       <div class="login-button-wrapper">
         <div>
-          <button @click="login" class="login-button">로그인</button>
+          <button v-if="loginSelector" @click="login" class="login-button">로그인(일반회원)</button>
+          <button v-else @click="loginBroker" class="login-button">로그인(공인중개사)</button>
         </div>
         <div>
           <!-- <button>로그인</button>
@@ -29,7 +45,7 @@
         </div>
         <div class="register-wrapper">
           아직 회원이 아니세요?
-          <button @click="SET_REGISTER_MODAL(true)" class="register-button">이메일로 회원가입</button>
+          <button @click="registerClick('user')" class="register-button">이메일로 회원가입</button>
         </div>
       </div>
     </div>
@@ -37,7 +53,7 @@
       <div class="move-broker">
         방을 판매하세요?
         <div>
-          <button class="move-broker-button">구해방 플러스</button>
+          <button class="move-broker-button">공인중개사 회원가입</button>
         </div>
       </div>
     </div>
@@ -56,7 +72,8 @@ export default {
     return {
       loginSave: false,
       userId: "",
-      userPassword: ""
+      userPassword: "",
+      loginSelector: true
     };
   },
   mounted() {
@@ -67,7 +84,18 @@ export default {
   },
   computed: {},
   methods: {
-    ...mapMutations(["SET_REGISTER_MODAL", "SET_LOGIN", "SET_PROFILE_IMAGE"]),
+    ...mapMutations([
+      "SET_REGISTER_MODAL",
+      "SET_LOGIN",
+      "SET_PROFILE_IMAGE",
+      "SET_SELECT_REGISTER"
+    ]),
+    loginSelect() {
+      this.loginSelector = true;
+    },
+    brokerlLoginSelect() {
+      this.loginSelector = false;
+    },
     //로그인 아이디 localStorage 저장
     setLoginSave() {
       if (this.loginSave === false) {
@@ -76,7 +104,7 @@ export default {
         localStorage.removeItem("loginId");
       }
     },
-    login() {
+    loginCheck() {
       if (this.userId === "") {
         this.$toasted.show("아이디를 입력해주세요", {
           type: "error",
@@ -92,42 +120,64 @@ export default {
         });
         return;
       }
+    },
+    loginAfter(res) {
+      //로그인이 안되었을때
+      if (res === "") {
+        sessionStorage.removeItem("login");
+        this.$toasted.show(
+          "로그인에 실패하였습니다 아이디및 비밀번호를 확인해주세요.",
+          {
+            type: "error",
+            position: "top-right",
+            duration: 2500
+          }
+        );
+        return;
+      } else {
+        // console.log(res);
+        //로그인정보 세션에 저장
+        this.$toasted.show(`${res.name}님 환영합니다`, {
+          type: "success",
+          position: "top-right",
+          duration: 2500
+        });
+        //로그인 정보를 세션에 담는다
+        sessionStorage.setItem("login", JSON.stringify(res));
+        //로그인시 현재 아이디 값을 localStroage에 다시 저장
+        //아이디 저장용도로 localStorate 활용
+        localStorage.setItem("loginId", this.userId);
+        //vuex 에 저장하기
+        this.SET_LOGIN(res);
+        this.SET_REGISTER_MODAL(false);
+        this.SET_PROFILE_IMAGE(res.profile_image);
+      }
+    },
+    login() {
+      this.loginCheck();
       let params = new URLSearchParams();
       params.append("userId", this.userId);
       params.append("userPassword", this.userPassword);
       request("post", "user/login", params).then(res => {
-        //로그인이 안되었을때
-        if (res === "") {
-          sessionStorage.removeItem("login");
-          this.$toasted.show(
-            "로그인에 실패하였습니다 아이디및 비밀번호를 확인해주세요.",
-            {
-              type: "error",
-              position: "top-right",
-              duration: 2500
-            }
-          );
-          return;
-        } else {
-          // console.log(res);
-          //로그인정보 세션에 저장
-          this.$toasted.show(`${res.name}님 환영합니다`, {
-            type: "success",
-            position: "top-right",
-            duration: 2500
-          });
-          //로그인 정보를 세션에 담는다
-          sessionStorage.setItem("login", JSON.stringify(res));
-          //로그인시 현재 아이디 값을 localStroage에 다시 저장
-          //아이디 저장용도로 localStorate 활용
-          localStorage.setItem("loginId", this.userId);
-          //vuex 에 저장하기
-          this.SET_LOGIN(res);
-          this.SET_REGISTER_MODAL(false);
-
-          this.SET_PROFILE_IMAGE(res.profile_image);
-        }
+        this.loginAfter(res);
       });
+    },
+
+    loginBroker() {
+      this.loginCheck();
+      let params = new URLSearchParams();
+      params.append("brokerId", this.userId);
+      params.append("brokerPassword", this.userPassword);
+      request("post", "broker/login", params).then(res => {
+        this.loginAfter(res);
+      });
+    },
+    registerClick(user) {
+      //vuex내에 있는 MODAL(팝업창 열어주기)
+      this.SET_REGISTER_MODAL(true);
+      //유저 회원가입인지 공인중개사 회원가입인지 vuex에 저장
+      this.SET_SELECT_REGISTER(user);
+      console.log(user);
     }
   }
 };
@@ -137,15 +187,41 @@ export default {
 * {
   color: black;
 }
+.header-top-wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.login-selector-broker {
+  margin-left: 20px;
+}
 .close-button {
-  text-align: right;
+  /* margin-left: auto; */
   cursor: pointer;
 }
 .close-button > img {
   width: 20px;
   height: auto;
 }
+.login-selector {
+  width: 100%;
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  /* margin-left: 60px; */
+  justify-content: center;
+  padding-left: 20px;
+}
 
+.login-selector > div {
+  font-size: 14px;
+}
+
+.selectedLogin {
+  font-weight: bold;
+  padding-bottom: 2px;
+  border-bottom: 2px solid #1a5ae8;
+}
 .login-input-wrapper {
   margin: 0 auto;
 }
@@ -195,7 +271,7 @@ export default {
 .register-wrapper {
   text-align: center;
   color: #888888;
-  padding: 24px 0 40px;
+  padding: 24px 0 5px 0;
   font-size: 14px;
 }
 
@@ -209,6 +285,7 @@ export default {
 .move-broker {
   color: #888888;
   text-align: center;
+  padding-bottom: 10px;
 }
 .move-broker-button {
   cursor: pointer;
