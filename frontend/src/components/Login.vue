@@ -1,18 +1,27 @@
 <template>
   <Modal>
     <div slot="header">
+      <notifications
+        group="notifyApp"
+        position="right right"
+        style="margin-right: 30vh;"
+      />
       <div class="header-top-wrapper">
         <div class="login-selector">
           <div
             @click="loginSelect"
             class="login-selector-user"
-            :class="{selectedLogin : loginSelector}"
-          >일반 회원</div>
+            :class="{ selectedLogin: loginSelector }"
+          >
+            일반 회원
+          </div>
           <div
             @click="brokerlLoginSelect"
             class="login-selector-broker"
-            :class="{selectedLogin : !loginSelector}"
-          >공인 중개사</div>
+            :class="{ selectedLogin: !loginSelector }"
+          >
+            공인 중개사
+          </div>
         </div>
         <div @click="SET_REGISTER_MODAL(false)" class="close-button">
           <img src="../assets/close.png" />
@@ -24,7 +33,12 @@
     <div slot="body">
       <div class="login-input-wrapper">
         <input v-model="userId" class="login-id" placeholder="아이디" />
-        <input v-model="userPassword" type="password" class="login-password" placeholder="비밀번호" />
+        <input
+          v-model="userPassword"
+          type="password"
+          class="login-password"
+          placeholder="비밀번호"
+        />
       </div>
       <div class="login-check-wrapper">
         <label class="login-check checkbox">
@@ -36,8 +50,12 @@
       </div>
       <div class="login-button-wrapper">
         <div>
-          <button v-if="loginSelector" @click="login" class="login-button">로그인(일반회원)</button>
-          <button v-else @click="loginBroker" class="login-button">로그인(공인중개사)</button>
+          <button v-if="loginSelector" @click="login" class="login-button">
+            로그인(일반회원)
+          </button>
+          <button v-else @click="loginBroker" class="login-button">
+            로그인(공인중개사)
+          </button>
         </div>
         <div>
           <!-- <button>로그인</button>
@@ -45,7 +63,9 @@
         </div>
         <div class="register-wrapper">
           아직 회원이 아니세요?
-          <button @click="registerClick('user')" class="register-button">이메일로 회원가입</button>
+          <button @click="registerClick('user')" class="register-button">
+            이메일로 회원가입
+          </button>
         </div>
       </div>
     </div>
@@ -53,7 +73,9 @@
       <div class="move-broker">
         방을 판매하세요?
         <div>
-          <button class="move-broker-button">공인중개사 회원가입</button>
+          <button @click="registerClick('broker')" class="move-broker-button">
+            공인중개사 회원가입
+          </button>
         </div>
       </div>
     </div>
@@ -61,34 +83,35 @@
 </template>
 
 <script>
-import Modal from "./Modal";
-import { mapSate, mapMutations } from "vuex";
-import { request } from "../util/axios";
+import Modal from './Modal';
+import { mapSate, mapMutations } from 'vuex';
+import { request } from '../util/axios';
+import { success, error, normal } from '../util/notification';
 export default {
   components: {
-    Modal
+    Modal,
   },
   data() {
     return {
       loginSave: false,
-      userId: "",
-      userPassword: "",
-      loginSelector: true
+      userId: '',
+      userPassword: '',
+      loginSelector: true,
     };
   },
   mounted() {
-    this.userId = localStorage.getItem("loginId");
-    localStorage.getItem("loginId") === null
+    this.userId = localStorage.getItem('loginId');
+    localStorage.getItem('loginId') === null
       ? (this.loginSave = false)
       : (this.loginSave = true);
   },
   computed: {},
   methods: {
     ...mapMutations([
-      "SET_REGISTER_MODAL",
-      "SET_LOGIN",
-      "SET_PROFILE_IMAGE",
-      "SET_SELECT_REGISTER"
+      'SET_REGISTER_MODAL',
+      'SET_LOGIN',
+      'SET_PROFILE_IMAGE',
+      'SET_SELECT_REGISTER',
     ]),
     loginSelect() {
       this.loginSelector = true;
@@ -99,87 +122,108 @@ export default {
     //로그인 아이디 localStorage 저장
     setLoginSave() {
       if (this.loginSave === false) {
-        localStorage.setItem("loginId", this.userId);
+        localStorage.setItem('loginId', this.userId);
       } else {
-        localStorage.removeItem("loginId");
+        localStorage.removeItem('loginId');
       }
     },
-    loginCheck() {
-      if (this.userId === "") {
-        this.$toasted.show("아이디를 입력해주세요", {
-          type: "error",
-          position: "top-right",
-          duration: 2500
-        });
-        return;
-      } else if (this.userPassword === "") {
-        this.$toasted.show("비밀번호를 입력해주세요.", {
-          type: "error",
-          position: "top-right",
-          duration: 2500
-        });
-        return;
-      }
-    },
-    loginAfter(res) {
-      //로그인이 안되었을때
-      if (res === "") {
-        sessionStorage.removeItem("login");
-        this.$toasted.show(
-          "로그인에 실패하였습니다 아이디및 비밀번호를 확인해주세요.",
-          {
-            type: "error",
-            position: "top-right",
-            duration: 2500
-          }
-        );
-        return;
-      } else {
-        // console.log(res);
-        //로그인정보 세션에 저장
-        this.$toasted.show(`${res.name}님 환영합니다`, {
-          type: "success",
-          position: "top-right",
-          duration: 2500
-        });
-        //로그인 정보를 세션에 담는다
-        sessionStorage.setItem("login", JSON.stringify(res));
-        //로그인시 현재 아이디 값을 localStroage에 다시 저장
-        //아이디 저장용도로 localStorate 활용
-        localStorage.setItem("loginId", this.userId);
-        //vuex 에 저장하기
-        this.SET_LOGIN(res);
-        this.SET_REGISTER_MODAL(false);
-        this.SET_PROFILE_IMAGE(res.profile_image);
-      }
-    },
+
+    // loginAfter(res) {
+    //   //로그인이 안되었을때
+
+    // },
     login() {
-      this.loginCheck();
+      if (this.userId === '') {
+        error('아이디를 입력해주세요', this);
+
+        return;
+      } else if (this.userPassword === '') {
+        error('비밀번호를 입력해주세요', this);
+
+        return;
+      }
       let params = new URLSearchParams();
-      params.append("userId", this.userId);
-      params.append("userPassword", this.userPassword);
-      request("post", "user/login", params).then(res => {
-        this.loginAfter(res);
+      params.append('userId', this.userId);
+      params.append('userPassword', this.userPassword);
+      request('post', 'user/login', params).then((res) => {
+        if (res === '') {
+          sessionStorage.removeItem('login');
+          error(
+            '로그인에 실패하였습니다 아이디및 비밀번호를 확인해주세요.',
+            this,
+          );
+
+          return;
+        } else {
+          // console.log(res);
+          //로그인정보 세션에 저장
+
+          this.$toasted.show(`${res.name}님 환영합니다`, {
+            type: 'success',
+            position: 'top-right',
+            duration: 2500,
+          });
+          //로그인 정보를 세션에 담는다
+          sessionStorage.setItem('login', JSON.stringify(res));
+          //로그인시 현재 아이디 값을 localStroage에 다시 저장
+          //아이디 저장용도로 localStorate 활용
+          localStorage.setItem('loginId', this.userId);
+          //vuex 에 저장하기
+          this.SET_LOGIN(res);
+          this.SET_REGISTER_MODAL(false);
+          this.SET_PROFILE_IMAGE(res.profile_image);
+        }
       });
     },
 
     loginBroker() {
-      this.loginCheck();
+      if (this.userId === '') {
+        error('아이디를 입력해주세요', this);
+        return;
+      } else if (this.userPassword === '') {
+        error('비밀번호를 입력해주세요', this);
+        return;
+      }
       let params = new URLSearchParams();
-      params.append("brokerId", this.userId);
-      params.append("brokerPassword", this.userPassword);
-      request("post", "broker/login", params).then(res => {
-        this.loginAfter(res);
+      params.append('brokerId', this.userId);
+      params.append('brokerPassword', this.userPassword);
+      request('post', 'broker/login', params).then((res) => {
+        if (res === '') {
+          sessionStorage.removeItem('login');
+          error(
+            '로그인에 실패하였습니다 아이디및 비밀번호를 확인해주세요.',
+            this,
+          );
+          return;
+        } else {
+          // console.log(res);
+          //로그인정보 세션에 저장
+          this.$toasted.show(`${res.name}님 환영합니다`, {
+            type: 'success',
+            position: 'top-right',
+            duration: 2500,
+          });
+          //로그인 정보를 세션에 담는다
+          sessionStorage.setItem('login', JSON.stringify(res));
+          //로그인시 현재 아이디 값을 localStroage에 다시 저장
+          //아이디 저장용도로 localStorate 활용
+          localStorage.setItem('loginId', this.userId);
+          //vuex 에 저장하기
+          this.SET_LOGIN(res);
+          this.SET_REGISTER_MODAL(false);
+          this.SET_PROFILE_IMAGE(res.profile_image);
+        }
       });
     },
     registerClick(user) {
       //vuex내에 있는 MODAL(팝업창 열어주기)
+      this.SET_SELECT_REGISTER(user);
       this.SET_REGISTER_MODAL(true);
       //유저 회원가입인지 공인중개사 회원가입인지 vuex에 저장
-      this.SET_SELECT_REGISTER(user);
       console.log(user);
-    }
-  }
+    },
+    testNotify() {},
+  },
 };
 </script>
 
@@ -328,7 +372,7 @@ export default {
 }
 
 .checkbox > input:checked + span::before {
-  content: "\2713";
+  content: '\2713';
   font-size: 15px;
   display: block;
   text-align: center;

@@ -5,7 +5,7 @@
       <div class="header">
         <div class="header-left">
           <div>
-            <router-link style="border:none" class="room-selector1" :to="`/`">
+            <router-link style="border: none;" class="room-selector1" :to="`/`">
               <img src="../assets/logo.png" />
             </router-link>
           </div>
@@ -43,8 +43,12 @@
       <!-- 로그인 세션이 있을시에 -->
       <div v-if="loginData" class="header-login">
         <div class="header-login-item header-login-item1">
-          <router-link style="border:none;" class="attention-select-item" :to="`/mypage`">
-            <button>{{loginData.name}}님 환영합니다</button>
+          <router-link
+            style="border: none;"
+            class="attention-select-item"
+            :to="`/mypage`"
+          >
+            <button>{{ loginData.name }}님 환영합니다</button>
           </router-link>
 
           <button @click="logout">로그아웃</button>
@@ -67,13 +71,13 @@
 </template>
 
 <script>
-import Login from "./Login";
-import Register from "./Register";
-import { mapState, mapMutations } from "vuex";
+import Login from './Login';
+import Register from './Register';
+import { mapState, mapMutations } from 'vuex';
 export default {
   components: {
     Login,
-    Register
+    Register,
   },
   data() {
     //로그인 데이터
@@ -81,25 +85,25 @@ export default {
   },
   mounted() {},
   computed: {
-    ...mapState(["loginData", "loginModal", "registerModal"])
+    ...mapState(['loginData', 'loginModal', 'registerModal']),
     // ...mapMutations(["SET_LOGIN_MODAL"])
   },
   methods: {
-    ...mapMutations(["SET_LOGIN", "SET_LOGIN_MODAL", "SET_REGISTER_MODAL"]),
+    ...mapMutations(['SET_LOGIN', 'SET_LOGIN_MODAL', 'SET_REGISTER_MODAL']),
     getLoginData() {
       // this.loginData = localStorage.getItem('login');
       // this.SET_LOGIN(this.loginData);
     },
     logout() {
-      console.log("test");
-      sessionStorage.removeItem("login");
-      this.SET_LOGIN("");
+      console.log('test');
+      sessionStorage.removeItem('login');
+      this.SET_LOGIN('');
       //중복 이동 방지
-      if (this.$route.path !== "/") {
-        this.$router.push("/");
+      if (this.$route.path !== '/') {
+        this.$router.push('/');
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

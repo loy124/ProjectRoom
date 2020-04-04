@@ -12,9 +12,13 @@
         <div class="room-selector">
           <router-link class="room-selector1" :to="`/`">최근 본방</router-link>
           <div class="line-divider"></div>
-          <router-link class="room-selector2" :to="`/keep`">찜한 방</router-link>
+          <router-link class="room-selector2" :to="`/keep`"
+            >찜한 방</router-link
+          >
         </div>
-        <div class="room-selector-title">최근에 본 방과 찜한 방을 볼 수 있어요</div>
+        <div class="room-selector-title">
+          최근에 본 방과 찜한 방을 볼 수 있어요
+        </div>
         <router-view />
       </div>
       <div slot="content3" class="container">
@@ -24,29 +28,29 @@
   </div>
 </template>
 <script>
-import AppContainer from "./AppContainer";
-import MainBanner from "../components/banner/MainBanner";
-import EasySearchRoom from "../components/content1/EasySearchRoom";
-import Menu from "../components/content3/Menu";
+import AppContainer from './AppContainer';
+import MainBanner from '../components/banner/MainBanner';
+import EasySearchRoom from '../components/content1/EasySearchRoom';
+import Menu from '../components/content3/Menu';
 export default {
-  name: "app",
+  name: 'app',
   components: {
     AppContainer,
     MainBanner,
     EasySearchRoom,
-    Menu
+    Menu,
   },
   data() {
     return {
-      clickedSelector: true
+      clickedSelector: true,
     };
   },
   methods: {
     clickSelector() {
       !this.clickedSelector;
-    }
+    },
   },
-  mounted() {}
+  mounted() {},
 };
 </script>
 <style scoped>
@@ -69,7 +73,7 @@ export default {
   width: 1px;
   height: 30px;
   background-color: #cccccc;
-  content: "";
+  content: '';
   margin: 0 20px;
 }
 

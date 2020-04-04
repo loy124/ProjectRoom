@@ -24,7 +24,7 @@ public class BrokerController {
 		number = brokerService.register(user);
 		System.out.println(number);
 
-		return number > 0 ? "ok" : "false";
+		return number > 0 ? "OK" : "FAIL";
 	}
 
 	// 관리자 단에서 멤버관리를 위한 용도
