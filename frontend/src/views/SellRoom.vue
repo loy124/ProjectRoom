@@ -5,12 +5,8 @@
         <div class="sell-room-title">방내놓기</div>
         <div class="sell-room-select-wrapper">
           <!-- <div class="sell-room-select-item">최근본방</div> -->
-          <router-link class="sell-room-select-item" :to="`/sellRoom/`"
-            >정보수정</router-link
-          >
-          <router-link class="sell-room-select-item" :to="`aa`"
-            >연락한 부동산</router-link
-          >
+          <router-link class="sell-room-select-item" :to="`/sellRoom/`">방 내놓기</router-link>
+          <router-link class="sell-room-select-item" :to="`aa`">연락한 부동산</router-link>
 
           <!-- <div class="sell-room-select-item">찜한 방</div> -->
         </div>
@@ -22,11 +18,11 @@
 </template>
 
 <script>
-import EtcContainer from '../views/EtcContainer';
+import EtcContainer from "../views/EtcContainer";
 export default {
   components: {
-    EtcContainer,
-  },
+    EtcContainer
+  }
 };
 </script>
 
