@@ -74,10 +74,15 @@
           <div class="room-location-content">
             <div class="room-location-content-notification">도로명 건물명 지번에 대해 통합검색이 가능합니다.</div>
             <div class="room-location-input-wrapper">
-              <input class="room-location-input" type="text" placeholder="예)번동 10-1,강북구 번동" />
-              <div class="room-location-search-button">주소검색</div>
+              <input
+                class="room-location-input"
+                v-model="locationSearch"
+                type="text"
+                placeholder="예)번동 10-1,강북구 번동"
+              />
+              <div @click="sample5_execDaumPostcode()" class="room-location-search-button">주소검색</div>
             </div>
-            <div class="room-location-search-result"></div>
+            <div class="room-location-search-result" id="sample5_address">{{sample5_address}}</div>
             <div class="room-location-result-detail-wrapper">
               <diV v-if="!checkDong" class="room-location-result-detail">
                 <input class="room-location-result-detail-input" placeholder="예)101동" />
@@ -93,12 +98,14 @@
               <span>등본에 동정보가 없는경우 선택해주세요</span>
             </label>
           </div>
-          <div class="name">
-            <input type="text" id="sample5_address" placeholder="주소" />
-            <input type="button" @click="sample5_execDaumPostcode()" value="주소 검색" />
-            <br />지도 API
-            <div id="map">aaaaaaaaaaa</div>
-            <div id="map1"></div>
+        </div>
+        <div class="room-location-map-wrapper">
+          <div class="room-location-map" id="map" ref="map">
+            <div class="room-location-img-wrapper">
+              <img src="../../assets/gps.png" />
+            </div>
+            <div>주소 검색을 하시면</div>
+            <div>해당 위치가 지도에 표시됩니다.</div>
           </div>
         </div>
       </div>
@@ -114,7 +121,11 @@ export default {
     return {
       roomCount: "one",
       roomType: "apartment",
-      checkDong: false
+      checkDong: false,
+      sample5_address: "",
+      address: "",
+      map: "",
+      locationSearch: ""
     };
   },
   mounted() {
@@ -122,75 +133,71 @@ export default {
     script1.src =
       "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
     document.head.appendChild(script1);
-
-    console.log(window.daum);
-    console.log(window.kakao);
-    // kakaoMap(".name");
-    if (window.kakao && window.kakao.maps) {
-      this.initMap();
-    } else {
-      const script = document.createElement("script");
-
-      /* global kakao */
-      script.onload = () => kakao.maps.load(this.initMap);
-      script.src =
-        "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=0fe1d5fd101ab6d2078168510cdb7237";
-      document.head.appendChild(script);
-      var mapContainer = document.getElementById("map"), // 지도를 표시할 div
-        mapOption = {
-          center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
-          level: 5 // 지도의 확대 레벨
-        };
-
-      //지도를 미리 생성
-      var map = new daum.maps.Map(mapContainer, mapOption);
-      //주소-좌표 변환 객체를 생성
-      var geocoder = new daum.maps.services.Geocoder();
-      //마커를 미리 생성
-      var marker = new daum.maps.Marker({
-        position: new daum.maps.LatLng(37.537187, 127.005476),
-        map: map
-      });
-    }
+    // if (window.kakao && window.kakao.maps) {
+    //   // this.initMap();
+    // } else {
+    const script = document.createElement("script");
+    /* global kakao */
+    script.onload = () => kakao.maps.load();
+    script.src =
+      "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=0fe1d5fd101ab6d2078168510cdb7237&libraries=services";
+    document.head.appendChild(script);
+    // }
   },
   methods: {
-    initMap() {
-      var container = document.getElementById("map1");
-      var options = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667),
-        level: 3
-      };
-
-      var map = new kakao.maps.Map(container, options);
-      map.setMapTypeId(kakao.maps.MapTypeId.HYBRID);
-    },
     sample5_execDaumPostcode() {
+      // console.log(this);
+      let vueData = this; //vue의 this 값 바인딩 new daum.Postcode에서는 this를 사용시 자체 함수를 가리킨다
+      let mapContainer = this.$refs.map;
+      // console.log(this.$route);
+      let searchKeyword = this.locationSearch;
+
       new daum.Postcode({
         oncomplete: function(data) {
-          var addr = data.address; // 최종 주소 변수
-          console.log(addr);
-
+          // let mapContainer = document.getElementById("map"); // 지도를 표시할 div
+          // let mapContainer = this.$refs.map; // 지도를 표시할 div
+          let mapOption = {
+            center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
+            level: 4 // 지도의 확대 레벨
+          };
+          let map = new daum.maps.Map(mapContainer, mapOption);
+          //주소-좌표 변환 객체를 생성
+          let geocoder = new daum.maps.services.Geocoder();
+          //마커를 미리 생성
+          let marker = new daum.maps.Marker({
+            position: new daum.maps.LatLng(37.537187, 127.005476),
+            map: map
+          });
+          let addr = data.address; // 최종 주소 변수
           // 주소 정보를 해당 필드에 넣는다.
-          document.getElementById("sample5_address").value = addr;
+          // document.getElementById("sample5_address").value = addr;
+          // document.getElementById("sample5_address").innerHTML = addr;
+          vueData.sample5_address = addr;
+          // d.address = addr;
           // 주소로 상세 정보를 검색
           geocoder.addressSearch(data.address, function(results, status) {
             // 정상적으로 검색이 완료됐으면
             if (status === daum.maps.services.Status.OK) {
-              var result = results[0]; //첫번째 결과의 값을 활용
+              let result = results[0]; //첫번째 결과의 값을 활용
 
               // 해당 주소에 대한 좌표를 받아서
-              var coords = new daum.maps.LatLng(result.y, result.x);
+              let coords = new daum.maps.LatLng(result.y, result.x);
               // 지도를 보여준다.
               mapContainer.style.display = "block";
               map.relayout();
+              map.setLevel(4);
               // 지도 중심을 변경한다.
               map.setCenter(coords);
+
               // 마커를 결과값으로 받은 위치로 옮긴다.
               marker.setPosition(coords);
             }
           });
         }
-      }).open();
+      }).open({
+        //검색어 넘기기
+        q: this.locationSearch
+      });
     }
   }
 };
@@ -384,11 +391,15 @@ input[type="radio"]:checked {
 }
 
 .room-location-search-result {
+  display: flex;
   margin-top: 12px;
   width: 528px;
   height: 100px;
+  align-items: center;
   border: 1px solid #cccccc;
   padding: 20px 15px;
+  font-size: 15px;
+  color: #666666;
 }
 
 .room-location-result-detail-wrapper {
@@ -480,6 +491,45 @@ input[type="radio"]:checked {
 }
 .checkbox > input:active {
   border: 2px solid #34495e;
+}
+.room-location-map-wrapper {
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+}
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+.room-location-map {
+  border: 1px solid #dddddd;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #888888;
+  font-size: 15px;
+}
+.room-location-map > div {
+  margin-top: 5px;
+}
+
+.room-location-img-wrapper {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #dddddd;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.room-location-img-wrapper > img {
+  width: 50%;
+  height: 50%;
 }
 </style>
 
