@@ -356,14 +356,9 @@
         </div>
         <div v-else>
           <div class="file-preview-container">
-            <div
-              v-for="(filePreview, index) in filesPreview"
-              :key="index"
-              class="file-preview-wrapper"
-              v-if="filePreview"
-            >
-              <div class="file-close-button" @click="fileDeleteButton" :name="index">x</div>
-              <img :src="filePreview" />
+            <div v-for="(file, index) in files" :key="index" class="file-preview-wrapper">
+              <div class="file-close-button" @click="fileDeleteButton" :name="file.number">x</div>
+              <img :src="file.preview" />
             </div>
           </div>
         </div>
@@ -535,27 +530,25 @@ export default {
         this.files = [
           ...this.files,
           //이미지 업로드
-          this.$refs.files.files[i]
+          {
+            file: this.$refs.files.files[i],
+            preview: URL.createObjectURL(this.$refs.files.files[i]),
+            number: i
+          }
         ];
         //이미지 업로드용 프리뷰
-        this.filesPreview = [
-          ...this.filesPreview,
-          URL.createObjectURL(this.$refs.files.files[i])
-        ];
+        // this.filesPreview = [
+        //   ...this.filesPreview,
+        //   { file: URL.createObjectURL(this.$refs.files.files[i]), number: i }
+        // ];
       }
       console.log(this.files);
-      console.log(this.filesPreview);
+      // console.log(this.filesPreview);
     },
     fileDeleteButton(e) {
       const name = e.target.getAttribute("name");
-      console.log(e.target.parentNode);
       console.log(e.target.getAttribute("name"));
-      console.log(this);
-      this.files[name] = null;
-      this.filesPreview[name] = null;
-      this.$set(this.files, name, null);
-      console.log(this.files);
-      console.log(this.filesPreview);
+      this.files.splice(name, 1);
     }
   }
 };
