@@ -335,8 +335,8 @@
         </ul>
       </div>
       <div class="room-file-upload-wrapper">
-        <div class="room-file-upload-example-container" v-if="!files.length">
-          <div>
+        <div v-if="!files.length" class="room-file-upload-example-container">
+          <div class="room-file-upload-example">
             <div class="room-file-image-example-wrapper">이미지</div>
             <div class="room-file-notice-item">실사진 최소 3장 이상 등록하셔야 하며, 가로사진을 권장합니다.</div>
             <div class="room-file-notice-item room-file-notice-item-red">
@@ -354,11 +354,14 @@
             </div>
           </div>
         </div>
-        <div v-else>
+        <div v-else class="file-preview-content-container">
           <div class="file-preview-container">
             <div v-for="(file, index) in files" :key="index" class="file-preview-wrapper">
               <div class="file-close-button" @click="fileDeleteButton" :name="file.number">x</div>
               <img :src="file.preview" />
+            </div>
+            <div class="file-preview-wrapper-upload">
+              <!-- <div class="file-close-button" @click="fileDeleteButton" :name="file.number">x</div> -->
             </div>
           </div>
         </div>
@@ -531,8 +534,11 @@ export default {
           ...this.files,
           //이미지 업로드
           {
+            //실제 파일
             file: this.$refs.files.files[i],
+            //이미지 프리뷰
             preview: URL.createObjectURL(this.$refs.files.files[i]),
+            //삭제및 관리를 위한 number
             number: i
           }
         ];
@@ -548,7 +554,10 @@ export default {
     fileDeleteButton(e) {
       const name = e.target.getAttribute("name");
       console.log(e.target.getAttribute("name"));
-      this.files.splice(name, 1);
+      // this.files.splice(name, 1);
+      this.files = this.files.filter(data => data.number !== Number(name));
+
+      console.log(this.files);
     }
   }
 };
@@ -1229,10 +1238,12 @@ select::-ms-expand {
   color: rgb(68, 68, 68);
   font-size: 17px;
 }
-
+.room-file-upload-example {
+  height: 100%;
+}
 .room-write-content-container {
   border-top: 1px solid #dddddd;
-  height: 260px;
+  min-height: 260px;
 }
 
 .room-picture-notice {
@@ -1240,15 +1251,21 @@ select::-ms-expand {
   padding: 20px 40px;
   border: 1px solid #dddddd;
 }
+.file-preview-content-container {
+  height: 100%;
+}
 
 .room-file-upload-wrapper {
   margin: 20px;
-  padding: 20px;
   border: 1px solid #dddddd;
   background-color: #f4f4f4;
-  height: 350px;
+  min-height: 350px;
   font-size: 15px;
   color: #888888;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 .room-file-upload-example-container {
@@ -1256,7 +1273,8 @@ select::-ms-expand {
   align-items: center;
   justify-content: center;
   height: 100%;
-  width: 100%;
+  /* height: 100%;
+  width: 100%; */
 }
 
 .room-file-image-example-wrapper {
@@ -1328,6 +1346,15 @@ select::-ms-expand {
 }
 
 .file-preview-container {
+  height: 100%;
   display: flex;
+  flex-wrap: wrap;
+}
+
+.file-preview-wrapper-upload {
+  margin: 10px;
+  background-color: #888888;
+  width: 190px;
+  height: 130px;
 }
 </style>
