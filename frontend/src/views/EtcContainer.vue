@@ -55,7 +55,7 @@ button {
 }
 
 .container {
-  width: 1100px;
+  width: 1180px;
   margin: 0 auto;
   height: inherit;
   /* background: rgba(0, 0, 0, 0.3); */

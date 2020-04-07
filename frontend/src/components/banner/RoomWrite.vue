@@ -82,7 +82,18 @@
               />
               <div @click="sample5_execDaumPostcode()" class="room-location-search-button">주소검색</div>
             </div>
-            <div class="room-location-search-result" id="sample5_address">{{sample5_address}}</div>
+            <div class="room-location-search-result" id="sample5_address">
+              <div>
+                <span v-if="sample5_address" class="room-location-search-type">도로명:</span>
+                {{ sample5_address }}
+              </div>
+
+              <div>
+                <span v-if="sample5_address_zibun" class="room-location-search-type">지번:</span>
+                {{ sample5_address_zibun }}
+              </div>
+            </div>
+
             <div class="room-location-result-detail-wrapper">
               <diV v-if="!checkDong" class="room-location-result-detail">
                 <input class="room-location-result-detail-input" placeholder="예)101동" />
@@ -110,6 +121,235 @@
         </div>
       </div>
     </div>
+
+    <div class="room-deal-information-container">
+      <div class="room-deal-information-title">거래 정보</div>
+      <div class="room-deal-information-content-wrapper">
+        <div class="room-deal-informtaion-content-title">거래종류</div>
+        <div class="room-deal-information-content">
+          <div class="room-deal-information">
+            <div class="room-deal-information-wrapper">
+              <div v-if="showMonth" class="room-deal-information-option">
+                <div class="room-deal-information-item-type">월세</div>
+                <div class="room-deal-information-item-wrapper">
+                  <input v-model="deposit" placeholder="보증금" />
+                  <span class="room-deal-inforamtion-divide">/</span>
+                  <input v-model="monthRent" placeholder="월세" />
+                  <span class="room-deal-inforamtion-won">만원</span>
+                  <span
+                    v-if="deposit || monthRent"
+                    class="room-deal-information-example"
+                  >(예 월세{{ deposit }}만원/{{ monthRent }}만원)</span>
+                  <span v-else class="room-deal-information-example">(예 월세 1000만원/50만원 )</span>
+                  <div class="room-deal-close-button-wrapper">
+                    <div class="room-deal-close-button" @click="showMonth = false">X</div>
+                  </div>
+                </div>
+              </div>
+              <div v-if="showLease" class="room-deal-information-option">
+                <div class="room-deal-information-item-type">전세</div>
+                <div class="room-deal-information-item-wrapper">
+                  <input v-model="lease" placeholder="전세" />
+                  <span class="room-deal-inforamtion-won">만원</span>
+                  <span v-if="lease" class="room-deal-information-example">(예 전세 {{ lease }}만원)</span>
+                  <span v-else class="room-deal-information-example">(예 전세 2000만원)</span>
+                  <div class="room-deal-close-button-wrapper">
+                    <div class="room-deal-close-button" @click="showLease = false">X</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="room-deal-option-selector">
+              <div
+                class="room-deal-option-item"
+                @click="clickMonth"
+                :class="{ 'room-deal-cliked': showMonth }"
+              >월세</div>
+              <div
+                class="room-deal-option-item room-deal-option-item-deposit"
+                @click="clickLease"
+                :class="{ 'room-deal-cliked': showLease }"
+              >전세</div>
+              <div class="room-deal-option-notice">
+                처음에 선택한 거래 종류가 우선노출됩니다. 예치금이 있는 경우
+                보증금 입력란에 필히 입력하세요.
+              </div>
+            </div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="room-deal-information-container">
+      <div class="room-deal-information-title">기본 정보</div>
+      <div class="room-deal-information-content-wrapper">
+        <div class="building-information-wrapper">
+          <div class="bulding-information-scale">
+            <div class="bulding-information-title">
+              <div>건물크기</div>
+              <div>(1P = 3.3058㎡)</div>
+            </div>
+            <div class="bulding-information-option-wrapper">
+              <div class="bulding-information-input-wrapper">
+                <span>공급면적</span>
+                <input v-model="supplySpace" @input="p" />
+                <span>평</span>
+                <input v-model="supplyM2" @input="m" />
+                <span>㎡</span>
+              </div>
+              <div class="bulding-information-option1">
+                <div class="bulding-information-input-wrapper">
+                  <span>전용면적</span>
+                  <input v-model="roomSpace" @input="p2" />
+                  <span>평</span>
+                  <input v-model="squareMeter" @input="m2" />
+                  <span>㎡</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bulding-information-scale">
+            <div class="bulding-information-title">건물층수</div>
+            <div class="bulding-information-option-wrapper">
+              <div class="bulding-inforamtion-floor-wrapper">
+                <div class="bulding-information-floor">
+                  <div class="bulding-information-floor-title">해당 층수</div>
+                  <select v-model="floor" class="bulding-information-floor-select">
+                    <option value="-2" disabled>건물 층수 선택</option>
+                    <option value="-1">반지하</option>
+                    <option value="0">옥탑</option>
+                    <option
+                      v-for="(floor, index) in 50"
+                      :key="index"
+                      :value="index + 1"
+                    >{{ index + 1 }}층</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bulding-information-calendar-wrapper">
+        <div class="bulding-information-calendar-title">입주가능일</div>
+        <div class="bulding-information-calendar-selector">
+          <div>
+            <el-date-picker v-model="moveDay" type="date" placeholder="날짜를 선택해 주세요"></el-date-picker>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- tv 에어컨 냉장고 공기청정기침대 전자레인지 세탁기 -->
+    <div class="room-deal-information-container">
+      <div class="room-deal-information-title">추가 정보</div>
+      <div class="room-deal-information-content-wrapper">
+        <div class="room-deal-informtaion-content-title">옵션항목</div>
+
+        <div class="room-deal-information-content">
+          <div class="room-deal-information">
+            <div class="room-deal-option-wrapper">
+              <label class="room-option-type">
+                <input type="checkbox" v-model="roomOption" value="tv" />
+                <p>TV</p>
+              </label>
+              <label class="room-option-type">
+                <input type="checkbox" v-model="roomOption" value="airconditioner" />
+                <p>에어컨</p>
+              </label>
+              <label class="room-option-type">
+                <input type="checkbox" v-model="roomOption" value="refrigerator" />
+                <p>냉장고</p>
+              </label>
+              <label class="room-option-type">
+                <input type="checkbox" v-model="roomOption" value="aircleaner" />
+                <p>공기청정기</p>
+              </label>
+              <label class="room-option-type">
+                <input type="checkbox" v-model="roomOption" value="bed" />
+                <p>침대</p>
+              </label>
+              <label class="room-option-type">
+                <input type="checkbox" v-model="roomOption" value="microwave" />
+                <p>전자레인지</p>
+              </label>
+              <label class="room-option-type">
+                <input type="checkbox" v-model="roomOption" value="washer" />
+                <p>세탁기</p>
+              </label>
+            </div>
+          </div>
+          <div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="room-deal-information-container">
+      <div class="room-deal-information-title">상세 설명</div>
+      <div class="room-deal-information-content-wrapper room-write-title-container">
+        <div class="room-deal-informtaion-content-title">제목</div>
+
+        <div class="room-deal-information-content">
+          <div class="room-deal-information room-write-title-input-wrapper">
+            <input v-model="title" placeholder="예)신논현역 도보 5분거리, 혼자살기 좋은 방입니다." />
+          </div>
+        </div>
+      </div>
+      <div class="room-deal-information-content-wrapper room-write-content-container">
+        <div class="room-deal-informtaion-content-title">상세설명</div>
+
+        <div class="room-deal-information-content">
+          <div class="room-deal-information room-write-title-input-wrapper">
+            <textarea
+              name="memo"
+              v-model="content"
+              placeholder="상세설명 작성 주의사항
+
+- 방 정보와 관련없는 홍보성 정보는 입력하실 수 없습니다. (홈페이지 주소, 블로그, SNS, 메신저ID, 전화번호, 이메일 등)
+- 중개수수료를 언급한 내용은 입력할 수 없습니다. (중개수수료 무료, 공짜, 반값 등)
+
+* 주의사항 위반시 허위매물로 간주되어 매물 삭제 및 이용의 제한이 있을 수 있습니다.
+* 구해방의 매물등록 규정에 위반되는 금칙어는 등록이 불가합니다."
+              class="Textarea-sc-6jro6l-0 styled__Memo-sc-1tnvlzf-2 cHRaGb"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="room-deal-information-container">
+      <div class="room-deal-information-title">사진 등록</div>
+      <div class="room-picture-notice">
+        <ul class="room-write-wrapper">
+          <li>사진은 가로로 찍은 사진을 권장합니다. (가로 사이즈 최소 800px)</li>
+          <li>사진 용량은 사진 한 장당 10MB 까지 등록이 가능합니다.</li>
+          <li>사진은 최소 3장 이상 등록해야하며, 최대 15장 까지 권장합니다. 그 이상 등록할 경우 업로드 시간이 다소 지연될 수 있습니다.</li>
+        </ul>
+      </div>
+      <div class="room-file-upload-wrapper">
+        <div>
+          <div class="room-file-image-example-wrapper">이미지</div>
+          <div class="room-file-notice-item">실사진 최소 3장 이상 등록하셔야 하며, 가로사진을 권장합니다.</div>
+          <div
+            class="room-file-notice-item room-file-notice-item-red"
+          >다방 로고를 제외한 불필요한 정보(워터마크,상호,전화번호 등)가 있는 매물은 비공개처리됩니다</div>
+          <div class="room-file-notice-item room-file-upload-button">
+            <div class="image-box">
+              <!-- <div class="image-profile">
+                <img :src="profileImage" />
+              </div>-->
+              <label for="file">일반 사진 등록</label>
+              <input type="file" id="file" ref="files" multiple />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -125,8 +365,27 @@ export default {
       sample5_address: "",
       address: "",
       map: "",
-      locationSearch: ""
+      locationSearch: "",
+      sample5_address_zibun: "",
+      lease: "",
+      deposit: "",
+      monthRent: "",
+      showMonth: false,
+      showLease: false,
+      floor: -2, //floor -2는 미선택,
+      roomSpace: "",
+      squareMeter: "",
+      supplySpace: "",
+      supplyM2: "",
+      moveDay: "", //이사가능한 날짜
+      roomOption: [], //옵션
+      title: "",
+      content: "", //내용
+      files: []
     };
+  },
+  watch: {
+    roomSpace() {}
   },
   mounted() {
     const script1 = document.createElement("script");
@@ -169,10 +428,15 @@ export default {
             map: map
           });
           let addr = data.address; // 최종 주소 변수
+          //
+          console.log("a");
+          console.log(data.jibunAddress);
+          console.log(data.bname);
           // 주소 정보를 해당 필드에 넣는다.
           // document.getElementById("sample5_address").value = addr;
           // document.getElementById("sample5_address").innerHTML = addr;
           vueData.sample5_address = addr;
+          vueData.sample5_address_zibun = data.jibunAddress;
           // d.address = addr;
           // 주소로 상세 정보를 검색
           geocoder.addressSearch(data.address, function(results, status) {
@@ -196,14 +460,55 @@ export default {
         }
       }).open({
         //검색어 넘기기
+        popupName: "구해방", //이름 설정시 여러개의 팝업 방지
         q: this.locationSearch
       });
+    },
+    clickMonth() {
+      if (this.showMonth) {
+        this.showMonth = false;
+      } else {
+        this.showMonth = true;
+      }
+    },
+    clickLease() {
+      if (this.showLease) {
+        this.showLease = false;
+      } else {
+        this.showLease = true;
+      }
+    },
+    p() {
+      if (this.supplySpace !== "") {
+        this.supplyM2 = Math.round(this.supplySpace * 3.3058);
+      }
+    },
+    //전용면적
+    m() {
+      if (this.supplyM2 !== "") {
+        this.supplySpace = Math.round(this.supplyM2 / 3.3058);
+      }
+      //    return nn / 3.3058;
+    },
+    p2() {
+      if (this.roomSpace !== "") {
+        this.squareMeter = Math.round(this.roomSpace * 3.3058);
+      }
+    },
+    //공급면적
+    m2() {
+      if (this.squareMeter !== "") {
+        this.roomSpace = Math.round(this.squareMeter / 3.3058);
+      }
     }
   }
 };
 </script>
 
 <style>
+* {
+  box-sizing: border-box;
+}
 .room-write-notification-wrapper {
   margin-top: 30px;
   border: 1px solid #dddddd;
@@ -349,12 +654,14 @@ input[type="radio"]:checked {
   height: 370px;
 }
 .room-location-content-title {
+  font-size: 15px;
   width: 150px;
   text-align: center;
   line-height: 370px;
   background-color: #f9f9f9;
 }
 .room-location-content-wrapper {
+  width: 560px;
   padding: 20px;
   display: flex;
   align-items: center;
@@ -389,17 +696,25 @@ input[type="radio"]:checked {
   line-height: 46px;
   border-radius: 4px;
 }
+.room-location-search-type {
+  display: inline-block;
+  width: 60px;
+}
 
 .room-location-search-result {
   display: flex;
+  justify-content: center;
+  flex-direction: column;
   margin-top: 12px;
   width: 528px;
   height: 100px;
-  align-items: center;
   border: 1px solid #cccccc;
   padding: 20px 15px;
   font-size: 15px;
   color: #666666;
+}
+.room-location-search-result > div {
+  margin-top: 5px;
 }
 
 .room-location-result-detail-wrapper {
@@ -437,7 +752,7 @@ input[type="radio"]:checked {
 }
 
 .room-location-dong-check-wrapper {
-  /* margin-top: 5px; */
+  padding-top: 30px;
   display: flex;
   align-items: center;
   font-size: 14px;
@@ -493,18 +808,19 @@ input[type="radio"]:checked {
   border: 2px solid #34495e;
 }
 .room-location-map-wrapper {
-  padding: 20px;
-  width: 100%;
+  padding: 10px 10px 10px 0;
+  /* width: 440px; */
+
   height: 100%;
 }
 #map {
-  width: 100%;
+  width: 380px;
   height: 100%;
 }
 
 .room-location-map {
   border: 1px solid #dddddd;
-  width: 100%;
+  width: 440px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -531,6 +847,392 @@ input[type="radio"]:checked {
   width: 50%;
   height: 50%;
 }
+
+.room-deal-information-container {
+  margin-top: 50px;
+  color: #222222;
+  border: 1px solid #dddddd;
+}
+.room-deal-information-title {
+  text-align: center;
+  font-size: 18px;
+  line-height: 60px;
+  border-bottom: 1px solid #dddddd;
+}
+
+.room-deal-information-content-wrapper {
+  min-height: 50px;
+  display: flex;
+}
+
+.room-deal-informtaion-content-title {
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  background-color: #f9f9f9;
+}
+
+.room-deal-information-content {
+  width: 100%;
+
+  font-size: 14px;
+}
+
+.room-deal-option-selector {
+  display: flex;
+  align-items: center;
+
+  padding: 15px;
+}
+
+.room-deal-option-item {
+  width: 100px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.room-deal-option-item:last-child {
+  margin-left: 10px;
+}
+
+.room-deal-option-notice {
+  margin-left: auto;
+  font-size: 14px;
+  color: #888888;
+}
+
+.room-deal-option-item-deposit {
+  margin-left: 10px;
+}
+
+.room-deal-information-wrapper {
+  display: flex;
+
+  flex-direction: column;
+}
+
+.room-deal-information-option {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.room-deal-information-option:last-child {
+  border-bottom: 1px solid #dddddd;
+}
+
+.room-deal-information-item-type {
+  font-size: 13px;
+
+  color: #fff;
+  background-color: #61b6e5;
+  min-width: 50px;
+  height: 26px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+}
+.room-deal-information-item-wrapper {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  height: 46px;
+  width: 100%;
+}
+
+.room-deal-information-item-wrapper > input {
+  border: 1px solid #dddddd;
+  width: 140px;
+  height: 100%;
+  padding: 0 15px;
+  font-size: 15px;
+}
+.room-deal-inforamtion-won {
+  margin: 0 10px;
+}
+.room-deal-information-example {
+  color: #888888;
+}
+
+.room-deal-information-option:not(:first-child) {
+  margin-top: 10px;
+}
+
+.room-deal-inforamtion-divide {
+  font-size: 22px;
+  margin: 0 8px;
+  color: #222222;
+  font-weight: 100;
+}
+.room-deal-close-button-wrapper {
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.room-deal-close-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background-color: #666666;
+  color: rgb(220, 220, 220);
+}
+.room-deal-cliked {
+  background-color: rgb(235, 235, 235);
+  color: rgb(170, 170, 170);
+}
+
+.building-information-wrapper {
+  display: flex;
+  width: 100%;
+}
+
+.bulding-information-scale {
+  display: flex;
+  flex: 1;
+  border-bottom: 1px solid #dddddd;
+  height: 150px;
+}
+
+.bulding-information-title {
+  width: 150px;
+  font-size: 15px;
+  color: #222222;
+  background-color: #f9f9f9f9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.bulding-information-calendar-selector {
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+.choose-date-picker {
+  margin-right: 20px;
+}
+.bulding-information-calendar-wrapper {
+  display: flex;
+}
+
+.bulding-information-calendar-title {
+  width: 150px;
+  height: 70px;
+  background-color: #f9f9f9f9;
+  font-size: 14px;
+  color: #222222;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bulding-information-option-wrapper {
+  width: 430px;
+  display: flex;
+  flex-direction: column;
+  font-size: 15px;
+}
+.bulding-information-option-wrapper > div {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  flex: 1;
+}
+
+.bulding-information-option1 {
+  border-top: 1px solid #dddddd;
+}
+.bulding-inforamtion-floor-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+.bulding-information-floor-title {
+  font-size: 15px;
+}
+.bulding-information-floor {
+  display: flex;
+  align-items: center;
+}
+
+.bulding-information-floor-select {
+  margin-left: 10px;
+  width: 168px;
+  height: 46px;
+}
+
+select {
+  width: 200px;
+  padding: 0.8em 0.5em;
+  border: 1px solid #999;
+  font-family: inherit;
+  background: url("../../assets/arrow.jpeg") no-repeat 95% 50%;
+  background-size: 25px;
+  border-radius: 0px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+select::-ms-expand {
+  display: none;
+}
+.bulding-information-input-wrapper {
+  height: 46px;
+  font-size: 15px;
+}
+.bulding-information-input-wrapper > input {
+  width: 100px;
+  height: 46px;
+  margin: 0 7px;
+  padding: 0 15px;
+  font-size: 15px;
+}
+
+.room-option-type {
+  text-align: center;
+  min-width: 82px;
+  height: 46px;
+  font-size: 15px;
+  line-height: 46px;
+  /* border: 0.5px solid #dddddd; */
+  border-radius: 5px;
+  cursor: pointer;
+}
+.room-option-type:not(:first-child) {
+  margin-left: 20px;
+}
+
+.room-option-type > input[type="checkbox"] {
+  position: relative;
+  user-select: none;
+}
+
+.room-option-type > input[type="checkbox"],
+input[type="checkbox"]:checked {
+  position: absolute;
+  appearance: none;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 100%;
+  margin-right: 0.1rem;
+}
+.room-option-type > p {
+  min-width: 82px;
+  height: 100%;
+  border-radius: 5px;
+  padding: 0 15px;
+  border: 1px solid #dddddd;
+}
+
+.room-option-type > input[type="checkbox"]:checked + p {
+  color: white;
+  background-color: #1a5ae8;
+  border: 1px solid #1a5ae8;
+}
+
+.room-deal-option-wrapper {
+  padding: 20px;
+  display: flex;
+}
+.room-write-title-container {
+  height: 70px;
+}
+
+.room-write-title-input-wrapper {
+  height: 100%;
+  padding: 12px 20px;
+}
+.room-write-title-input-wrapper > input {
+  border: 1px solid #dddddd;
+  width: 100%;
+  height: 100%;
+  padding: 0 15px;
+  font-size: 15px;
+  color: rgb(68, 68, 68);
+}
+
+.room-write-title-input-wrapper > textarea {
+  border: 1px solid #dddddd;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  color: rgb(68, 68, 68);
+  font-size: 17px;
+}
+
+.room-write-content-container {
+  border-top: 1px solid #dddddd;
+  height: 260px;
+}
+
+.room-picture-notice {
+  margin: 20px;
+  padding: 20px 40px;
+  border: 1px solid #dddddd;
+}
+
+.room-file-upload-wrapper {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #dddddd;
+  background-color: #f4f4f4;
+  height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  color: #888888;
+}
+
+.room-file-image-example-wrapper {
+  text-align: center;
+}
+
+.room-file-notice-item {
+  margin-top: 5px;
+  text-align: center;
+}
+.room-file-notice-item-red {
+  color: #ef4351;
+}
+
+.image-box {
+  margin-top: 30px;
+  padding-bottom: 20px;
+  text-align: center;
+}
+
+.image-box input[type="file"] {
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+}
+
+.image-box label {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #232d4a;
+  color: #fff;
+  vertical-align: middle;
+  font-size: 15px;
+  cursor: pointer;
+  border-radius: 5px;
+}
 </style>
-
-
