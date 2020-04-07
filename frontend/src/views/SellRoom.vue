@@ -2,7 +2,7 @@
   <EtcContainer class="container">
     <div slot="banner">
       <div class="sell-room-container">
-        <div class="sell-room-title">방내놓기</div>
+        <div class="sell-room-title">방 내놓기</div>
         <div class="sell-room-select-wrapper">
           <!-- <div class="sell-room-select-item">최근본방</div> -->
           <router-link class="sell-room-select-item" :to="`/sellRoom/`">방 내놓기</router-link>

@@ -28,13 +28,20 @@
                 <button v-on:click="submitFile()">Submit</button>
             </div>
 
-            <div>
+
+            <!-- <div>
                 이미지 리스트 받아오기
                 <div v-for="(galleryData, index) in galleryDatas" :key="index">
                     {{galleryData.title}}
                     <img style="width: 120px;" :src="galleryData.file_path">
                 </div>
-            </div>
+            </div> -->
+        </div>
+        <div>
+            파일 프리뷰 예제
+            <input ref="imageInput" type="file" hidden @change="onChangeImages">
+            <button type="button" @click="onClickImageUpload">이미지 업로드</button>
+            <img v-if="imageUrl" :src="imageUrl">
         </div>
 
     </div>
@@ -46,50 +53,55 @@
                 return {
                     title: "",
                     files: [],
-                    galleryDatas: []
+                    galleryDatas: [],
+                    imageUrl: "",
                 }
             },
             mounted() {
-                axios.get('http://localhost:8081/api/gallery/getImageList')
-                    .then(res => {
-                        console.log(res.data);
-                        this.galleryDatas = res.data
-                    })
-                    .catch(error => console.log(error));
+                // axios.get('http://localhost:8081/api/gallery/getImageList')
+                //     .then(res => {
+                //         console.log(res.data);
+                //         this.galleryDatas = res.data
+                //     })
+                //     .catch(error => console.log(error));
             },
             methods: {
 
                 submitFile() {
-                    for (i = 0; i < this.files.length; i++) {
-                        let formData = new FormData();
-                        formData.append('title', this.title);
-                        formData.append('files', this.files[i]);
-                        axios.post('http://localhost:8081/api/gallery/upload',
-                                formData, {
-                                    headers: {
-                                        'Content-Type': 'multipart/form-data'
-                                    }
-                                }
-                            ).then(function() {
-                                console.log('SUCCESS!!');
-                            })
-                            .catch(function() {
-                                console.log('FAILURE!!');
-                            });
-                    }
+                    // for (i = 0; i < this.files.length; i++) {
+                    //     let formData = new FormData();
+                    //     formData.append('title', this.title);
+                    //     formData.append('files', this.files[i]);
+                    //     axios.post('http://localhost:8081/api/gallery/upload',
+                    //             formData, {
+                    //                 headers: {
+                    //                     'Content-Type': 'multipart/form-data'
+                    //                 }
+                    //             }
+                    //         ).then(function() {
+                    //             console.log('SUCCESS!!');
+                    //         })
+                    //         .catch(function() {
+                    //             console.log('FAILURE!!');
+                    //         });
+                    // }
                     // formData.append('file', this.file);
 
                     /*
                       Make the request to the POST /single-file URL
                     */
                 },
-
-                /*
-                  Handles a change on the file upload
-                */
                 handleFileUpload() {
                     this.files = this.$refs.files.files;
                     console.log(this.files);
+                },
+                onClickImageUpload() {
+                    this.$refs.imageInput.click();
+                },
+                onChangeImages(e) {
+                    console.log(e.target.files)
+                    const file = e.target.files[0];
+                    this.imageUrl = URL.createObjectURL(file);
                 }
             }
         });

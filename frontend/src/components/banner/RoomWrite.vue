@@ -328,23 +328,42 @@
         <ul class="room-write-wrapper">
           <li>사진은 가로로 찍은 사진을 권장합니다. (가로 사이즈 최소 800px)</li>
           <li>사진 용량은 사진 한 장당 10MB 까지 등록이 가능합니다.</li>
-          <li>사진은 최소 3장 이상 등록해야하며, 최대 15장 까지 권장합니다. 그 이상 등록할 경우 업로드 시간이 다소 지연될 수 있습니다.</li>
+          <li>
+            사진은 최소 3장 이상 등록해야하며, 최대 15장 까지 권장합니다. 그
+            이상 등록할 경우 업로드 시간이 다소 지연될 수 있습니다.
+          </li>
         </ul>
       </div>
       <div class="room-file-upload-wrapper">
-        <div>
-          <div class="room-file-image-example-wrapper">이미지</div>
-          <div class="room-file-notice-item">실사진 최소 3장 이상 등록하셔야 하며, 가로사진을 권장합니다.</div>
-          <div
-            class="room-file-notice-item room-file-notice-item-red"
-          >다방 로고를 제외한 불필요한 정보(워터마크,상호,전화번호 등)가 있는 매물은 비공개처리됩니다</div>
-          <div class="room-file-notice-item room-file-upload-button">
-            <div class="image-box">
-              <!-- <div class="image-profile">
+        <div class="room-file-upload-example-container" v-if="!files.length">
+          <div>
+            <div class="room-file-image-example-wrapper">이미지</div>
+            <div class="room-file-notice-item">실사진 최소 3장 이상 등록하셔야 하며, 가로사진을 권장합니다.</div>
+            <div class="room-file-notice-item room-file-notice-item-red">
+              다방 로고를 제외한 불필요한 정보(워터마크,상호,전화번호 등)가 있는
+              매물은 비공개처리됩니다
+            </div>
+            <div class="room-file-notice-item room-file-upload-button">
+              <div class="image-box">
+                <!-- <div class="image-profile">
                 <img :src="profileImage" />
-              </div>-->
-              <label for="file">일반 사진 등록</label>
-              <input type="file" id="file" ref="files" multiple />
+                </div>-->
+                <label for="file">일반 사진 등록</label>
+                <input type="file" id="file" ref="files" @change="imageUpload" multiple />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div v-else>
+          <div class="file-preview-container">
+            <div
+              v-for="(filePreview, index) in filesPreview"
+              :key="index"
+              class="file-preview-wrapper"
+              v-if="filePreview"
+            >
+              <div class="file-close-button" @click="fileDeleteButton" :name="index">x</div>
+              <img :src="filePreview" />
             </div>
           </div>
         </div>
@@ -381,7 +400,8 @@ export default {
       roomOption: [], //옵션
       title: "",
       content: "", //내용
-      files: []
+      files: [], //업로드용 파일
+      filesPreview: []
     };
   },
   watch: {
@@ -402,6 +422,11 @@ export default {
       "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=0fe1d5fd101ab6d2078168510cdb7237&libraries=services";
     document.head.appendChild(script);
     // }
+  },
+  computed: {
+    createObject() {
+      return URL.createObjectURL(file);
+    }
   },
   methods: {
     sample5_execDaumPostcode() {
@@ -500,6 +525,37 @@ export default {
       if (this.squareMeter !== "") {
         this.roomSpace = Math.round(this.squareMeter / 3.3058);
       }
+    },
+    imageUpload() {
+      console.log(this.$refs.files.files);
+
+      // this.files = [...this.files, this.$refs.files.files];
+      //하나의 배열로 넣기
+      for (let i = 0; i < this.$refs.files.files.length; i++) {
+        this.files = [
+          ...this.files,
+          //이미지 업로드
+          this.$refs.files.files[i]
+        ];
+        //이미지 업로드용 프리뷰
+        this.filesPreview = [
+          ...this.filesPreview,
+          URL.createObjectURL(this.$refs.files.files[i])
+        ];
+      }
+      console.log(this.files);
+      console.log(this.filesPreview);
+    },
+    fileDeleteButton(e) {
+      const name = e.target.getAttribute("name");
+      console.log(e.target.parentNode);
+      console.log(e.target.getAttribute("name"));
+      console.log(this);
+      this.files[name] = null;
+      this.filesPreview[name] = null;
+      this.$set(this.files, name, null);
+      console.log(this.files);
+      console.log(this.filesPreview);
     }
   }
 };
@@ -785,12 +841,12 @@ input[type="radio"]:checked {
   cursor: pointer;
 }
 
-.checkbox > input:checked {
+.checkbox > input[type="checkbox"]:checked {
   border: 1px solid #1564f9;
   background-color: #1564f9;
 }
 
-.checkbox > input:checked + span::before {
+.checkbox > input[type="checkbox"]:checked + span::before {
   content: "\2713";
   font-size: 15px;
   display: block;
@@ -1121,8 +1177,15 @@ select::-ms-expand {
   user-select: none;
 }
 
-.room-option-type > input[type="checkbox"],
-input[type="checkbox"]:checked {
+.room-option-type > input[type="checkbox"] {
+  position: absolute;
+  appearance: none;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 100%;
+  margin-right: 0.1rem;
+}
+.room-option-type > input[type="checkbox"]:checked {
   position: absolute;
   appearance: none;
   width: 0.9rem;
@@ -1191,11 +1254,16 @@ input[type="checkbox"]:checked {
   border: 1px solid #dddddd;
   background-color: #f4f4f4;
   height: 350px;
+  font-size: 15px;
+  color: #888888;
+}
+
+.room-file-upload-example-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
-  color: #888888;
+  height: 100%;
+  width: 100%;
 }
 
 .room-file-image-example-wrapper {
@@ -1234,5 +1302,39 @@ input[type="checkbox"]:checked {
   font-size: 15px;
   cursor: pointer;
   border-radius: 5px;
+}
+
+.file-preview-wrapper {
+  padding: 10px;
+  position: relative;
+}
+
+.file-preview-wrapper > img {
+  position: relative;
+  width: 190px;
+  height: 130px;
+  z-index: 10;
+}
+
+.file-close-button {
+  position: absolute;
+
+  /* align-items: center; */
+  line-height: 18px;
+  z-index: 99;
+  font-size: 18px;
+  right: 5px;
+  top: 10px;
+  color: #fff;
+  font-weight: bold;
+  background-color: #666666;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.file-preview-container {
+  display: flex;
 }
 </style>
