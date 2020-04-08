@@ -4,8 +4,8 @@
 <!-- bit.com.a.dao.BbsDao -->
 <mapper namespace="bit.com.a.room.RoomDao">
 
-<!-- 성공적!!  -->
-<!--  	 <insert id="addroom" parameterType="bit.com.a.room.RoomDto"  useGeneratedKeys="true" keyProperty="id">
+	<!-- 성공적!!  -->
+	<!--  	 <insert id="addroom" parameterType="bit.com.a.room.RoomDto"  useGeneratedKeys="true" keyProperty="id">
 	 INSERT INTO ROOM(deposit)
 	  VALUES(#{deposit}) 
 	 </insert>
@@ -14,23 +14,28 @@
 		INSERT INTO ROOM_OPTION(tv)
 		VALUES(#{tv})
 	 </insert> -->
- 
- 
- 
- 
-  <!-- now() = SYSOUT -->
- <!-- 방올리기 페이지  -->
- 	 <insert id="addroom" parameterType="bit.com.a.room.RoomDto"  useGeneratedKeys="true" keyProperty="id">
-	 INSERT INTO ROOM(title, content, address_detail, room_type, room_count, 
+
+
+	<!-- now() = SYSOUT -->
+	<!-- 방올리기 페이지  -->
+	<insert id="addroom" parameterType="bit.com.a.room.RoomDto" useGeneratedKeys="true" keyProperty="id">
+	 INSERT INTO ROOM(title, content, address_detail, address_detail_zibun, room_type, room_count, 
 	 				  deposit, lease, supply_space ,room_space, move_day, payment_type,
 	 				 floor, month_rent, del, created_at )
-	  VALUES(#{title}, #{content}, #{addressDetail}, #{roomType}, #{roomCount}, 
+	  VALUES(#{title}, #{content}, #{addressDetail}, #{addressDetailZibun}, #{roomType}, #{roomCount}, 
 	  				  #{deposit}, #{lease}, #{supplySpace}, #{roomSpace}, #{moveDay}, #{paymentType},
 	  				#{floor}, #{monthRent}, 0, NOW())  
 	 </insert>
-	 
- 
-<!-- 	 <insert id="addRoom" parameterType="bit.com.a.room.RoomDto"  useGeneratedKeys="true" keyProperty="id">
+
+	<!-- 파일 업로드 -->
+
+	<insert id="addRoomPicture" parameterType="bit.com.a.room.RoomPictureDto" useGeneratedKeys="true" keyProperty="id">
+		 INSERT INTO ROOM_PICTURE(file_name, real_file_name, ROOM_id, download_count)
+		 VALUES(#{fileName}, #{realFileName}, #{roomId}, #{downloadCount})
+	 </insert>
+
+
+	<!-- 	 <insert id="addRoom" parameterType="bit.com.a.room.RoomDto"  useGeneratedKeys="true" keyProperty="id">
 	 INSERT INTO ROOM(title, content, address_detail, room_type, room_count, deposit, room_space, move_day, payment_type,
 	  floor, month_rent, del, DONG_id, BROKER_id, created_at, created_by)
 	  VALUES(#{title}, #{content}, #{addressDetail}, #{roomType}, #{roomCount}, 
@@ -38,11 +43,11 @@
 	  #{floor}, #{monthRent}, 0, #{DONGId}, #{BROKERId}, NOW(), #{userId})  
 	 </insert>
 	  -->
-	  
-	 <insert id="addRoomOption" parameterType="bit.com.a.room.RoomOptionDto"  useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO ROOM_OPTION(tv, airconditioner, refrigerator, aircleaner, bed, microwave, washer)
-		VALUES(#{tv}, #{airconditioner},#{refrigerator},#{aircleaner},#{bed},#{microwave},#{washer})
-	 </insert> 
-<!-- // 방올리기 페이지  -->  
-  
+
+	<insert id="addRoomOption" parameterType="bit.com.a.room.RoomOptionDto" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO ROOM_OPTION(tv, airconditioner, refrigerator, aircleaner, bed, microwave, washer, ROOM_id)
+		VALUES(#{tv}, #{airconditioner},#{refrigerator},#{aircleaner},#{bed},#{microwave},#{washer}, #{roomId})
+	 </insert>
+	<!-- // 방올리기 페이지  -->
+
 </mapper>

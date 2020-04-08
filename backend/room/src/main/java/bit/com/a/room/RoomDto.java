@@ -3,139 +3,80 @@ package bit.com.a.room;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+public class RoomDto implements Serializable {
 
-public class RoomDto  implements Serializable {
+	private int id;
 
-    private int id;
+	private String title;
 
-    private String title;
+	private String content;
 
-    private String content;
+	private String addressDetail; // 상세주소 기본주소는 DONG_ID
 
-    private String addressDetail;       // 상세주소 기본주소는 DONG_ID
+	private String addressDetailZibun;
 
-    private String roomType;
+	private String roomType;
 
-    private String roomCount;
+	private String roomCount;
 
 	private String deposit;
-	
+
 	private String lease;
-    
-    private String supplySpace;
 
-    private String roomSpace;
+	private String supplySpace;
 
-    private String moveDay;			// private Timestamp moveDay;  <- DB에서 타입 DATETIME일 때
+	private String roomSpace;
 
-    private String paymentType;
+	private String moveDay; // private Timestamp moveDay; <- DB에서 타입 DATETIME일 때
 
-    private String floor;
+	private String paymentType;
 
-    private String monthRent;
+	private String floor;
 
-    private int readcount;
+	private String monthRent;
 
-    private int wishcount;
+	private int readcount;
 
-    private int del;
+	private int wishcount;
 
-    private int DONGId;
+	private int del;
 
-    private int BROKERId;
+	private int DONGId;
 
-    private String createdAt;            
+	private int BROKERId;
 
-    private String createdBy;
+	private String createdAt;
 
-    private String updatedAt;
+	private String createdBy;
 
-    private String updatedBy;
+	private String updatedAt;
 
-    private String deletedAt;
+	private String updatedBy;
 
-    private String deletedBy;
+	private String deletedAt;
 
-    
-   //디폴트 생성자 
+	private String deletedBy;
+
+	// 디폴트 생성자
 	public RoomDto() {
 
 	}
 
-	
-																				// Timestamp
-	public RoomDto(int id, String title, String content, String addressDetail, String roomType, String roomCount,
-			String deposit, String lease, String supplySpace, String roomSpace, String moveDay, String paymentType, String floor,
-			String monthRent, int readcount, int wishcount, int del, int dONGId, int bROKERId, String createdAt,
-			String createdBy, String updatedAt, String updatedBy, String deletedAt, String deletedBy) {
-		super();
-		this.id = id;
-		this.title = title;
-		this.content = content;
-		this.addressDetail = addressDetail;
-		this.roomType = roomType;
-		this.roomCount = roomCount;
-		this.deposit = deposit;
-		this.lease = lease;
-		this.supplySpace = supplySpace;
-		this.roomSpace = roomSpace;
-		this.moveDay = moveDay;
-		this.paymentType = paymentType;
-		this.floor = floor;
-		this.monthRent = monthRent;
-		this.readcount = readcount;
-		this.wishcount = wishcount;
-		this.del = del;
-		DONGId = dONGId;
-		BROKERId = bROKERId;
-		this.createdAt = createdAt;
-		this.createdBy = createdBy;
-		this.updatedAt = updatedAt;
-		this.updatedBy = updatedBy;
-		this.deletedAt = deletedAt;
-		this.deletedBy = deletedBy;
-	}
-
-
-
 	@Override
 	public String toString() {
-		return "RoomDto [id=" + id + ", title=" + title + ", content=" + content + ", addressDetail=" + addressDetail
-				+ ", roomType=" + roomType + ", roomCount=" + roomCount + ", deposit=" + deposit + ", lease=" + lease + ", supplySpace="
-				+ supplySpace + ", roomSpace=" + roomSpace + ", moveDay=" + moveDay + ", paymentType=" + paymentType
-				+ ", floor=" + floor + ", monthRent=" + monthRent + ", readcount=" + readcount + ", wishcount="
-				+ wishcount + ", del=" + del + ", DONGId=" + DONGId + ", BROKERId=" + BROKERId + ", createdAt="
-				+ createdAt + ", createdBy=" + createdBy + ", updatedAt=" + updatedAt + ", updatedBy=" + updatedBy
-				+ ", deletedAt=" + deletedAt + ", deletedBy=" + deletedBy + "]";
-	}
-
-
-
-	public String getSupplySpace() {
-		return supplySpace;
-	}
-
-
-
-	public void setSupplySpace(String supplySpace) {
-		this.supplySpace = supplySpace;
-	}
-
-
-
-	public RoomDto(String deposit) {
-		super();
-		this.deposit = deposit;
-	}
-
-	public RoomDto(int id, String deposit) {
-		super();
-		this.id = id;
-		this.deposit = deposit;
+		return "{" + " id='" + id + "'" + ", title='" + title + "'" + ", content='" + content + "'" + ", addressDetail='"
+				+ addressDetail + "'" + ", addressDetailZibun='" + addressDetailZibun + "'" + ", roomType='" + roomType + "'"
+				+ ", roomCount='" + roomCount + "'" + ", deposit='" + deposit + "'" + ", lease='" + lease + "'"
+				+ ", supplySpace='" + supplySpace + "'" + ", roomSpace='" + roomSpace + "'" + ", moveDay='" + moveDay + "'"
+				+ ", paymentType='" + paymentType + "'" + ", floor='" + floor + "'" + ", monthRent='" + monthRent + "'"
+				+ ", readcount='" + readcount + "'" + ", wishcount='" + wishcount + "'" + ", del='" + del + "'" + ", DONGId='"
+				+ DONGId + "'" + ", BROKERId='" + BROKERId + "'" + ", createdAt='" + createdAt + "'" + ", createdBy='"
+				+ createdBy + "'" + ", updatedAt='" + updatedAt + "'" + ", updatedBy='" + updatedBy + "'" + ", deletedAt='"
+				+ deletedAt + "'" + ", deletedBy='" + deletedBy + "'" + "}";
 	}
 
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(int id) {
@@ -143,7 +84,7 @@ public class RoomDto  implements Serializable {
 	}
 
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
 	public void setTitle(String title) {
@@ -151,7 +92,7 @@ public class RoomDto  implements Serializable {
 	}
 
 	public String getContent() {
-		return content;
+		return this.content;
 	}
 
 	public void setContent(String content) {
@@ -159,15 +100,23 @@ public class RoomDto  implements Serializable {
 	}
 
 	public String getAddressDetail() {
-		return addressDetail;
+		return this.addressDetail;
 	}
 
 	public void setAddressDetail(String addressDetail) {
 		this.addressDetail = addressDetail;
 	}
 
+	public String getAddressDetailZibun() {
+		return this.addressDetailZibun;
+	}
+
+	public void setAddressDetailZibun(String addressDetailZibun) {
+		this.addressDetailZibun = addressDetailZibun;
+	}
+
 	public String getRoomType() {
-		return roomType;
+		return this.roomType;
 	}
 
 	public void setRoomType(String roomType) {
@@ -175,7 +124,7 @@ public class RoomDto  implements Serializable {
 	}
 
 	public String getRoomCount() {
-		return roomCount;
+		return this.roomCount;
 	}
 
 	public void setRoomCount(String roomCount) {
@@ -183,33 +132,47 @@ public class RoomDto  implements Serializable {
 	}
 
 	public String getDeposit() {
-		return deposit;
+		return this.deposit;
 	}
 
 	public void setDeposit(String deposit) {
 		this.deposit = deposit;
 	}
 
+	public String getLease() {
+		return this.lease;
+	}
+
+	public void setLease(String lease) {
+		this.lease = lease;
+	}
+
+	public String getSupplySpace() {
+		return this.supplySpace;
+	}
+
+	public void setSupplySpace(String supplySpace) {
+		this.supplySpace = supplySpace;
+	}
+
 	public String getRoomSpace() {
-		return roomSpace;
+		return this.roomSpace;
 	}
 
 	public void setRoomSpace(String roomSpace) {
 		this.roomSpace = roomSpace;
 	}
 
-			// Timestamp
 	public String getMoveDay() {
-		return moveDay;
+		return this.moveDay;
 	}
 
-						// Timestamp
 	public void setMoveDay(String moveDay) {
 		this.moveDay = moveDay;
 	}
 
 	public String getPaymentType() {
-		return paymentType;
+		return this.paymentType;
 	}
 
 	public void setPaymentType(String paymentType) {
@@ -217,7 +180,7 @@ public class RoomDto  implements Serializable {
 	}
 
 	public String getFloor() {
-		return floor;
+		return this.floor;
 	}
 
 	public void setFloor(String floor) {
@@ -225,7 +188,7 @@ public class RoomDto  implements Serializable {
 	}
 
 	public String getMonthRent() {
-		return monthRent;
+		return this.monthRent;
 	}
 
 	public void setMonthRent(String monthRent) {
@@ -233,7 +196,7 @@ public class RoomDto  implements Serializable {
 	}
 
 	public int getReadcount() {
-		return readcount;
+		return this.readcount;
 	}
 
 	public void setReadcount(int readcount) {
@@ -241,7 +204,7 @@ public class RoomDto  implements Serializable {
 	}
 
 	public int getWishcount() {
-		return wishcount;
+		return this.wishcount;
 	}
 
 	public void setWishcount(int wishcount) {
@@ -249,7 +212,7 @@ public class RoomDto  implements Serializable {
 	}
 
 	public int getDel() {
-		return del;
+		return this.del;
 	}
 
 	public void setDel(int del) {
@@ -257,23 +220,23 @@ public class RoomDto  implements Serializable {
 	}
 
 	public int getDONGId() {
-		return DONGId;
+		return this.DONGId;
 	}
 
-	public void setDONGId(int dONGId) {
-		DONGId = dONGId;
+	public void setDONGId(int DONGId) {
+		this.DONGId = DONGId;
 	}
 
 	public int getBROKERId() {
-		return BROKERId;
+		return this.BROKERId;
 	}
 
-	public void setBROKERId(int bROKERId) {
-		BROKERId = bROKERId;
+	public void setBROKERId(int BROKERId) {
+		this.BROKERId = BROKERId;
 	}
 
 	public String getCreatedAt() {
-		return createdAt;
+		return this.createdAt;
 	}
 
 	public void setCreatedAt(String createdAt) {
@@ -281,7 +244,7 @@ public class RoomDto  implements Serializable {
 	}
 
 	public String getCreatedBy() {
-		return createdBy;
+		return this.createdBy;
 	}
 
 	public void setCreatedBy(String createdBy) {
@@ -289,7 +252,7 @@ public class RoomDto  implements Serializable {
 	}
 
 	public String getUpdatedAt() {
-		return updatedAt;
+		return this.updatedAt;
 	}
 
 	public void setUpdatedAt(String updatedAt) {
@@ -297,7 +260,7 @@ public class RoomDto  implements Serializable {
 	}
 
 	public String getUpdatedBy() {
-		return updatedBy;
+		return this.updatedBy;
 	}
 
 	public void setUpdatedBy(String updatedBy) {
@@ -305,7 +268,7 @@ public class RoomDto  implements Serializable {
 	}
 
 	public String getDeletedAt() {
-		return deletedAt;
+		return this.deletedAt;
 	}
 
 	public void setDeletedAt(String deletedAt) {
@@ -313,19 +276,46 @@ public class RoomDto  implements Serializable {
 	}
 
 	public String getDeletedBy() {
-		return deletedBy;
+		return this.deletedBy;
 	}
 
 	public void setDeletedBy(String deletedBy) {
 		this.deletedBy = deletedBy;
 	}
 
-	public String getLease() {
-		return lease;
+	public RoomDto(int id, String title, String content, String addressDetail, String addressDetailZibun, String roomType,
+			String roomCount, String deposit, String lease, String supplySpace, String roomSpace, String moveDay,
+			String paymentType, String floor, String monthRent, int readcount, int wishcount, int del, int DONGId,
+			int BROKERId, String createdAt, String createdBy, String updatedAt, String updatedBy, String deletedAt,
+			String deletedBy) {
+		this.id = id;
+		this.title = title;
+		this.content = content;
+		this.addressDetail = addressDetail;
+		this.addressDetailZibun = addressDetailZibun;
+		this.roomType = roomType;
+		this.roomCount = roomCount;
+		this.deposit = deposit;
+		this.lease = lease;
+		this.supplySpace = supplySpace;
+		this.roomSpace = roomSpace;
+		this.moveDay = moveDay;
+		this.paymentType = paymentType;
+		this.floor = floor;
+		this.monthRent = monthRent;
+		this.readcount = readcount;
+		this.wishcount = wishcount;
+		this.del = del;
+		this.DONGId = DONGId;
+		this.BROKERId = BROKERId;
+		this.createdAt = createdAt;
+		this.createdBy = createdBy;
+		this.updatedAt = updatedAt;
+		this.updatedBy = updatedBy;
+		this.deletedAt = deletedAt;
+		this.deletedBy = deletedBy;
 	}
 
-	public void setLease(String lease) {
-		this.lease = lease;
-	}
+	// Timestamp
 
 }

@@ -1,5 +1,10 @@
 <template>
   <div>
+    <notifications
+      group="notifyApp"
+      position="right right"
+      style="margin-right: 30vh;"
+    />
     <div class="room-write-notification-wrapper">
       <ul class="room-write-wrapper">
         <li>등록한 매물은 30일 동안 노출됩니다.</li>
@@ -112,6 +117,7 @@
             <div class="room-location-result-detail-wrapper">
               <diV v-if="!checkDong" class="room-location-result-detail">
                 <input
+                  v-model="dong"
                   class="room-location-result-detail-input"
                   placeholder="예)101동"
                 />
@@ -119,6 +125,7 @@
               </diV>
               <diV class="room-location-result-detail">
                 <input
+                  v-model="ho"
                   class="room-location-result-detail-input"
                   placeholder="예)201호"
                 />
@@ -455,16 +462,32 @@
               <img :src="file.preview" />
             </div>
             <div class="file-preview-wrapper-upload">
+              <div class="image-box">
+                <label for="file">추가 사진 등록</label>
+                <input
+                  type="file"
+                  id="file"
+                  ref="files"
+                  @change="imageAddUpload"
+                  multiple
+                />
+              </div>
               <!-- <div class="file-close-button" @click="fileDeleteButton" :name="file.number">x</div> -->
             </div>
           </div>
         </div>
       </div>
     </div>
+    <div class="room-write-button-wrapper">
+      <div class="room-write-button-cancel" @click="moveMain">취소</div>
+      <div class="room-write-button" @click="roomWrite">매물등록</div>
+    </div>
   </div>
 </template>
 
 <script>
+import { request, requestFile } from '../../util/axios';
+import { error } from '../../util/notification';
 // import { kakaoMap } from "../../util/kakaoMap";
 
 export default {
@@ -475,6 +498,8 @@ export default {
       checkDong: false,
       sample5_address: '',
       address: '',
+      dong: '',
+      ho: '',
       map: '',
       locationSearch: '',
       sample5_address_zibun: '',
@@ -495,6 +520,7 @@ export default {
       files: [], //업로드용 파일
       filesPreview: [],
       date: new Date(),
+      uploadImageIndex: 0, // 이미지 업로드를 위한 변수
     };
   },
   watch: {
@@ -624,6 +650,7 @@ export default {
 
       // this.files = [...this.files, this.$refs.files.files];
       //하나의 배열로 넣기
+      let num = -1;
       for (let i = 0; i < this.$refs.files.files.length; i++) {
         this.files = [
           ...this.files,
@@ -637,22 +664,135 @@ export default {
             number: i,
           },
         ];
+        num = i;
         //이미지 업로드용 프리뷰
         // this.filesPreview = [
         //   ...this.filesPreview,
         //   { file: URL.createObjectURL(this.$refs.files.files[i]), number: i }
         // ];
       }
+      this.uploadImageIndex = num + 1; //이미지 index의 마지막 값 + 1 저장
+      console.log(this.files);
+      // console.log(this.filesPreview);
+    },
+
+    imageAddUpload() {
+      console.log(this.$refs.files.files);
+
+      // this.files = [...this.files, this.$refs.files.files];
+      //하나의 배열로 넣기c
+      let num = -1;
+      for (let i = 0; i < this.$refs.files.files.length; i++) {
+        console.log(this.uploadImageIndex);
+        this.files = [
+          ...this.files,
+          //이미지 업로드
+          {
+            //실제 파일
+            file: this.$refs.files.files[i],
+            //이미지 프리뷰
+            preview: URL.createObjectURL(this.$refs.files.files[i]),
+            //삭제및 관리를 위한 number
+            number: i + this.uploadImageIndex,
+          },
+        ];
+        num = i;
+      }
+      this.uploadImageIndex = this.uploadImageIndex + num + 1;
+
       console.log(this.files);
       // console.log(this.filesPreview);
     },
     fileDeleteButton(e) {
       const name = e.target.getAttribute('name');
-      console.log(e.target.getAttribute('name'));
-      // this.files.splice(name, 1);
       this.files = this.files.filter((data) => data.number !== Number(name));
+      // console.log(this.files);
+    },
+    moveMain() {
+      this.$router.push('/');
+    },
+    roomWrite() {
+      console.log(this.roomCount); //방의갯수
+      console.log(this.roomType);
 
-      console.log(this.files);
+      let params = new URLSearchParams();
+
+      params.append('title', this.title);
+      params.append('content', this.content);
+      params.append('roomType', this.roomType);
+      params.append('lease', this.lease); //전세
+      params.append('roomCount', this.roomCount);
+      params.append(
+        'addressDetail',
+        this.sample5_address + ' ' + this.dong + ' ' + this.ho,
+      );
+      params.append(
+        'addressDetailZibun',
+        this.sample5_address_zibun + ' ' + this.dong + ' ' + this.ho,
+      );
+      params.append('deposit', this.deposit); //보증금
+      params.append('monthRent', this.monthRent); //월세
+      params.append('supplySpace', this.supplySpace);
+      params.append('roomSpace', this.roomSpace);
+      params.append('floor', this.floor);
+      params.append('moveDay', this.date);
+
+      //roomOption
+      for (let i = 0; i < this.roomOption.length; i++) {
+        params.append(this.roomOption[i], this.roomOption[i]);
+      }
+      // params.append('tv', this.roomOption[0]);
+      // params.append('airconditioner', this.roomOption[1]);
+      // params.append('refrigerator', this.roomOption[2]);
+      // params.append('aircleaner', this.roomOption[3]);
+      // params.append('bed', this.roomOption[4]);
+      // params.append('microwave', this.roomOption[5]);
+      // params.append('washer', this.roomOption[6]);
+
+      request('post', 'room/addroom', params)
+        //성공시 파일업로드 실행
+        .then((res) => {
+          //res에는 roomid가 담겨있다
+          console.log(res);
+          for (let i = 0; i < this.files.length; i++) {
+            let params = new FormData();
+            params.append('roomId', res);
+            params.append('file', this.files[i].file);
+            console.log(res);
+            requestFile('post', 'room/upload', params)
+              .then((response) => {
+                if (response !== 'FAIL') {
+                  this.$toasted.show(`글 작성에 성공했습니다`, {
+                    type: 'success',
+                    position: 'top-right',
+                    duration: 2500,
+                    singleton: true,
+                  });
+                  if (this.$route.path !== '/') {
+                    this.$router.push('/');
+                  }
+                } else {
+                  error('글 작성에 실패했습니다', this);
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
+        });
+      // .then((res) => {
+      //   console.log(res);
+      //   if (res !== 'FAIL') {
+      //     this.$toasted.show(`글 작성에 성공했습니다`, {
+      //       type: 'success',
+      //       position: 'top-right',
+      //       duration: 2500,
+      //     });
+      //     this.$router.push('/');
+      //   } else {
+      //     error('글 작성에 실패했습니다', this);
+      //   }
+      // });
     },
   },
 };
@@ -1448,8 +1588,37 @@ select::-ms-expand {
 
 .file-preview-wrapper-upload {
   margin: 10px;
+  padding-top: 20px;
   background-color: #888888;
   width: 190px;
   height: 130px;
+}
+
+.room-write-button-wrapper {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #222222;
+}
+.room-write-button-wrapper > div {
+  width: 160px;
+  height: 50px;
+  border: 1px solid #dddddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.room-write-button {
+  margin-left: 15px;
+  color: #fff;
+  background-color: #1564f9;
+}
+
+.room-write-button:hover {
+  opacity: 0.8;
 }
 </style>
