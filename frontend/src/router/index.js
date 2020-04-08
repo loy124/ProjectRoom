@@ -3,9 +3,10 @@ import VueRouter from 'vue-router';
 import Toasted from 'vue-toasted';
 import VueTypedJs from 'vue-typed-js';
 import Notifications from 'vue-notification';
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-import locale from 'element-ui/lib/locale/lang/ko';
+import VCalendar from 'v-calendar';
+// import ElementUI from 'element-ui';
+// import 'element-ui/lib/theme-chalk/index.css';
+// import locale from 'element-ui/lib/locale/lang/ko';
 
 //view 쪽
 import Main from '../views/Main.vue';
@@ -20,11 +21,12 @@ import RecentRoomBanner from '../components/banner/RecentSearchRoom.vue';
 import Profile from '../components/banner/Profile.vue';
 import RoomWrite from '../components/banner/RoomWrite.vue';
 
-Vue.use(Notifications);
-Vue.use(Toasted);
 Vue.use(VueRouter);
 Vue.use(VueTypedJs);
-Vue.use(ElementUI, { locale });
+Vue.use(Toasted);
+Vue.use(Notifications);
+Vue.use(VCalendar);
+// Vue.use(ElementUI, { locale });
 
 const routes = [{
         path: '/',

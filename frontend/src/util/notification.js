@@ -1,3 +1,4 @@
+import Notifications from 'vue-notification';
 export const error = (title, location) => {
     location.$notify({
         group: 'notifyApp',
