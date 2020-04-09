@@ -62,9 +62,16 @@
 		select id, file_name, ROOM_id, download_count from ROOM_PICTURE where ROOM_id = #{id}
 	</select>
 
+	<!-- 디테일 -->
 	<select id="getRoomMap" resultMap="RoomDtoMap">
 		select * from ROOM  where id = #{id}
 		<!-- where ROOM_id = #{id} -->
+	</select>
+
+
+	<!-- 리스트 가져오기 -->
+	<select id="getRoomMapList" resultMap="RoomDtoMap">
+		select * from ROOM 
 	</select>
 
 	<!-- 성공적!!  -->

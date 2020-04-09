@@ -13,6 +13,7 @@ import Main from '../views/Main.vue';
 import Attention from '../views/Attention.vue';
 import Mypage from '../views/MyPage.vue';
 import SellRoom from '../views/SellRoom.vue';
+import SearchView from '../views/SearchView.vue';
 //컴포넌트쪽
 import RecentSearchRoom from '../components/content2/RecentSearchRoom.vue';
 import KeepRoom from '../components/content2/KeepRoom.vue';
@@ -84,6 +85,11 @@ const routes = [{
             path: '/',
             component: RoomWrite,
         }, ],
+    },
+    {
+        path: '/search',
+        name: 'search',
+        component: SearchView,
     },
     {
         path: '/*',

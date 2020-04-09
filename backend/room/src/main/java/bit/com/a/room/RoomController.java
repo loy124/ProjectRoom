@@ -57,6 +57,11 @@ public class RoomController {
         return roomService.getRoomMap(dto);
     }
 
+    @PostMapping("/getRoomMapList")
+    public List<RoomDto> getRoomMapList() {
+        return roomService.getRoomMapList();
+    }
+
     // @PostMapping("/addroom") // 다중 mapping
     // public String addroom(RoomDto dto, RoomOptionDto optionDto) {
 

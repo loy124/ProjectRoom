@@ -22,7 +22,10 @@
     <div class="header-right">
       <div class="header-menu">
         <div class="header-menu-item header-menu-item1">
-          <button>방찾기</button>
+          search
+          <router-link style="border: none;" class="room-selector1" :to="`/search`">
+            <button class="router-item">방찾기</button>
+          </router-link>
         </div>
         <div class="header-menu-item header-menu-item1">
           <button>분양</button>
@@ -33,11 +36,7 @@
           </router-link>
         </div>
         <div class="header-menu-item header-menu-item3">
-          <router-link
-            style="border: none;"
-            class="room-selector1"
-            :to="`/sellRoom`"
-          >
+          <router-link style="border: none;" class="room-selector1" :to="`/sellRoom`">
             <button>방내놓기</button>
           </router-link>
         </div>
@@ -49,11 +48,7 @@
       <!-- 로그인 세션이 있을시에 -->
       <div v-if="loginData" class="header-login">
         <div class="header-login-item header-login-item1">
-          <router-link
-            style="border: none;"
-            class="attention-select-item"
-            :to="`/mypage`"
-          >
+          <router-link style="border: none;" class="attention-select-item" :to="`/mypage`">
             <button>{{ loginData.name }}님 환영합니다</button>
           </router-link>
 
@@ -77,13 +72,13 @@
 </template>
 
 <script>
-import Login from './Login';
-import Register from './Register';
-import { mapState, mapMutations } from 'vuex';
+import Login from "./Login";
+import Register from "./Register";
+import { mapState, mapMutations } from "vuex";
 export default {
   components: {
     Login,
-    Register,
+    Register
   },
   data() {
     //로그인 데이터
@@ -91,25 +86,25 @@ export default {
   },
   mounted() {},
   computed: {
-    ...mapState(['loginData', 'loginModal', 'registerModal']),
+    ...mapState(["loginData", "loginModal", "registerModal"])
     // ...mapMutations(["SET_LOGIN_MODAL"])
   },
   methods: {
-    ...mapMutations(['SET_LOGIN', 'SET_LOGIN_MODAL', 'SET_REGISTER_MODAL']),
+    ...mapMutations(["SET_LOGIN", "SET_LOGIN_MODAL", "SET_REGISTER_MODAL"]),
     getLoginData() {
       // this.loginData = localStorage.getItem('login');
       // this.SET_LOGIN(this.loginData);
     },
     logout() {
-      console.log('test');
-      sessionStorage.removeItem('login');
-      this.SET_LOGIN('');
+      console.log("test");
+      sessionStorage.removeItem("login");
+      this.SET_LOGIN("");
       //중복 이동 방지
-      if (this.$route.path !== '/') {
-        this.$router.push('/');
+      if (this.$route.path !== "/") {
+        this.$router.push("/");
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

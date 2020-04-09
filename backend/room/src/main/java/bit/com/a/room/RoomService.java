@@ -43,6 +43,10 @@ public class RoomService {
         return roomDao.getRoomMap(dto);
     }
 
+    public List<RoomDto> getRoomMapList() {
+        return roomDao.getRoomMapList();
+    }
+
     // 방 등록 방 + 옵션
     /*
      * public int addRoom(RoomDto dto, RoomOptionDto optionDto) { int room =
