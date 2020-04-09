@@ -52,6 +52,11 @@ public class RoomController {
         return roomService.uploadFile(roomPictureDto) > 0 ? "OK" : "FAIL";
     }
 
+    @PostMapping("/getRoomMap")
+    public RoomDto getRoomMap(RoomDto dto) {
+        return roomService.getRoomMap(dto);
+    }
+
     // @PostMapping("/addroom") // 다중 mapping
     // public String addroom(RoomDto dto, RoomOptionDto optionDto) {
 

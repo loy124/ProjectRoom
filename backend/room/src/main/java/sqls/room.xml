@@ -4,6 +4,69 @@
 <!-- bit.com.a.dao.BbsDao -->
 <mapper namespace="bit.com.a.room.RoomDao">
 
+	<resultMap id="RoomOptionDto" type="bit.com.a.room.RoomOptionDto">
+		<result column="tv" property="tv" />
+		<result column="airconditioner" property="airconditioner" />
+		<result column="refrigerator" property="refrigerator" />
+		<result column="aircleaner" property="aircleaner" />
+		<result column="bed" property="bed" />
+		<result column="microwave" property="microwave" />
+		<result column="washer" property="washer" />
+		<result column="ROOM_id" property="roomId" />
+	</resultMap>
+
+	<resultMap id="RoomPictureDto" type="bit.com.a.room.RoomPictureDto">
+		<result column="file_name" property="fileName" />
+		<result column="ROOM_id" property="roomId" />
+	</resultMap>
+
+	<resultMap id="RoomDtoMap" type="bit.com.a.room.RoomDto">
+		<result column="id" property="id" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="address_detail" property="addressDetail" />
+		<result column="address_detail_zibun" property="addressDetailZibun" />
+		<result column="room_type" property="roomType" />
+		<result column="room_count" property="roomCount" />
+		<result column="deposit" property="deposit" />
+		<result column="lease" property="lease" />
+		<result column="supply_space" property="supplySpace" />
+		<result column="room_space" property="roomSpace" />
+		<result column="move_day" property="moveDay" />
+		<result column="payment_type" property="paymentType" />
+		<result column="floor" property="floor" />
+		<result column="month_rent" property="monthRent" />
+		<result column="readcount" property="readcount" />
+		<result column="wishcount" property="wishcount" />
+		<result column="del" property="del" />
+		<result column="DONG_id" property="DONGId" />
+		<result column="BROKER_id" property="BROKERId" />
+		<result column="created_at" property="createdAt" />
+		<result column="created_by" property="createdBy" />
+		<result column="updated_at" property="updatedAt" />
+		<result column="updated_by" property="updatedBy" />
+		<result column="deleted_at" property="deletedAt" />
+		<result column="deleted_by" property="deletedBy" />
+		<!-- <collection property="roomOptionDto" resultMap="RoomOptionDto" /> -->
+		<!-- 1대1 매핑시에는 association -->
+		<association property="roomOptionDto" column="id" select="getRoomOption"></association>
+		<!-- list등 다수를 가져올때는 collection -->
+		<collection property="roomPictureDtoList" column="id" javaType="java.util.ArrayList" ofType="bit.com.a.room.RoomPictureDto" select="getRoomPicture"></collection>
+	</resultMap>
+
+	<select id="getRoomOption" resultType="bit.com.a.room.RoomOptionDto">
+		select * from ROOM_OPTION where ROOM_id = #{id}
+	</select>
+	<!-- collection에서 사용하기위한 select문  -->
+	<select id="getRoomPicture" resultType="bit.com.a.room.RoomPictureDto">
+		select id, file_name, ROOM_id, download_count from ROOM_PICTURE where ROOM_id = #{id}
+	</select>
+
+	<select id="getRoomMap" resultMap="RoomDtoMap">
+		select * from ROOM  where id = #{id}
+		<!-- where ROOM_id = #{id} -->
+	</select>
+
 	<!-- 성공적!!  -->
 	<!--  	 <insert id="addroom" parameterType="bit.com.a.room.RoomDto"  useGeneratedKeys="true" keyProperty="id">
 	 INSERT INTO ROOM(deposit)
@@ -26,6 +89,7 @@
 	  				  #{deposit}, #{lease}, #{supplySpace}, #{roomSpace}, #{moveDay}, #{paymentType},
 	  				#{floor}, #{monthRent}, 0, NOW())  
 	 </insert>
+
 
 	<!-- 파일 업로드 -->
 

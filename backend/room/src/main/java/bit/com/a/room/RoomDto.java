@@ -2,6 +2,7 @@ package bit.com.a.room;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class RoomDto implements Serializable {
 
@@ -56,6 +57,10 @@ public class RoomDto implements Serializable {
 	private String deletedAt;
 
 	private String deletedBy;
+
+	private RoomOptionDto roomOptionDto;
+
+	private List<RoomPictureDto> roomPictureDtoList;
 
 	// 디폴트 생성자
 	public RoomDto() {
@@ -281,6 +286,22 @@ public class RoomDto implements Serializable {
 
 	public void setDeletedBy(String deletedBy) {
 		this.deletedBy = deletedBy;
+	}
+
+	public RoomOptionDto getRoomOptionDto() {
+		return this.roomOptionDto;
+	}
+
+	public void setRoomOptionDto(RoomOptionDto roomOptionDto) {
+		this.roomOptionDto = roomOptionDto;
+	}
+
+	public List<RoomPictureDto> getRoomPictureDtoList() {
+		return this.roomPictureDtoList;
+	}
+
+	public void setRoomPictureDtoList(List<RoomPictureDto> roomPictureDtoList) {
+		this.roomPictureDtoList = roomPictureDtoList;
 	}
 
 	public RoomDto(int id, String title, String content, String addressDetail, String addressDetailZibun, String roomType,

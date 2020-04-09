@@ -11,7 +11,7 @@
     </div>
     <hr />
     <div slot="body">
-      <!-- <notifications group="notifyApp" position="right right" style="margin-right: 30vh;" /> -->
+      <notifications group="notifyApp" position="right right" style="margin-right: 30vh;" />
       <div class="register-information-container">
         <div class="register-information-wrapper">
           <div class="register-title">이메일(아이디)</div>
