@@ -4,6 +4,9 @@ import Toasted from 'vue-toasted';
 import VueTypedJs from 'vue-typed-js';
 import Notifications from 'vue-notification';
 import VCalendar from 'v-calendar';
+import VueSlider from 'vue-slider-component';
+import 'vue-slider-component/theme/default.css';
+
 // import ElementUI from 'element-ui';
 // import 'element-ui/lib/theme-chalk/index.css';
 // import locale from 'element-ui/lib/locale/lang/ko';
@@ -27,6 +30,7 @@ Vue.use(VueTypedJs);
 Vue.use(Toasted);
 Vue.use(Notifications);
 Vue.use(VCalendar);
+Vue.component('VueSlider', VueSlider);
 // Vue.use(ElementUI, { locale });
 
 const routes = [{

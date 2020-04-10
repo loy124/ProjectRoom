@@ -24,7 +24,7 @@ public class RoomOptionDto implements Serializable {
 
 	// 기본 생성자
 	public RoomOptionDto() {
-		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override
