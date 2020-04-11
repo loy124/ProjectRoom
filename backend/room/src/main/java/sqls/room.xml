@@ -71,7 +71,7 @@
 
 	<!-- 리스트 가져오기 -->
 	<select id="getRoomMapList" resultMap="RoomDtoMap">
-		select * from ROOM 
+		select * from ROOM ORDER BY created_at DESC LIMIT 10 OFFSET 0;
 	</select>
 
 	<!-- 성공적!!  -->

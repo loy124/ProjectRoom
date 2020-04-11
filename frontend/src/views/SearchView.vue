@@ -3,58 +3,31 @@
     <div slot="banner">
       <div class="search-option-container">
         <div class="search-option-wrapper1">
-          <div
-            @mousedown="closeEvent"
-            class="search-option-search-input-wrapper"
-          >
+          <div @mousedown="closeEvent" class="search-option-search-input-wrapper">
             <input placeholder="신림동 원룸" />
           </div>
           <div class="search-option-option search-option-option1">
-            <span
-              @click="openEvent('option1')"
-              class="search-option-option-wrapper"
-              >원룸, 투·쓰리룸, 오피스텔</span
-            >
-            <i
-              @click="openEvent('option1')"
-              class="search-option-option-arrow-wrapper"
-            >
-              <img
-                v-if="!optionModalType.option1"
-                src="../assets/down-arrow.png"
-              />
+            <span @click="openEvent('option1')" class="search-option-option-wrapper">원룸, 투·쓰리룸, 오피스텔</span>
+            <i @click="openEvent('option1')" class="search-option-option-arrow-wrapper">
+              <img v-if="!optionModalType.option1" src="../assets/down-arrow.png" />
               <img v-else src="../assets/up-arrow.png" />
             </i>
             <div>
               <div v-if="optionModalType.option1" class="option-modal-wrapper">
                 <div class="option-modal-type-title">방종류</div>
-                <div class="option-modal-type-sub-title">
-                  중복선택이 가능합니다
-                </div>
+                <div class="option-modal-type-sub-title">중복선택이 가능합니다</div>
                 <div class="option-modal-type-wrapper">
                   <div class="option-modal-check-wrapper">
                     <label class="login-check checkbox">
-                      <input
-                        v-model="roomTypeOption"
-                        type="checkbox"
-                        value="one"
-                      />
+                      <input v-model="roomTypeOption" type="checkbox" value="one" />
                       <span>원룸</span>
                     </label>
                     <label class="login-check checkbox">
-                      <input
-                        v-model="roomTypeOption"
-                        type="checkbox"
-                        value="twoOrThree"
-                      />
+                      <input v-model="roomTypeOption" type="checkbox" value="twoOrThree" />
                       <span>투·쓰리룸</span>
                     </label>
                     <label class="login-check checkbox">
-                      <input
-                        v-model="roomTypeOption"
-                        type="checkbox"
-                        value="officetel"
-                      />
+                      <input v-model="roomTypeOption" type="checkbox" value="officetel" />
                       <span>오피스텔</span>
                     </label>
                   </div>
@@ -63,51 +36,27 @@
             </div>
           </div>
           <div class="search-option-option search-option-option2">
-            <span
-              @click="openEvent('option2')"
-              class="search-option-option-wrapper"
-              >월세,전세,매매</span
-            >
-            <i
-              @click="openEvent('option2')"
-              class="search-option-option-arrow-wrapper"
-            >
-              <img
-                v-if="!optionModalType.option2"
-                src="../assets/down-arrow.png"
-              />
+            <span @click="openEvent('option2')" class="search-option-option-wrapper">월세,전세,매매</span>
+            <i @click="openEvent('option2')" class="search-option-option-arrow-wrapper">
+              <img v-if="!optionModalType.option2" src="../assets/down-arrow.png" />
               <img v-else src="../assets/up-arrow.png" />
             </i>
             <div>
               <div v-if="optionModalType.option2" class="option-modal-wrapper">
                 <div class="option-modal-type-title">매물 종류</div>
-                <div class="option-modal-type-sub-title">
-                  중복선택이 가능합니다
-                </div>
+                <div class="option-modal-type-sub-title">중복선택이 가능합니다</div>
                 <div class="option-modal-type-wrapper">
                   <div class="option-modal-check-wrapper">
                     <label class="login-check checkbox">
-                      <input
-                        v-model="roomPayOption"
-                        type="checkbox"
-                        value="one"
-                      />
+                      <input v-model="roomPayOption" type="checkbox" value="one" />
                       <span>월세</span>
                     </label>
                     <label class="login-check checkbox">
-                      <input
-                        v-model="roomPayOption"
-                        type="checkbox"
-                        value="twoOrThree"
-                      />
+                      <input v-model="roomPayOption" type="checkbox" value="twoOrThree" />
                       <span>전세</span>
                     </label>
                     <label class="login-check checkbox">
-                      <input
-                        v-model="roomPayOption"
-                        type="checkbox"
-                        value="officetel"
-                      />
+                      <input v-model="roomPayOption" type="checkbox" value="officetel" />
                       <span>매매</span>
                     </label>
                   </div>
@@ -117,19 +66,9 @@
           </div>
 
           <div class="search-option-option search-option-option3">
-            <span
-              @click="openEvent('option3')"
-              class="search-option-option-wrapper"
-              >가격대</span
-            >
-            <i
-              @click="openEvent('option3')"
-              class="search-option-option-arrow-wrapper"
-            >
-              <img
-                v-if="!optionModalType.option3"
-                src="../assets/down-arrow.png"
-              />
+            <span @click="openEvent('option3')" class="search-option-option-wrapper">가격대</span>
+            <i @click="openEvent('option3')" class="search-option-option-arrow-wrapper">
+              <img v-if="!optionModalType.option3" src="../assets/down-arrow.png" />
               <img v-else src="../assets/up-arrow.png" />
             </i>
             <div>
@@ -138,65 +77,38 @@
                   <div class="option-modal-check-wrapper">
                     <div class="option-modal-type-pay-wrapper">
                       <label class="login-check checkbox">
-                        <div
-                          class="option-modal-type-title option-modal-type-title-pay"
-                        >
+                        <div class="option-modal-type-title option-modal-type-title-pay">
                           전세
-                          <span class="option-modal-pay-text"
-                            >({{ lease }}만원)</span
-                          >
+                          <span class="option-modal-pay-text">({{ lease }}만원)</span>
                         </div>
                       </label>
-                      <vue-slider
-                        :min="0"
-                        :max="100000"
-                        v-model="lease"
-                      ></vue-slider>
+                      <vue-slider :min="0" :max="100000" v-model="lease"></vue-slider>
                     </div>
 
                     <div class="option-modal-type-pay-wrapper">
                       <label class="login-check checkbox">
-                        <div
-                          class="option-modal-type-title option-modal-type-title-pay"
-                        >
+                        <div class="option-modal-type-title option-modal-type-title-pay">
                           보증금
-                          <span class="option-modal-pay-text">
-                            ({{ deposit > 9999 ? '1억원' : deposit + '만원' }})
-                          </span>
+                          <span
+                            class="option-modal-pay-text"
+                          >({{ deposit > 9999 ? '1억원' : deposit + '만원' }})</span>
                         </div>
                       </label>
 
-                      <vue-slider
-                        :min="0"
-                        :max="10000"
-                        v-model="deposit"
-                      ></vue-slider>
+                      <vue-slider :min="0" :max="10000" v-model="deposit"></vue-slider>
                     </div>
                     <div class="option-modal-type-pay-wrapper">
                       <label class="login-check checkbox">
-                        <div
-                          class="option-modal-type-title option-modal-type-title-pay"
-                        >
+                        <div class="option-modal-type-title option-modal-type-title-pay">
                           월세
-                          <span class="option-modal-pay-text">
-                            ({{ monthRent }}만원)
-                          </span>
+                          <span class="option-modal-pay-text">({{ monthRent }}만원)</span>
                         </div>
                       </label>
-                      <vue-slider
-                        :min="0"
-                        :max="1000"
-                        v-model="monthRent"
-                      ></vue-slider>
+                      <vue-slider :min="0" :max="1000" v-model="monthRent"></vue-slider>
                     </div>
                     <div>
                       <div class="option-modal-delete-option-wrapper">
-                        <div
-                          class="option-modal-delete-option"
-                          @click="deleteOption"
-                        >
-                          조건 삭제
-                        </div>
+                        <div class="option-modal-delete-option" @click="deleteOption">조건 삭제</div>
                       </div>
                     </div>
                   </div>
@@ -206,19 +118,9 @@
           </div>
 
           <div class="search-option-option search-option-option4">
-            <span
-              @click="openEvent('option4')"
-              class="search-option-option-wrapper"
-              >방크기</span
-            >
-            <i
-              @click="openEvent('option4')"
-              class="search-option-option-arrow-wrapper"
-            >
-              <img
-                v-if="!optionModalType.option4"
-                src="../assets/down-arrow.png"
-              />
+            <span @click="openEvent('option4')" class="search-option-option-wrapper">방크기</span>
+            <i @click="openEvent('option4')" class="search-option-option-arrow-wrapper">
+              <img v-if="!optionModalType.option4" src="../assets/down-arrow.png" />
               <img v-else src="../assets/up-arrow.png" />
             </i>
             <div>
@@ -227,28 +129,15 @@
                   <div class="option-modal-check-wrapper">
                     <div class="option-modal-type-pay-wrapper">
                       <label class="login-check checkbox">
-                        <div
-                          class="option-modal-type-title option-modal-type-title-pay"
-                        >
+                        <div class="option-modal-type-title option-modal-type-title-pay">
                           방크기
-                          <span class="option-modal-pay-text"
-                            >({{ roomSpace }}평)</span
-                          >
+                          <span class="option-modal-pay-text">({{ roomSpace }}평)</span>
                         </div>
                       </label>
-                      <vue-slider
-                        :min="0"
-                        :max="300"
-                        v-model="roomSpace"
-                      ></vue-slider>
+                      <vue-slider :min="0" :max="300" v-model="roomSpace"></vue-slider>
                     </div>
                     <div class="option-modal-delete-option-wrapper">
-                      <div
-                        class="option-modal-delete-option"
-                        @click="deleteRoomOption"
-                      >
-                        조건 삭제
-                      </div>
+                      <div class="option-modal-delete-option" @click="deleteRoomOption">조건 삭제</div>
                     </div>
                   </div>
                 </div>
@@ -260,22 +149,30 @@
         </div>
         <div class="search-option-wrapper2">
           <!-- <div>전체필터</div>
-          <div>초기화</div> -->
+          <div>초기화</div>-->
         </div>
       </div>
       <div @click="closeEvent" class="search-result-container">
         <div class="search-room-list-container">
-          <div class="search-room-list-all-count">전체방 1111개</div>
+          <div class="search-room-list-all-count">전체방 {{roomLists.length}}개</div>
           <div class="search-room-list-wrapper-wrapper">
             <div class="search-room-list-wrapper">
               <!-- v-for로 묶을부분 -->
-              <div v-for="l in 30" :key="l" class="search-room-list">
+              <div
+                v-for="(roomList, index) in roomLists"
+                :key="index"
+                class="search-room-list"
+                :id="roomList.id"
+              >
                 <div class="search-room-image-wrapper">
                   <img
+                    v-if="roomList.room_picture_dto_list[0]"
                     class="search-room-image"
-                    src="../assets/room3.jpg"
+                    :src="roomList.room_picture_dto_list[0].file_name"
                     alt="이미지없음"
                   />
+                  <img v-else class="search-room-image" src="../assets/room1.jpg" />
+
                   <img class="heart-image" src="../assets/fillHeart.png" alt />
                   <!-- <img
             v-else
@@ -287,16 +184,21 @@
                 </div>
                 <div class="search-room-list-check">
                   <!-- <div>플러스+</div> -->
-                  <div class="search-room-list-certification">
-                    공인중개사 확인
-                  </div>
+                  <div class="search-room-list-certification">공인중개사 확인</div>
                 </div>
-                <div class="search-room-list-type">원룸</div>
-                <div class="search-room-pay-type">월세 30/32</div>
-                <div class="search-room-detail">2층. 23.14m2</div>
-                <div class="search-room-content">
-                  방3화장실2 아주 넓은 베란다 넓은 우리집 넓은 역세권
-                </div>
+                <!-- 타입 처리부분  -->
+                <div v-if="roomList.room_type === 'apartment'" class="search-room-list-type">아파트</div>
+                <div v-if="roomList.room_type === 'studio'" class="search-room-list-type">오피스텔</div>
+                <div v-if="roomList.room_type === 'house'" class="search-room-list-type">단독주택</div>
+                <div
+                  v-if="roomList.room_type === 'multiunit'"
+                  class="search-room-list-type"
+                >빌라/연립/다세대</div>
+                <div v-if="roomList.room_type === 'flatwithshop'" class="search-room-list-type">상가주택</div>
+
+                <div class="search-room-pay-type">월세 {{roomList.deposit}}/{{roomList.month_rent}}</div>
+                <div class="search-room-detail">{{roomList.floor}}층. {{roomList.room_space}}평</div>
+                <div class="search-room-content">{{roomList.content}}</div>
               </div>
             </div>
             <div>페이지 표시</div>
@@ -308,11 +210,30 @@
   </EtcContainer>
 </template>
 <script scoped>
-import EtcContainer from './EtcContainer';
+import EtcContainer from "./EtcContainer";
+import { request } from "../util/axios";
+import { error } from "../util/notification";
 export default {
-  name: 'app',
+  name: "app",
   components: {
-    EtcContainer,
+    EtcContainer
+  },
+  computed: {
+    //데이터 처리
+    // roomType(element) {
+    //   console.log(element);
+    //   if (element === "apartment") {
+    //     return "아파트";
+    //   } else if (element === "studio") {
+    //     return "오피스텔";
+    //   } else if (element === "house") {
+    //     return "단독주택";
+    //   } else if (element === "multiunit") {
+    //     return "빌라/연립/다세대";
+    //   } else if (element === "flatwithshop") {
+    //     return "상가주택";
+    //   }
+    // }
   },
   data() {
     return {
@@ -323,13 +244,18 @@ export default {
         option2: false,
         option3: false,
         option4: false,
-        option5: false,
+        option5: false
       },
       deposit: 0, //보증금
       lease: 0, //전세
       monthRent: 0, //월세
       roomSpace: 0, //몇평
+      roomLists: []
     };
+  },
+  mounted() {
+    this.getRoomList();
+    console.log("aa");
   },
   methods: {
     openEvent(element) {
@@ -353,8 +279,30 @@ export default {
     deleteRoomOption() {
       this.roomSpace = 0;
     },
+    getRoomList() {
+      request("post", "room/getRoomMapList")
+        .then(res => {
+          console.log(res);
+          //리스트를 data안에 집어넣기
+          this.roomLists = res;
+        })
+        .catch(error => console.log(error));
+    }
   },
-  mounted() {},
+  roomType(element) {
+    console.log(element);
+    if (element === "apartment") {
+      return "아파트";
+    } else if (element === "studio") {
+      return "오피스텔";
+    } else if (element === "house") {
+      return "단독주택";
+    } else if (element === "multiunit") {
+      return "빌라/연립/다세대";
+    } else if (element === "flatwithshop") {
+      return "상가주택";
+    }
+  }
 };
 </script>
 <style>
@@ -535,6 +483,7 @@ export default {
   padding-left: 15px;
   margin-bottom: 50px;
   position: relative;
+  cursor: pointer;
 }
 .search-room-image-wrapper {
   height: 145px;
@@ -544,6 +493,9 @@ export default {
   height: 100%;
   position: relative;
   z-index: 99;
+}
+.search-room-image:hover {
+  opacity: 0.5;
 }
 .heart-image {
   position: relative;
