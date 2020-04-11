@@ -6,7 +6,10 @@
           <div @mousedown="closeEvent" class="search-option-search-input-wrapper">
             <input placeholder="신림동 원룸" />
           </div>
-          <div class="search-option-option search-option-option1">
+          <div
+            :class="{ 'search-option-active' : optionModalType.option1}"
+            class="search-option-option search-option-option1"
+          >
             <span @click="openEvent('option1')" class="search-option-option-wrapper">원룸, 투·쓰리룸, 오피스텔</span>
             <i @click="openEvent('option1')" class="search-option-option-arrow-wrapper">
               <img v-if="!optionModalType.option1" src="../assets/down-arrow.png" />
@@ -35,7 +38,10 @@
               </div>
             </div>
           </div>
-          <div class="search-option-option search-option-option2">
+          <div
+            :class="{ 'search-option-active' : optionModalType.option2}"
+            class="search-option-option search-option-option2"
+          >
             <span @click="openEvent('option2')" class="search-option-option-wrapper">월세,전세,매매</span>
             <i @click="openEvent('option2')" class="search-option-option-arrow-wrapper">
               <img v-if="!optionModalType.option2" src="../assets/down-arrow.png" />
@@ -65,7 +71,10 @@
             </div>
           </div>
 
-          <div class="search-option-option search-option-option3">
+          <div
+            :class="{ 'search-option-active' : optionModalType.option3}"
+            class="search-option-option search-option-option3"
+          >
             <span @click="openEvent('option3')" class="search-option-option-wrapper">가격대</span>
             <i @click="openEvent('option3')" class="search-option-option-arrow-wrapper">
               <img v-if="!optionModalType.option3" src="../assets/down-arrow.png" />
@@ -117,7 +126,10 @@
             </div>
           </div>
 
-          <div class="search-option-option search-option-option4">
+          <div
+            :class="{ 'search-option-active' : optionModalType.option4}"
+            class="search-option-option search-option-option4"
+          >
             <span @click="openEvent('option4')" class="search-option-option-wrapper">방크기</span>
             <i @click="openEvent('option4')" class="search-option-option-arrow-wrapper">
               <img v-if="!optionModalType.option4" src="../assets/down-arrow.png" />
@@ -158,11 +170,15 @@
           <div class="search-room-list-wrapper-wrapper">
             <div class="search-room-list-wrapper">
               <!-- v-for로 묶을부분 -->
-              <div
+
+              <!-- 동적 라우팅 -->
+              <router-link
                 v-for="(roomList, index) in roomLists"
                 :key="index"
                 class="search-room-list"
                 :id="roomList.id"
+                :to="`detail/${roomList.id}`"
+                style="text-decoration:none; outline: none; color:#222222;"
               >
                 <div class="search-room-image-wrapper">
                   <img
@@ -173,7 +189,12 @@
                   />
                   <img v-else class="search-room-image" src="../assets/room1.jpg" />
 
-                  <img class="heart-image" src="../assets/fillHeart.png" alt />
+                  <img
+                    @click.prevent.stop="clickImage(roomList.id)"
+                    class="heart-image"
+                    src="../assets/fillHeart.png"
+                    alt
+                  />
                   <!-- <img
             v-else
             class="heart-image"
@@ -199,7 +220,7 @@
                 <div class="search-room-pay-type">월세 {{roomList.deposit}}/{{roomList.month_rent}}</div>
                 <div class="search-room-detail">{{roomList.floor}}층. {{roomList.room_space}}평</div>
                 <div class="search-room-content">{{roomList.content}}</div>
-              </div>
+              </router-link>
             </div>
             <div>페이지 표시</div>
           </div>
@@ -287,20 +308,9 @@ export default {
           this.roomLists = res;
         })
         .catch(error => console.log(error));
-    }
-  },
-  roomType(element) {
-    console.log(element);
-    if (element === "apartment") {
-      return "아파트";
-    } else if (element === "studio") {
-      return "오피스텔";
-    } else if (element === "house") {
-      return "단독주택";
-    } else if (element === "multiunit") {
-      return "빌라/연립/다세대";
-    } else if (element === "flatwithshop") {
-      return "상가주택";
+    },
+    clickImage(id) {
+      console.log("heart click");
     }
   }
 };
@@ -317,6 +327,7 @@ export default {
   border: 1px solid #dddddddd;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px;
 }
+
 .search-option-wrapper1 {
   display: flex;
   align-items: center;
@@ -367,10 +378,11 @@ export default {
   align-items: center;
   border: 1px solid #dddddd;
   padding: 0 10px;
+  border-radius: 5px;
 }
 
 .search-option-option:hover {
-  background-color: #eeeeee;
+  /* background-color: #eeeeee; */
 }
 
 .search-option-option1 {
@@ -406,6 +418,11 @@ export default {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+.search-option-active {
+  background-color: #006cff;
+  color: #fff;
+  border: none;
 }
 
 .option-modal-wrapper {
@@ -466,7 +483,7 @@ export default {
 .search-room-list-wrapper-wrapper {
   overflow-x: hidden;
   overflow-y: auto;
-  height: 500px;
+  height: 80vh;
 
   /* z-index: 101; */
 }
@@ -512,7 +529,7 @@ export default {
 }
 
 .search-room-pay-type {
-  margin-top: 10px;
+  margin-top: 5px;
   font-size: 20px;
   font-weight: bold;
 }
@@ -520,10 +537,11 @@ export default {
 .search-room-detail {
   color: #666666;
   font-size: 14px;
-  margin-top: 10px;
+  margin-top: 5px;
   font-weight: 100;
 }
 .search-room-content {
+  margin-top: 2px;
   color: #666666;
   font-size: 14px;
   width: 100%;

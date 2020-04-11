@@ -17,6 +17,7 @@ import Attention from '../views/Attention.vue';
 import Mypage from '../views/MyPage.vue';
 import SellRoom from '../views/SellRoom.vue';
 import SearchView from '../views/SearchView.vue';
+import RoomDetail from '../views/RoomDetail.vue';
 //컴포넌트쪽
 import RecentSearchRoom from '../components/content2/RecentSearchRoom.vue';
 import KeepRoom from '../components/content2/KeepRoom.vue';
@@ -39,13 +40,13 @@ const routes = [{
         component: Main,
         children: [{
                 path: '/',
-                component: RecentSearchRoom,
+                component: RecentSearchRoom
             },
             {
                 path: '/keep',
-                component: KeepRoom,
-            },
-        ],
+                component: KeepRoom
+            }
+        ]
     },
 
     {
@@ -55,7 +56,7 @@ const routes = [{
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/About.vue'),
+            import ( /* webpackChunkName: "about" */ '../views/About.vue')
     },
 
     {
@@ -64,13 +65,13 @@ const routes = [{
         component: Attention,
         children: [{
                 path: '/',
-                component: RecentRoomBanner,
+                component: RecentRoomBanner
             },
             {
                 path: '/attention/keep',
-                component: KeepRoomBanner,
-            },
-        ],
+                component: KeepRoomBanner
+            }
+        ]
     },
     {
         path: '/mypage',
@@ -78,8 +79,8 @@ const routes = [{
         component: Mypage,
         children: [{
             path: '/',
-            component: Profile,
-        }, ],
+            component: Profile
+        }]
     },
     {
         path: '/sellRoom',
@@ -87,13 +88,18 @@ const routes = [{
         component: SellRoom,
         children: [{
             path: '/',
-            component: RoomWrite,
-        }, ],
+            component: RoomWrite
+        }]
     },
     {
         path: '/search',
         name: 'search',
-        component: SearchView,
+        component: SearchView
+    },
+    {
+        path: '/detail/:roomId',
+        name: 'detail',
+        component: RoomDetail
     },
     {
         path: '/*',
@@ -102,14 +108,14 @@ const routes = [{
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/About.vue'),
-    },
+            import ( /* webpackChunkName: "about" */ '../views/About.vue')
+    }
 ];
 
 const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
-    routes,
+    routes
 });
 
 export default router;
