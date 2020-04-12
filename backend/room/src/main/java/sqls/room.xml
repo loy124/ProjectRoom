@@ -74,6 +74,16 @@
 		select * from ROOM ORDER BY created_at DESC LIMIT 10 OFFSET 0;
 	</select>
 
+	<!-- 디테일 가져오기 -->
+	<select id="getRoomDetail" parameterType="bit.com.a.room.RoomDto" resultMap="RoomDtoMap">
+	select * from ROOM where id = #{id};
+</select>
+
+	<!-- 디테일 파트 공인중개사의 다른 판매글들 보여주기 -->
+	<select id="getRoomBrokerList" parameterType="bit.com.a.room.RoomDto" resultMap="RoomDtoMap">
+	select * from ROOM where not id=#{id} ORDER BY created_at DESC LIMIT 4 OFFSET 0;
+</select>
+
 	<!-- 성공적!!  -->
 	<!--  	 <insert id="addroom" parameterType="bit.com.a.room.RoomDto"  useGeneratedKeys="true" keyProperty="id">
 	 INSERT INTO ROOM(deposit)
@@ -91,10 +101,10 @@
 	<insert id="addroom" parameterType="bit.com.a.room.RoomDto" useGeneratedKeys="true" keyProperty="id">
 	 INSERT INTO ROOM(title, content, address_detail, address_detail_zibun, room_type, room_count, 
 	 				  deposit, lease, supply_space ,room_space, move_day, payment_type,
-	 				 floor, month_rent, del, created_at )
+	 				 floor, month_rent, del, BROKER_id, created_at )
 	  VALUES(#{title}, #{content}, #{addressDetail}, #{addressDetailZibun}, #{roomType}, #{roomCount}, 
 	  				  #{deposit}, #{lease}, #{supplySpace}, #{roomSpace}, #{moveDay}, #{paymentType},
-	  				#{floor}, #{monthRent}, 0, NOW())  
+	  				#{floor}, #{monthRent}, 0, #{BROKERId} , NOW())  
 	 </insert>
 
 

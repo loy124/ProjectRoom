@@ -47,6 +47,14 @@ public class RoomService {
         return roomDao.getRoomMapList();
     }
 
+    public RoomDto getRoomDetail(RoomDto dto) {
+        return roomDao.getRoomDetail(dto);
+    }
+
+    public List<RoomDto> getRoomBrokerList(RoomDto dto) {
+        return roomDao.getRoomBrokerList(dto);
+    }
+
     // 방 등록 방 + 옵션
     /*
      * public int addRoom(RoomDto dto, RoomOptionDto optionDto) { int room =

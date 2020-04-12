@@ -6,20 +6,52 @@
           <div class="room-detail-header-container">
             <div class="room-detail-header-wrapper">
               <div class="room-detail-header-item">
-                <div class="room-detail-header-type">원룸</div>
+                <!-- <div class="room-detail-header-type">원룸</div> -->
+                <div
+                  v-if="roomDetail.room_type === 'apartment'"
+                  class="room-detail-header-type"
+                >
+                  아파트
+                </div>
+                <div
+                  v-if="roomDetail.room_type === 'studio'"
+                  class="room-detail-header-type"
+                >
+                  오피스텔
+                </div>
+                <div
+                  v-if="roomDetail.room_type === 'house'"
+                  class="room-detail-header-type"
+                >
+                  단독주택
+                </div>
+                <div
+                  v-if="roomDetail.room_type === 'multiunit'"
+                  class="room-detail-header-type"
+                >
+                  빌라/연립/다세대
+                </div>
+                <div
+                  v-if="roomDetail.room_type === 'flatwithshop'"
+                  class="room-detail-header-type"
+                >
+                  상가주택
+                </div>
                 <div class="room-detail-header-information">
-                  월세 300/36
+                  월세 {{ roomDetail.deposit }}/{{ roomDetail.month_rent }}
                   <span class="gray-font-8 money-type">만원</span>
                 </div>
               </div>
               <div class="room-detail-header-item">
                 <div class="room-detail-header-type">전용면적</div>
-                <div class="room-detail-header-information">19.86</div>
+                <div class="room-detail-header-information">
+                  {{ roomDetail.room_space }} 평
+                </div>
               </div>
               <div class="room-detail-header-item">
                 <div class="room-detail-header-type">한달 생활비</div>
                 <div class="room-detail-header-information blue-font">
-                  41만 원 + α
+                  {{ Number(roomDetail.month_rent) + 5 }}만 원 + α
                 </div>
               </div>
             </div>
@@ -54,38 +86,78 @@
           <div class="room-detail-content-header">
             <div class="room-detail-content-header-wrapper">
               <div class="room-detail-content-header-title">해당층</div>
-              <div class="room-detail-content-header-content">3층</div>
+              <div class="room-detail-content-header-content">
+                {{ roomDetail.floor }}층
+              </div>
             </div>
             <div class="room-detail-content-header-wrapper">
               <div class="room-detail-content-header-title">전용/공급면적</div>
-              <div class="room-detail-content-header-content">16.52/26.44</div>
+              <div class="room-detail-content-header-content">
+                <!-- computed -->
+                {{ roomSpaceToM }} / {{ supplySpaceToM }}㎡
+              </div>
             </div>
             <div class="room-detail-content-header-wrapper">
               <div class="room-detail-content-header-title">
                 전용/공급면적(평)
               </div>
-              <div class="room-detail-content-header-content">16.52/26.44</div>
+              <div class="room-detail-content-header-content">
+                {{ roomDetail.room_space }}/{{ roomDetail.supply_space }}평
+              </div>
             </div>
             <div class="room-detail-content-header-wrapper">
               <div class="room-detail-content-header-title">입주가능일</div>
-              <div class="room-detail-content-header-content">2020-04-12</div>
+              <div class="room-detail-content-header-content">
+                <!-- {{ roomDetail.move_day }} -->
+                <div style="width:150px; ">
+                  <v-date-picker
+                    style="pointer-events:none;"
+                    v-model="moveDate"
+                    :input-props="{
+                      placeholder: '입주가능한 날짜를 선택하세요',
+                      readonly: true,
+                      hidePopover: true
+                    }"
+                    :formatInput="false"
+                  />
+                </div>
+              </div>
             </div>
           </div>
           <div class="room-detail-content-image-container">
             <div class="room-detail-content-image-wrapper1">
-              <img src="../assets/room1.jpg" />
+              <!-- <img src="../assets/room1.jpg" /> -->
+              <img
+                v-if="imagePrint(0)"
+                :src="roomDetail.room_picture_dto_list[0].file_name"
+              />
+              <!-- {{ roomDetail.room_picture_dto_list[3].file_name }} -->
             </div>
             <div class="room-detail-content-image-wrapper2">
               <div class="room-detail-content-image-wrapper3">
-                <img src="../assets/room2.jpg" />
-                <img src="../assets/room3.jpg" />
+                <img
+                  v-if="imagePrint(1)"
+                  :src="roomDetail.room_picture_dto_list[1].file_name"
+                />
+                <img
+                  v-if="imagePrint(2)"
+                  :src="roomDetail.room_picture_dto_list[2].file_name"
+                />
               </div>
               <div class="room-detail-content-image-wrapper3">
-                <img src="../assets/room4.jpg" />
+                <img
+                  v-if="imagePrint(3)"
+                  :src="roomDetail.room_picture_dto_list[3].file_name"
+                />
+                <div v-else></div>
                 <div class="room-detail-content-click-image">
                   <div class="room-detail-content-click-image-item1">+</div>
                   <div class="room-detail-content-click-image-item2">
-                    10개 전체보기
+                    {{
+                      roomDetail.room_picture_dto_list
+                        ? roomDetail.room_picture_dto_list.length
+                        : ''
+                    }}개 전체보기
                   </div>
                 </div>
               </div>
@@ -94,13 +166,15 @@
 
           <div class="room-detail-content-text-container">
             <div class="room-detail-content-text-title">
-              방크기좋고~가성비굿 💟현관문따로~방문따로~이중문원룸
+              <!-- 방크기좋고~가성비굿 💟현관문따로~방문따로~이중문원룸 -->
+              {{ roomDetail.title }}
             </div>
             <div class="room-detail-content-text-content">
-              단기시 보증금 10만원 실제로 가능하구요, 장기시 보증금
+              {{ roomDetail.content }}
+              <!-- 단기시 보증금 10만원 실제로 가능하구요, 장기시 보증금
               100만원까지만 채워주시면 됩니다. 그리고 침대도 넣어드릴 수
               있습니다. 방 호수별로 금액 5만원 정도 차이는 있습니다~ 실제
-              있는방이니 안심하시고 문의 주세요~^^
+              있는방이니 안심하시고 문의 주세요~^^ -->
             </div>
           </div>
 
@@ -111,11 +185,15 @@
             <div class="room-detail-content-pay-information-wrapper">
               <div class="room-detail-content-pay-information">
                 <div class="room-detail-content-pay-title">월세</div>
-                <div class="room-detail-content-pay-content">10/40 만원</div>
+                <div class="room-detail-content-pay-content">
+                  {{ roomDetail.deposit }}/{{ roomDetail.month_rent }} 만원
+                </div>
               </div>
               <div class="room-detail-content-pay-information">
                 <div class="room-detail-content-pay-title">전세</div>
-                <div class="room-detail-content-pay-content">2000 만원</div>
+                <div class="room-detail-content-pay-content">
+                  {{ roomDetail.lease ? roomDetail.lease + ' 만원' : '' }}
+                </div>
               </div>
               <div class="room-detail-content-pay-information">
                 <div class="room-detail-content-pay-title">관리비</div>
@@ -126,7 +204,7 @@
             <div class="room-detail-content-pay-life-wrapper">
               <div class="room-detail-content-pay-life-title">한달 생활비</div>
               <div class="room-detail-content-pay-life-content">
-                57만원 + α
+                {{ Number(roomDetail.month_rent) + 5 }}만원 + α
                 <span class="room-detail-content-pay-life-content-sub"
                   >(월세+ 관리비)</span
                 >
@@ -137,43 +215,61 @@
           <div class="room-detail-content-option-container">
             <div class="room-detail-content-option-title">옵션</div>
             <div class="room-detail-content-option-item-wrapper">
-              <div class="room-detail-content-option-item">
+              <div
+                v-if="iconPrint('tv')"
+                class="room-detail-content-option-item"
+              >
                 <img src="../assets/television.png" />
                 <div class="room-detail-content-option-item-name">
                   TV
                 </div>
               </div>
-              <div class="room-detail-content-option-item">
+              <div
+                v-if="iconPrint('airconditioner')"
+                class="room-detail-content-option-item"
+              >
                 <img src="../assets/air-conditioner.png" />
                 <div class="room-detail-content-option-item-name">
                   에어컨
                 </div>
               </div>
-              <div class="room-detail-content-option-item">
+              <div
+                v-if="iconPrint('refrigerator')"
+                class="room-detail-content-option-item"
+              >
                 <img src="../assets/fridge.png" />
                 <div class="room-detail-content-option-item-name">
                   냉장고
                 </div>
               </div>
-              <div class="room-detail-content-option-item">
+              <div
+                v-if="iconPrint('aircleaner')"
+                class="room-detail-content-option-item"
+              >
                 <img src="../assets/air-purifier.png" />
                 <div class="room-detail-content-option-item-name">
                   공기청정기
                 </div>
               </div>
-              <div class="room-detail-content-option-item">
+              <div
+                v-if="iconPrint('bed')"
+                class="room-detail-content-option-item"
+              >
                 <img src="../assets/bed.png" />
                 <div class="room-detail-content-option-item-name">
                   침대
                 </div>
               </div>
-              <div class="room-detail-content-option-item">
+              <div
+                v-if="iconPrint('microwave')"
+                class="room-detail-content-option-item"
+              >
                 <img src="../assets/microwave.png" />
                 <div class="room-detail-content-option-item-name">
                   전자렌지
                 </div>
               </div>
-              <div class="room-detail-content-option-item">
+              <div v-if="iconPrint('washer')">
                 <img src="../assets/washer.png" />
                 <div class="room-detail-content-option-item-name">
                   세탁기
@@ -243,15 +339,73 @@
 </template>
 <script scoped>
 import EtcContainer from './EtcContainer';
+import { request } from '../util/axios';
 export default {
   name: 'app',
   components: {
     EtcContainer
   },
   data() {
-    return {};
+    return {
+      roomDetail: [],
+      moveDate: ''
+    };
   },
-  mounted() {}
+  mounted() {
+    console.log(this.$route.params.roomId); //넘겨 받은 아이디
+    this.getRoomDetail();
+  },
+  computed: {
+    supplySpaceToM() {
+      return Math.round(this.roomDetail.supply_space * 3.3058);
+    },
+    roomSpaceToM() {
+      return Math.round(this.roomDetail.room_space * 3.3058);
+    }
+  },
+  methods: {
+    //방 detail 출력
+    getRoomDetail() {
+      request('post', `room/getRoomDetail/${this.$route.params.roomId}`).then(
+        res => {
+          console.log(res);
+          this.roomDetail = res;
+
+          this.moveDate = new Date(res.move_day);
+        }
+      );
+    },
+    //broker의 다른 방 리스트 출력
+    getRoomBrokerList() {
+      request(
+        'post',
+        `room/getRoomBrokerList/${this.$route.params.roomId}`
+      ).then(res => {
+        console.log(res);
+      });
+    },
+    imagePrint(number) {
+      if (
+        this.roomDetail &&
+        this.roomDetail.room_picture_dto_list &&
+        this.roomDetail.room_picture_dto_list.length > number
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    iconPrint(element) {
+      if (
+        this.roomDetail.room_option_dto &&
+        this.roomDetail.room_option_dto[element]
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
 };
 </script>
 <style>
@@ -407,6 +561,7 @@ export default {
   display: flex;
   height: 360px;
   cursor: pointer;
+  border: 1px solid #dddddd;
 }
 
 .room-detail-content-image-wrapper1 {
@@ -430,6 +585,7 @@ export default {
 }
 .room-detail-content-image-wrapper3 > * {
   flex: 1;
+  width: 50%;
 }
 
 .room-detail-content-image-wrapper3 > *:hover {

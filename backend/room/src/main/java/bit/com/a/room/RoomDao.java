@@ -17,7 +17,13 @@ public interface RoomDao {
 
 	public RoomDto getRoomMap(RoomDto dto);
 
+	// 전체 리스트 출력
 	public List<RoomDto> getRoomMapList();
+
+	// room detail 출력
+	public RoomDto getRoomDetail(RoomDto dto);
+
+	public List<RoomDto> getRoomBrokerList(RoomDto dto);
 
 	// 방 등록
 	// public int addRoom(RoomDto dto);

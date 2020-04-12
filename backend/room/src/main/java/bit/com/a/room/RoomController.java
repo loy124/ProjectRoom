@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,6 +61,20 @@ public class RoomController {
     @PostMapping("/getRoomMapList")
     public List<RoomDto> getRoomMapList() {
         return roomService.getRoomMapList();
+    }
+
+    @PostMapping("/getRoomDetail/{id}")
+    public RoomDto getRoomDetail(@PathVariable int id) {
+        RoomDto roomDto = new RoomDto();
+        roomDto.setId(id);
+        return roomService.getRoomDetail(roomDto);
+    }
+
+    @PostMapping("/getRoomBrokerList/{id}")
+    public List<RoomDto> getRoomBrokerList(@PathVariable int id) {
+        RoomDto roomDto = new RoomDto();
+        roomDto.setId(id);
+        return roomService.getRoomBrokerList(roomDto);
     }
 
     // @PostMapping("/addroom") // 다중 mapping
