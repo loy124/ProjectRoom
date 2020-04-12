@@ -18,7 +18,9 @@
               </div>
               <div class="room-detail-header-item">
                 <div class="room-detail-header-type">한달 생활비</div>
-                <div class="room-detail-header-information blue-font">41만 원 + α</div>
+                <div class="room-detail-header-information blue-font">
+                  41만 원 + α
+                </div>
               </div>
             </div>
             <div class="room-detail-broker-info">
@@ -42,14 +44,207 @@
             </div>
           </div>
         </div>
+        <div class="room-detail-content-container">
+          <div class="room-detail-content-check-wrapper">
+            <div class="room-detail-content-check-title">확인매물</div>
+            <div class="room-detail-content-check-content">
+              방주인과 공인중개사가 거래정보를 확인한 매물입니다
+            </div>
+          </div>
+          <div class="room-detail-content-header">
+            <div class="room-detail-content-header-wrapper">
+              <div class="room-detail-content-header-title">해당층</div>
+              <div class="room-detail-content-header-content">3층</div>
+            </div>
+            <div class="room-detail-content-header-wrapper">
+              <div class="room-detail-content-header-title">전용/공급면적</div>
+              <div class="room-detail-content-header-content">16.52/26.44</div>
+            </div>
+            <div class="room-detail-content-header-wrapper">
+              <div class="room-detail-content-header-title">
+                전용/공급면적(평)
+              </div>
+              <div class="room-detail-content-header-content">16.52/26.44</div>
+            </div>
+            <div class="room-detail-content-header-wrapper">
+              <div class="room-detail-content-header-title">입주가능일</div>
+              <div class="room-detail-content-header-content">2020-04-12</div>
+            </div>
+          </div>
+          <div class="room-detail-content-image-container">
+            <div class="room-detail-content-image-wrapper1">
+              <img src="../assets/room1.jpg" />
+            </div>
+            <div class="room-detail-content-image-wrapper2">
+              <div class="room-detail-content-image-wrapper3">
+                <img src="../assets/room2.jpg" />
+                <img src="../assets/room3.jpg" />
+              </div>
+              <div class="room-detail-content-image-wrapper3">
+                <img src="../assets/room4.jpg" />
+                <div class="room-detail-content-click-image">
+                  <div class="room-detail-content-click-image-item1">+</div>
+                  <div class="room-detail-content-click-image-item2">
+                    10개 전체보기
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="room-detail-content-text-container">
+            <div class="room-detail-content-text-title">
+              방크기좋고~가성비굿 💟현관문따로~방문따로~이중문원룸
+            </div>
+            <div class="room-detail-content-text-content">
+              단기시 보증금 10만원 실제로 가능하구요, 장기시 보증금
+              100만원까지만 채워주시면 됩니다. 그리고 침대도 넣어드릴 수
+              있습니다. 방 호수별로 금액 5만원 정도 차이는 있습니다~ 실제
+              있는방이니 안심하시고 문의 주세요~^^
+            </div>
+          </div>
+
+          <div class="room-detail-content-pay-information-container">
+            <div class="room-detail-content-pay-information-title">
+              가격정보
+            </div>
+            <div class="room-detail-content-pay-information-wrapper">
+              <div class="room-detail-content-pay-information">
+                <div class="room-detail-content-pay-title">월세</div>
+                <div class="room-detail-content-pay-content">10/40 만원</div>
+              </div>
+              <div class="room-detail-content-pay-information">
+                <div class="room-detail-content-pay-title">전세</div>
+                <div class="room-detail-content-pay-content">2000 만원</div>
+              </div>
+              <div class="room-detail-content-pay-information">
+                <div class="room-detail-content-pay-title">관리비</div>
+                <div class="room-detail-content-pay-content">5만원</div>
+              </div>
+            </div>
+
+            <div class="room-detail-content-pay-life-wrapper">
+              <div class="room-detail-content-pay-life-title">한달 생활비</div>
+              <div class="room-detail-content-pay-life-content">
+                57만원 + α
+                <span class="room-detail-content-pay-life-content-sub"
+                  >(월세+ 관리비)</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="room-detail-content-option-container">
+            <div class="room-detail-content-option-title">옵션</div>
+            <div class="room-detail-content-option-item-wrapper">
+              <div class="room-detail-content-option-item">
+                <img src="../assets/television.png" />
+                <div class="room-detail-content-option-item-name">
+                  TV
+                </div>
+              </div>
+              <div class="room-detail-content-option-item">
+                <img src="../assets/air-conditioner.png" />
+                <div class="room-detail-content-option-item-name">
+                  에어컨
+                </div>
+              </div>
+              <div class="room-detail-content-option-item">
+                <img src="../assets/fridge.png" />
+                <div class="room-detail-content-option-item-name">
+                  냉장고
+                </div>
+              </div>
+              <div class="room-detail-content-option-item">
+                <img src="../assets/air-purifier.png" />
+                <div class="room-detail-content-option-item-name">
+                  공기청정기
+                </div>
+              </div>
+              <div class="room-detail-content-option-item">
+                <img src="../assets/bed.png" />
+                <div class="room-detail-content-option-item-name">
+                  침대
+                </div>
+              </div>
+              <div class="room-detail-content-option-item">
+                <img src="../assets/microwave.png" />
+                <div class="room-detail-content-option-item-name">
+                  전자렌지
+                </div>
+              </div>
+              <div class="room-detail-content-option-item">
+                <img src="../assets/washer.png" />
+                <div class="room-detail-content-option-item-name">
+                  세탁기
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="room-detail-content-location-container">
+            <div class="room-detail-content-location-title">
+              위치 및 주변 시설
+            </div>
+            <div class="room-detail-content-location-title-sub">
+              서울특별시 관악구 신림동
+            </div>
+            <div class="room-detail-content-location-wrapper">지도</div>
+          </div>
+
+          <div class="room-detail-content-other-room">
+            <!-- <router-link
+                v-for="(roomList, index) in roomLists"
+                :key="index"
+                class="search-room-list"
+                :id="roomList.id"
+                :to="`search/detail/${roomList.id}`"
+                style="text-decoration:none; outline: none; color:#222222;"
+              >
+                <div class="search-room-image-wrapper">
+                  <img
+                    v-if="roomList.room_picture_dto_list[0]"
+                    class="search-room-image"
+                    :src="roomList.room_picture_dto_list[0].file_name"
+                    alt="이미지없음"
+                  />
+                  <img v-else class="search-room-image" src="../assets/room1.jpg" />
+
+                  <img
+                    @click.prevent.stop="clickImage(roomList.id)"
+                    class="heart-image"
+                    src="../assets/fillHeart.png"
+                    alt
+                  />
+          
+                </div>
+                <div class="search-room-list-check">
+                  <!-- <div>플러스+</div>
+                  <div class="search-room-list-certification">공인중개사 확인</div>
+                </div>
+                <!-- 타입 처리부분 
+                <div v-if="roomList.room_type === 'apartment'" class="search-room-list-type">아파트</div>
+                <div v-if="roomList.room_type === 'studio'" class="search-room-list-type">오피스텔</div>
+                <div v-if="roomList.room_type === 'house'" class="search-room-list-type">단독주택</div>
+                <div
+                  v-if="roomList.room_type === 'multiunit'"
+                  class="search-room-list-type"
+                >빌라/연립/다세대</div>
+                <div v-if="roomList.room_type === 'flatwithshop'" class="search-room-list-type">상가주택</div>
+
+                <div class="search-room-pay-type">월세 {{roomList.deposit}}/{{roomList.month_rent}}</div>
+                <div class="search-room-detail">{{roomList.floor}}층. {{roomList.room_space}}평</div>
+                <div class="search-room-content">{{roomList.content}}</div>
+              </router-link> -->
+          </div>
+        </div>
       </div>
     </div>
   </EtcContainer>
 </template>
 <script scoped>
-import EtcContainer from "./EtcContainer";
+import EtcContainer from './EtcContainer';
 export default {
-  name: "app",
+  name: 'app',
   components: {
     EtcContainer
   },
@@ -153,5 +348,242 @@ export default {
 }
 .room-detail-icon-text {
   margin-left: 10px;
+  font-size: 14px;
+}
+.room-detail-content-container {
+  margin-top: 15px;
+}
+
+.room-detail-content-check-wrapper {
+  display: flex;
+  color: #fff;
+  height: 36px;
+  background-color: #3665ce;
+  font-size: 12px;
+  align-items: center;
+  border: 2px solid #0649c0;
+}
+.room-detail-content-check-title {
+  height: inherit;
+  width: 18vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0649c0;
+}
+.room-detail-content-check-content {
+  width: 80vh;
+  padding-left: 20px;
+}
+.room-detail-content-header {
+  display: flex;
+  font-size: 15px;
+  height: 50px;
+  border-bottom: 1px solid #dddddd;
+}
+
+.room-detail-content-header-wrapper {
+  display: flex;
+  flex: 1;
+  align-items: center;
+}
+.room-detail-content-header-title {
+  color: #888888;
+  padding-left: 10px;
+}
+
+.room-detail-content-header-title:before {
+  content: '·';
+  color: rgb(34, 34, 34);
+  margin-right: 7px;
+}
+.room-detail-content-header-content {
+  padding-left: 20px;
+  color: #222222;
+}
+
+.room-detail-content-image-container {
+  margin-top: 40px;
+  display: flex;
+  height: 360px;
+  cursor: pointer;
+}
+
+.room-detail-content-image-wrapper1 {
+  flex: 1;
+  height: 100%;
+}
+.room-detail-content-image-wrapper1 > img {
+  width: 550px;
+  height: 360px;
+}
+.room-detail-content-image-wrapper1 > img:hover {
+  opacity: 0.5;
+}
+.room-detail-content-image-wrapper2 {
+  flex: 1;
+  height: 360px;
+}
+.room-detail-content-image-wrapper3 {
+  display: flex;
+  height: 180px;
+}
+.room-detail-content-image-wrapper3 > * {
+  flex: 1;
+}
+
+.room-detail-content-image-wrapper3 > *:hover {
+  opacity: 0.5;
+}
+
+.room-detail-content-image-wrapper3 > img {
+  width: 50%;
+}
+
+.room-detail-content-click-image {
+  background-color: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.room-detail-content-click-image-item1 {
+  font-size: 60px;
+  font-weight: 100;
+}
+.room-detail-content-click-image-item2 {
+  font-size: 15px;
+}
+
+.room-detail-content-text-container {
+  display: flex;
+  margin-top: 30px;
+}
+.room-detail-content-text-container > div {
+  flex: 1;
+}
+.room-detail-content-text-title {
+  font-size: 26px;
+  padding-right: 140px;
+}
+.room-detail-content-text-content {
+  font-size: 16px;
+  padding-right: 300px;
+  white-space: pre-wrap;
+}
+.room-detail-content-pay-information-container {
+  margin-top: 200px;
+  padding-bottom: 100px;
+  padding-left: 100px;
+  padding-right: 100px;
+}
+.room-detail-content-pay-information-title {
+  font-size: 28px;
+  text-align: center;
+}
+.room-detail-content-pay-information-wrapper {
+  margin-top: 40px;
+  display: flex;
+  border-top: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
+}
+.room-detail-content-pay-information {
+  flex: 1;
+}
+.room-detail-content-pay-information:not(:last-child) {
+  border-right: 1px solid #dddddd;
+}
+.room-detail-content-pay-title,
+.room-detail-content-pay-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+}
+.room-detail-content-pay-title {
+  height: 50px;
+}
+.room-detail-content-pay-content {
+  border-top: 1px solid #dddddd;
+  height: 150px;
+}
+.room-detail-content-pay-life-wrapper {
+  margin-top: 80px;
+  display: flex;
+  align-items: center;
+  height: 112px;
+  padding: 0 55px;
+  border: 1px solid #1476fc;
+  color: #1476fc;
+}
+.room-detail-content-pay-life-title {
+  font-size: 20px;
+  flex: 2;
+}
+
+.room-detail-content-pay-life-content {
+  flex: 8;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.room-detail-content-pay-life-content-sub {
+  margin-left: 10px;
+  color: #444444;
+  font-size: 15px;
+}
+.room-detail-content-option-container {
+  padding: 100px 100px 100px 100px;
+  border-top: 1px solid #dddddddd;
+}
+.room-detail-content-option-title {
+  font-size: 27px;
+  text-align: center;
+}
+
+.room-detail-content-option-item-wrapper {
+  margin-top: 40px;
+  display: flex;
+}
+.room-detail-content-option-item {
+  text-align: center;
+  flex: 1;
+}
+
+.room-detail-content-option-item > img {
+  width: 60px;
+}
+.room-detail-content-option-item-name {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.room-detail-content-location-container {
+  padding: 100px;
+  border-top: 1px solid #dddddd;
+}
+
+.room-detail-content-location-title {
+  text-align: center;
+  font-size: 28px;
+}
+.room-detail-content-location-title-sub {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 15px;
+}
+.room-detail-content-location-wrapper {
+  margin-top: 30px;
+  height: 400px;
+  border: 1px solid #dddddd;
+}
+
+.room-detail-content-other-room {
+  border-top: 1px solid #dddddd;
+  padding: 100px 0;
 }
 </style>

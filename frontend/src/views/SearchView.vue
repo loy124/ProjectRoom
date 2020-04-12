@@ -177,7 +177,7 @@
                 :key="index"
                 class="search-room-list"
                 :id="roomList.id"
-                :to="`detail/${roomList.id}`"
+                :to="`search/detail/${roomList.id}`"
                 style="text-decoration:none; outline: none; color:#222222;"
               >
                 <div class="search-room-image-wrapper">

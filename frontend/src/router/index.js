@@ -97,7 +97,7 @@ const routes = [{
         component: SearchView
     },
     {
-        path: '/detail/:roomId',
+        path: '/search/detail/:roomId',
         name: 'detail',
         component: RoomDetail
     },
