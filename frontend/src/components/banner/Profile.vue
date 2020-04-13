@@ -5,6 +5,7 @@
         <div class="image-profile">
           <img :src="profileImage" />
         </div>
+
         <label for="file">프로필 사진 변경</label>
         <input type="file" id="file" ref="file" @change="profileUpload" />
       </div>

@@ -16,6 +16,8 @@ export default new Vuex.Store({
         localPath: '/', //경로를 저장,
         searchModal: false,
         selectRegister: '',
+        imageList: [],
+        imageListModal: false
     },
     mutations: {
         SET_LOGIN(state, data) {
@@ -43,7 +45,13 @@ export default new Vuex.Store({
         SET_SELECT_REGISTER(state, data) {
             state.selectRegister = data;
         },
+        SET_IMAGE_LIST(state, data) {
+            state.imageList = data;
+        },
+        SET_IMAGE_LIST_MODAL(state, data) {
+            state.imageListModal = data;
+        }
     },
     actions: {},
-    modules: {},
+    modules: {}
 });
