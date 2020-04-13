@@ -25,6 +25,7 @@ import KeepRoomBanner from '../components/banner/KeepRoom.vue';
 import RecentRoomBanner from '../components/banner/RecentSearchRoom.vue';
 import Profile from '../components/banner/Profile.vue';
 import RoomWrite from '../components/banner/RoomWrite.vue';
+import store from '../store';
 
 Vue.use(VueRouter);
 Vue.use(VueTypedJs);
@@ -116,6 +117,20 @@ const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
     routes
+});
+router.beforeEach((to, from, next) => {
+    // ${//to and from are Route Object,next() must be called to resolve the hook}
+    store.commit('SET_LOADING', true);
+    console.log('hello');
+    next();
+});
+
+router.afterEach(route => {
+    // ${//these hooks do not get a next function and cannot affect the navigation}
+    // setTimeout(() => {
+    store.commit('SET_LOADING', false);
+    // }, 500);
+    console.log('hello');
 });
 
 export default router;

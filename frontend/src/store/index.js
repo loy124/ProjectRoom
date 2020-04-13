@@ -17,7 +17,8 @@ export default new Vuex.Store({
         searchModal: false,
         selectRegister: '',
         imageList: [],
-        imageListModal: false
+        imageListModal: false,
+        loading: false //로딩 컴포넌트를 위함
     },
     mutations: {
         SET_LOGIN(state, data) {
@@ -50,6 +51,9 @@ export default new Vuex.Store({
         },
         SET_IMAGE_LIST_MODAL(state, data) {
             state.imageListModal = data;
+        },
+        SET_LOADING(state, data) {
+            state.loading = data;
         }
     },
     actions: {},

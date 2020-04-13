@@ -16,7 +16,7 @@
     <!-- <div id="header-nav">
                 <div class="container">header-nav</div>
     </div>-->
-
+    <Spinner />
     <router-view />
     <!-- //header -->
 
@@ -51,18 +51,20 @@
   </div>
 </template>
 <script>
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Spinner from "./components/etc/Spinner";
 export default {
-  name: 'app',
+  name: "app",
   components: {
     Navbar,
     Footer,
+    Spinner
   },
   data() {
     return {};
   },
-  mounted() {},
+  mounted() {}
 };
 </script>
 <style>
