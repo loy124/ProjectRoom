@@ -33,12 +33,24 @@ public class UserDto {
 	private String unRegisteredAt;
 
 	private String unRegisteredBy;
-	
+
+	// 회원수 저장용
+	private int count;
+
+	public int getCount() {
+		return this.count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
 
 	public UserDto() {
 	}
 
-	public UserDto(int id, String userId, String userPassword, String name, String email, int age, String phoneNumber, String address, String auth, String registeredAt, String registeredBy, String updatedAt, String updatedBy, String profileImage, String unRegisteredAt, String unRegisteredBy) {
+	public UserDto(int id, String userId, String userPassword, String name, String email, int age, String phoneNumber,
+			String address, String auth, String registeredAt, String registeredBy, String updatedAt, String updatedBy,
+			String profileImage, String unRegisteredAt, String unRegisteredBy) {
 		this.id = id;
 		this.userId = userId;
 		this.userPassword = userPassword;
@@ -265,28 +277,14 @@ public class UserDto {
 		return this;
 	}
 
-
-
 	@Override
 	public String toString() {
-		return "{" +
-			" id='" + getId() + "'" +
-			", userId='" + getUserId() + "'" +
-			", userPassword='" + getUserPassword() + "'" +
-			", name='" + getName() + "'" +
-			", email='" + getEmail() + "'" +
-			", age='" + getAge() + "'" +
-			", phoneNumber='" + getPhoneNumber() + "'" +
-			", address='" + getAddress() + "'" +
-			", auth='" + getAuth() + "'" +
-			", registeredAt='" + getRegisteredAt() + "'" +
-			", registeredBy='" + getRegisteredBy() + "'" +
-			", updatedAt='" + getUpdatedAt() + "'" +
-			", updatedBy='" + getUpdatedBy() + "'" +
-			", profileImage='" + getProfileImage() + "'" +
-			", unRegisteredAt='" + getUnRegisteredAt() + "'" +
-			", unRegisteredBy='" + getUnRegisteredBy() + "'" +
-			"}";
+		return "{" + " id='" + getId() + "'" + ", userId='" + getUserId() + "'" + ", userPassword='" + getUserPassword()
+				+ "'" + ", name='" + getName() + "'" + ", email='" + getEmail() + "'" + ", age='" + getAge() + "'"
+				+ ", phoneNumber='" + getPhoneNumber() + "'" + ", address='" + getAddress() + "'" + ", auth='" + getAuth() + "'"
+				+ ", registeredAt='" + getRegisteredAt() + "'" + ", registeredBy='" + getRegisteredBy() + "'" + ", updatedAt='"
+				+ getUpdatedAt() + "'" + ", updatedBy='" + getUpdatedBy() + "'" + ", profileImage='" + getProfileImage() + "'"
+				+ ", unRegisteredAt='" + getUnRegisteredAt() + "'" + ", unRegisteredBy='" + getUnRegisteredBy() + "'" + "}";
 	}
-	
+
 }

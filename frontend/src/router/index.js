@@ -127,9 +127,9 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach(route => {
     // ${//these hooks do not get a next function and cannot affect the navigation}
-    // setTimeout(() => {
-    store.commit('SET_LOADING', false);
-    // }, 500);
+    setTimeout(() => {
+        store.commit('SET_LOADING', false);
+    }, 100);
     console.log('hello');
 });
 

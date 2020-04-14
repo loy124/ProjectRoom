@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- bit.com.a.admin.AdminDao -->
+<mapper namespace="bit.com.a.admin.AdminDao">
+    <select id="adminLogin" parameterType="bit.com.a.admin.AdminDto" resultType="bit.com.a.admin.AdminDto">
+        SELECT ID, ADMIN_ID, ADMIN_PASSWORD, NAME, REGISTERED_AT, UN_REGISTERED_AT, AUTH
+        FROM ADMIN_USER
+        WHERE ADMIN_ID=#{adminId} AND ADMIN_PASSWORD=#{adminPassword}
+    </select>
+
+    <update id="brokerPermission" parameterType="java.lang.Integer">
+        UPDATE BROKER
+        SET AUTH=4
+        WHERE ID=#{id}
+    </update>
+    
+    <select id="getMemberList" resultType="bit.com.a.user.UserDto">
+        SELECT *
+        FROM USER
+    </select>
+
+    <select id="getAllBrokerList" parameterType="bit.com.a.admin.Param" resultType="bit.com.a.broker.BrokerDto">
+        SELECT *
+        FROM BROKER
+        WHERE 1=1
+        <if test="s_category != null and s_category != '' and s_keyword != null and s_keyword != ''">
+            <if test="s_category == 'brokerId'">
+                AND BROKER_ID LIKE CONCAT("%", #{s_keyword}, "%")
+            </if>
+            <if test="s_category == 'name'">
+                AND NAME LIKE CONCAT("%", #{s_keyword}, "%")
+            </if>
+        </if>
+        ORDER BY REGISTERED_AT DESC
+        LIMIT #{start}, 5;
+    </select>
+
+    <select id="getAllBrokerCount" parameterType="bit.com.a.admin.Param" resultType="java.lang.Integer">
+        SELECT IFNULL(COUNT(*), 0) AS CNT
+        FROM BROKER
+        WHERE 1=1
+        <if test="s_category != null and s_category != '' and s_keyword != null and s_keyword != ''">
+            <if test="s_category == 'brokerId'">
+                AND BROKER_ID LIKE CONCAT("%", #{s_keyword}, "%")
+            </if>
+            <if test="s_category == 'name'">
+                AND NAME LIKE CONCAT("%", #{s_keyword}, "%")
+            </if>
+        </if>
+    </select>
+
+    <select id="getBrokerDetail" parameterType="java.lang.Integer" resultType="bit.com.a.broker.BrokerDto">
+        SELECT *
+        FROM BROKER
+        WHERE ID=#{id}
+    </select>
+
+    <update id="brokerForcedDeletion" parameterType="java.lang.Integer">
+        UPDATE BROKER
+        SET AUTH=7, UN_REGISTERED_AT=NOW(), UN_REGISTERED_BY="관리자"
+        WHERE ID=#{id}
+    </update>
+
+    <update id="brokerOutOfPermission" parameterType="java.lang.Integer">
+        UPDATE BROKER
+        SET AUTH=5
+        WHERE ID=#{id}
+    </update>
+
+    <select id="getUserList" parameterType="bit.com.a.admin.Param" resultType="bit.com.a.user.UserDto">
+        SELECT *
+        FROM USER
+        WHERE 1=1
+        <if test="s_category != null and s_category != '' and s_keyword != null and s_keyword != ''">
+            <if test="s_category == 'userId'">
+                AND USER_ID LIKE CONCAT("%", #{s_keyword}, "%")
+            </if>
+            <if test="s_category == 'name'">
+                AND NAME LIKE CONCAT("%", #{s_keyword}, "%")
+            </if>
+        </if>
+        ORDER BY REGISTERED_AT DESC
+        LIMIT #{start}, 5;
+    </select>
+
+    <select id="getUserCount" parameterType="bit.com.a.admin.Param" resultType="java.lang.Integer">
+        SELECT IFNULL(COUNT(*), 0) AS CNT
+        FROM USER
+        WHERE 1=1
+        <if test="s_category != null and s_category != '' and s_keyword != null and s_keyword != ''">
+            <if test="s_category == 'userId'">
+                AND USER_ID LIKE CONCAT("%", #{s_keyword}, "%")
+            </if>
+            <if test="s_category == 'name'">
+                AND NAME LIKE CONCAT("%", #{s_keyword}, "%")
+            </if>
+        </if>
+    </select>
+
+    <select id="notPermittedBrokerCount" parameterType="bit.com.a.admin.Param" resultType="java.lang.Integer">
+        SELECT IFNULL(COUNT(*), 0) AS CNT
+        FROM BROKER
+        WHERE AUTH=5
+        <if test="s_category != null and s_category != '' and s_keyword != null and s_keyword != ''">
+            <if test="s_category == 'brokerId'">
+                AND BROKER_ID LIKE CONCAT("%", #{s_keyword}, "%")
+            </if>
+            <if test="s_category == 'name'">
+                AND NAME LIKE CONCAT("%", #{s_keyword}, "%")
+            </if>
+        </if>
+    </select>
+
+    <select id="notPermittedBrokerList" parameterType="bit.com.a.admin.Param" resultType="bit.com.a.broker.BrokerDto">
+        SELECT *
+        FROM BROKER
+        WHERE AUTH=5
+        <if test="s_category != null and s_category != '' and s_keyword != null and s_keyword != ''">
+            <if test="s_category == 'brokerId'">
+                AND BROKER_ID LIKE CONCAT("%", #{s_keyword}, "%")
+            </if>
+            <if test="s_category == 'name'">
+                AND NAME LIKE CONCAT("%", #{s_keyword}, "%")
+            </if>
+        </if>
+        ORDER BY REGISTERED_AT DESC
+        LIMIT #{start}, 5;
+    </select>
+
+    <select id="getUserDetail" parameterType="java.lang.Integer" resultType="bit.com.a.user.UserDto">
+        SELECT *
+        FROM USER
+        WHERE ID=#{id}
+    </select>
+
+    <update id="userForcedDeletion" parameterType="java.lang.Integer">
+        UPDATE USER
+        SET AUTH=6, UN_REGISTERED_AT=NOW(), UN_REGISTERED_BY="관리자"
+        WHERE ID=#{id}
+    </update>
+
+    <select id="getGoodbyeBrokerCount" parameterType="bit.com.a.admin.Param" resultType="java.lang.Integer">
+        SELECT IFNULL(COUNT(*), 0) AS CNT
+        FROM BROKER
+        WHERE AUTH=7
+        <if test="s_category != null and s_category != '' and s_keyword != null and s_keyword != ''">
+            <if test="s_category == 'brokerId'">
+                AND BROKER_ID LIKE CONCAT("%", #{s_keyword}, "%")
+            </if>
+            <if test="s_category == 'name'">
+                AND NAME LIKE CONCAT("%", #{s_keyword}, "%")
+            </if>
+        </if>
+    </select>
+
+    <select id="getGoodByeBrokerList" parameterType="bit.com.a.admin.Param" resultType="bit.com.a.broker.BrokerDto">
+        SELECT *
+        FROM BROKER
+        WHERE AUTH=7
+        <if test="s_category != null and s_category != '' and s_keyword != null and s_keyword != ''">
+            <if test="s_category == 'brokerId'">
+                AND BROKER_ID LIKE CONCAT("%", #{s_keyword}, "%")
+            </if>
+            <if test="s_category == 'name'">
+                AND NAME LIKE CONCAT("%", #{s_keyword}, "%")
+            </if>
+        </if>
+        ORDER BY REGISTERED_AT DESC
+        LIMIT #{start}, 5;
+    </select>
+    
+    <select id="getRoomCount" resultType="bit.com.a.admin.DateParam">
+        SELECT  IFNULL(COUNT(case when TIMESTAMPDIFF(DAY, SUBSTR(created_at, 1, 10), SUBSTR(NOW(), 1, 10)) = 0 then 1 end), 0) AS TIMESTAMPDIFF0,
+                IFNULL(COUNT(case when TIMESTAMPDIFF(DAY, SUBSTR(created_at, 1, 10), SUBSTR(NOW(), 1, 10)) = 1 then 1 end), 0) AS TIMESTAMPDIFF1,
+                IFNULL(COUNT(case when TIMESTAMPDIFF(DAY, SUBSTR(created_at, 1, 10), SUBSTR(NOW(), 1, 10)) = 2 then 1 end), 0) AS TIMESTAMPDIFF2,
+                IFNULL(COUNT(case when TIMESTAMPDIFF(DAY, SUBSTR(created_at, 1, 10), SUBSTR(NOW(), 1, 10)) = 3 then 1 end), 0) AS TIMESTAMPDIFF3,
+                IFNULL(COUNT(case when TIMESTAMPDIFF(DAY, SUBSTR(created_at, 1, 10), SUBSTR(NOW(), 1, 10)) = 4 then 1 end), 0) AS TIMESTAMPDIFF4,
+                IFNULL(COUNT(case when TIMESTAMPDIFF(DAY, SUBSTR(created_at, 1, 10), SUBSTR(NOW(), 1, 10)) = 5 then 1 end), 0) AS TIMESTAMPDIFF5,
+                IFNULL(COUNT(case when TIMESTAMPDIFF(DAY, SUBSTR(created_at, 1, 10), SUBSTR(NOW(), 1, 10)) = 6 then 1 end), 0) AS TIMESTAMPDIFF6
+        FROM ROOM;
+    <!--
+        SELECT IFNULL(COUNT(*), 0) AS TIMESTAMPDIFF0
+        FROM ROOM
+        WHERE TIMESTAMPDIFF(DAY, SUBSTR(created_at, 1, 10), SUBSTR(NOW(), 1, 10)) = 0;
+
+        SELECT IFNULL(COUNT(*), 0) AS TIMESTAMPDIFF1
+        FROM ROOM
+        WHERE TIMESTAMPDIFF(DAY, SUBSTR(created_at, 1, 10), SUBSTR(NOW(), 1, 10)) = 1;
+
+        SELECT IFNULL(COUNT(*), 0) AS TIMESTAMPDIFF2
+        FROM ROOM
+        WHERE TIMESTAMPDIFF(DAY, SUBSTR(created_at, 1, 10), SUBSTR(NOW(), 1, 10)) = 2;
+
+        SELECT IFNULL(COUNT(*), 0) AS TIMESTAMPDIFF3
+        FROM ROOM
+        WHERE TIMESTAMPDIFF(DAY, SUBSTR(created_at, 1, 10), SUBSTR(NOW(), 1, 10)) = 3;
+
+        SELECT IFNULL(COUNT(*), 0) AS TIMESTAMPDIFF4
+        FROM ROOM
+        WHERE TIMESTAMPDIFF(DAY, SUBSTR(created_at, 1, 10), SUBSTR(NOW(), 1, 10)) = 4;
+
+        SELECT IFNULL(COUNT(*), 0) AS TIMESTAMPDIFF5
+        FROM ROOM
+        WHERE TIMESTAMPDIFF(DAY, SUBSTR(created_at, 1, 10), SUBSTR(NOW(), 1, 10)) = 5;
+
+        SELECT IFNULL(COUNT(*), 0) AS TIMESTAMPDIFF6
+        FROM ROOM
+        WHERE TIMESTAMPDIFF(DAY, SUBSTR(created_at, 1, 10), SUBSTR(NOW(), 1, 10)) = 6;
+    -->
+    </select>
+
+    <select id="getRegisterCount" resultType="bit.com.a.admin.RegiCountParam">
+        SELECT 	IFNULL(COUNT(case when TIMESTAMPDIFF(DAY, SUBSTR(registered_at, 1, 10), SUBSTR(NOW(), 1, 10)) = 0 then 1 end), 0) AS todayRegisterCount,
+		        IFNULL(COUNT(case when TIMESTAMPDIFF(DAY, SUBSTR(registered_at, 1, 10), SUBSTR(NOW(), 1, 10)) = 1 then 1 end), 0) AS yesterdayRegisterCount
+        FROM room.USER;
+    </select>
+
+    <select id="getPaymentList" resultType="bit.com.a.payment.PaymentDto">
+		SELECT *
+		FROM payment
+	</select>
+</mapper>

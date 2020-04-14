@@ -58,6 +58,9 @@ public class RoomDto implements Serializable {
 
 	private String deletedBy;
 
+	// 방의 갯수 저장용
+	private int count;
+
 	private RoomOptionDto roomOptionDto;
 
 	private List<RoomPictureDto> roomPictureDtoList;
@@ -286,6 +289,14 @@ public class RoomDto implements Serializable {
 
 	public void setDeletedBy(String deletedBy) {
 		this.deletedBy = deletedBy;
+	}
+
+	public int getCount() {
+		return this.count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
 	}
 
 	public RoomOptionDto getRoomOptionDto() {

@@ -42,10 +42,24 @@ public class BrokerDto {
 
 	private int writeCount;
 
+	// 회원수 저장용
+	private int count;
+
+	public int getCount() {
+		return this.count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
 	public BrokerDto() {
 	}
 
-	public BrokerDto(int id, String brokerId, String brokerPassword, String name, String email, int age, String phoneNumber, String address, String auth, String certification, String originalCertification, String registeredAt, String registeredBy, String updatedAt, String updatedBy, String profileImage, String originalProfileImage, String unRegisteredAt, String unRegisteredBy, int writeCount) {
+	public BrokerDto(int id, String brokerId, String brokerPassword, String name, String email, int age,
+			String phoneNumber, String address, String auth, String certification, String originalCertification,
+			String registeredAt, String registeredBy, String updatedAt, String updatedBy, String profileImage,
+			String originalProfileImage, String unRegisteredAt, String unRegisteredBy, int writeCount) {
 		this.id = id;
 		this.brokerId = brokerId;
 		this.brokerPassword = brokerPassword;
@@ -328,33 +342,17 @@ public class BrokerDto {
 		return this;
 	}
 
-
 	@Override
 	public String toString() {
-		return "{" +
-			" id='" + getId() + "'" +
-			", brokerId='" + getBrokerId() + "'" +
-			", brokerPassword='" + getBrokerPassword() + "'" +
-			", name='" + getName() + "'" +
-			", email='" + getEmail() + "'" +
-			", age='" + getAge() + "'" +
-			", phoneNumber='" + getPhoneNumber() + "'" +
-			", address='" + getAddress() + "'" +
-			", auth='" + getAuth() + "'" +
-			", certification='" + getCertification() + "'" +
-			", originalCertification='" + getOriginalCertification() + "'" +
-			", registeredAt='" + getRegisteredAt() + "'" +
-			", registeredBy='" + getRegisteredBy() + "'" +
-			", updatedAt='" + getUpdatedAt() + "'" +
-			", updatedBy='" + getUpdatedBy() + "'" +
-			", profileImage='" + getProfileImage() + "'" +
-			", originalProfileImage='" + getOriginalProfileImage() + "'" +
-			", unRegisteredAt='" + getUnRegisteredAt() + "'" +
-			", unRegisteredBy='" + getUnRegisteredBy() + "'" +
-			", writeCount='" + getWriteCount() + "'" +
-			"}";
+		return "{" + " id='" + getId() + "'" + ", brokerId='" + getBrokerId() + "'" + ", brokerPassword='"
+				+ getBrokerPassword() + "'" + ", name='" + getName() + "'" + ", email='" + getEmail() + "'" + ", age='"
+				+ getAge() + "'" + ", phoneNumber='" + getPhoneNumber() + "'" + ", address='" + getAddress() + "'" + ", auth='"
+				+ getAuth() + "'" + ", certification='" + getCertification() + "'" + ", originalCertification='"
+				+ getOriginalCertification() + "'" + ", registeredAt='" + getRegisteredAt() + "'" + ", registeredBy='"
+				+ getRegisteredBy() + "'" + ", updatedAt='" + getUpdatedAt() + "'" + ", updatedBy='" + getUpdatedBy() + "'"
+				+ ", profileImage='" + getProfileImage() + "'" + ", originalProfileImage='" + getOriginalProfileImage() + "'"
+				+ ", unRegisteredAt='" + getUnRegisteredAt() + "'" + ", unRegisteredBy='" + getUnRegisteredBy() + "'"
+				+ ", writeCount='" + getWriteCount() + "'" + "}";
 	}
-
-
 
 }
