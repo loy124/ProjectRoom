@@ -9,7 +9,7 @@
           data-background-color="green"
         >
           <template slot="content">
-            <h4 class="title">날짜에 따른 수익 분포도</h4>
+            <h4 class="title">요일별 수익</h4>
             <p class="category">
               <span class="text-success">
                 <i class="fas fa-long-arrow-alt-up"></i> 55%
@@ -53,8 +53,8 @@
           data-background-color="green"
         >
           <template slot="content">
-            <h4 class="title">Completed Tasks</h4>
-            <p class="category">Last Campaign Performance</p>
+            <h4 class="title">VIP 공인중개사</h4>
+            <p class="category">최다 충전</p>
           </template>
 
           <template slot="footer">

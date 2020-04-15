@@ -47,4 +47,6 @@ public interface AdminDao {
     public RegiCountParam getRegisterCount();
 
     public List<PaymentDto> getPaymentList();
+
+    public List<AdminDto> getAll();
 }

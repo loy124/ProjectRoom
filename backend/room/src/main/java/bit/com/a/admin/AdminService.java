@@ -17,14 +17,14 @@ public class AdminService {
     AdminDao adminDao;
 
     public AdminDto adminLogin(AdminDto admin) {
-        //System.out.println("서비스에 들어온 아이디는 " + admin.getAdminId());
+        // System.out.println("서비스에 들어온 아이디는 " + admin.getAdminId());
         return adminDao.adminLogin(admin);
     }
 
     public void brokerPermission(int id) {
         adminDao.brokerPermission(id);
     }
-    
+
     public List<BrokerDto> getAllBrokerList(Param param) {
         return adminDao.getAllBrokerList(param);
     }
@@ -87,5 +87,9 @@ public class AdminService {
 
     public List<PaymentDto> getPaymentList() {
         return adminDao.getPaymentList();
+    }
+
+    public List<AdminDto> getAll() {
+        return adminDao.getAll();
     }
 }

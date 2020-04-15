@@ -4,6 +4,7 @@
 <!-- bit.com.a.dao.BbsDao -->
 <mapper namespace="bit.com.a.broker.BrokerDao">
 
+
   <!-- now() = SYSOUT -->
   <insert id="register" parameterType="bit.com.a.broker.BrokerDto" useGeneratedKeys="true" keyProperty="id">
 INSERT INTO BROKER(broker_id, broker_password, name, email, age, phone_number, address,

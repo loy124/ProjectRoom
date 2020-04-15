@@ -1,5 +1,9 @@
 package bit.com.a.broker;
 
+import java.util.List;
+
+import bit.com.a.payment.PaymentDto;
+
 public class BrokerDto {
 
 	private int id;
@@ -41,6 +45,16 @@ public class BrokerDto {
 	private String unRegisteredBy;
 
 	private int writeCount;
+
+	private List<PaymentDto> paymentList;
+
+	public List<PaymentDto> getPaymentList() {
+		return this.paymentList;
+	}
+
+	public void setPaymentList(List<PaymentDto> paymentList) {
+		this.paymentList = paymentList;
+	}
 
 	// 회원수 저장용
 	private int count;

@@ -172,4 +172,10 @@ public class AdminController {
 
         return list;
     }
+
+    @GetMapping("/getAll")
+    public List<AdminDto> getAll() {
+
+        return adminService.getAll();
+    }
 }
