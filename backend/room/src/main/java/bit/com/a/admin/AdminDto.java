@@ -30,6 +30,16 @@ public class AdminDto {
 
 	private List<DateParam> dayOfRoomList; // 요일별 방의 갯수 받아오기
 
+	private int memberCount;
+
+	public int getMemberCount() {
+		return this.memberCount;
+	}
+
+	public void setMemberCount(int memberCount) {
+		this.memberCount = memberCount;
+	}
+
 	private DateParam dateParam;
 
 	public List<DateParam> getDayOfRoomList() {

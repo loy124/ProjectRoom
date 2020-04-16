@@ -188,6 +188,9 @@
         <result column="name" property="name" />
         <result column="registered_at" property="registered_at" />
         <result column="auth" property="auth" />
+        <!--  -->
+
+        <!-- <association property="memberCount" column="id" select="getUserCount"></association> -->
         <!-- propety는 dto의 property coulm은 인자로 받을값(brokerId=#{id}등) select는 말그대로 select문의 id를 가져온다  -->
         <!-- 방의갯수 -->
         <association property="roomCount" column="id" select="roomCount"></association>
@@ -268,6 +271,7 @@
         <result column="registered_by" property="registeredBy" />
         <collection property="paymentList" column="id" javaType="java.util.ArrayList" select="getPaymentList"></collection>
         <!-- 프로필 정보 받아오기 -->
+
     </resultMap>
 
 

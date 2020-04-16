@@ -5,10 +5,22 @@ export const request = (method, url, data) => {
     return axios({
             method: method,
             url: DOMAIN + url,
-            data: data
+            data: data,
         })
-        .then(result => result.data)
-        .catch(error => {
+        .then((result) => result.data)
+        .catch((error) => {
+            console.log(error);
+        });
+};
+
+export const requestParams = (method, url, data) => {
+    return axios({
+            method: method,
+            url: DOMAIN + url,
+            params: data,
+        })
+        .then((result) => result.data)
+        .catch((error) => {
             console.log(error);
         });
 };
@@ -19,11 +31,11 @@ export const requestFile = (method, url, data) => {
             url: DOMAIN + url,
             data: data,
             headers: {
-                'Content-Type': 'multipart/form-data'
-            }
+                'Content-Type': 'multipart/form-data',
+            },
         })
-        .then(result => result.data)
-        .catch(error => {
+        .then((result) => result.data)
+        .catch((error) => {
             console.log(error);
         });
 };

@@ -84,17 +84,20 @@ public class AdminController {
     public List<UserDto> getUserList(Param param) {
         System.out.println("param투스트링 " + param.toString());
 
-        int sn = param.getPageNumber() - 1; // 0, 1, 2...
-        // System.out.println("sn : " + sn);
-        int start = sn * param.getRecordCountPerPage();
+        // int sn = param.getPageNumber() - 1; // 0, 1, 2...
+        // // System.out.println("sn : " + sn);
+        // int start = sn * param.getRecordCountPerPage();
 
-        param.setStart(start);
+        // param.setStart(start);
 
         return adminService.getUserList(param);
     }
 
     @GetMapping("/getUserCount")
     public int getUserCount(Param param) {
+        System.out.println("param");
+        System.out.println(param.getS_category());
+        System.out.println(param.toString());
         return adminService.getUserCount(param);
     }
 
@@ -132,6 +135,7 @@ public class AdminController {
 
     @GetMapping("/getGoodByeBrokerList")
     public List<BrokerDto> getGoodByeBrokerList(Param param) {
+
         int sn = param.getPageNumber() - 1; // 0, 1, 2...
         // System.out.println("sn : " + sn);
         int start = sn * param.getRecordCountPerPage();
