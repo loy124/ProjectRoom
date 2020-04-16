@@ -72,7 +72,9 @@
 
           <template slot="content">
             <p class="category">전체 방의 개수</p>
-            <h3 class="title">$34,245</h3>
+            <h3 class="title">
+              <small>{{roomCount}}개</small>
+            </h3>
           </template>
 
           <template slot="footer">
@@ -89,10 +91,10 @@
           </template>
 
           <template slot="content">
-            <p class="category">회원의 수</p>
+            <p class="category">유저/공인중개사</p>
             <h3 class="title">
               <!-- 유저/브로커 -->
-              <small>GB</small>
+              <small>{{userCount}}/{{brokerCount}}</small>
             </h3>
           </template>
 
@@ -112,7 +114,9 @@
 
           <template slot="content">
             <p class="category">일간 수익</p>
-            <h3 class="title">75</h3>
+            <h3 class="title">
+              <small>{{todayRevenue}}원</small>
+            </h3>
           </template>
 
           <template slot="footer">
@@ -130,7 +134,9 @@
 
           <template slot="content">
             <p class="category">누적 수익</p>
-            <h3 class="title">+245</h3>
+            <h3 class="title">
+              <small>{{allRevenue}}원</small>
+            </h3>
           </template>
 
           <template slot="footer">
@@ -265,7 +271,12 @@ export default {
             }
           ]
         ]
-      }
+      },
+      roomCount: 0,
+      userCount: 0,
+      brokerCount: 0,
+      todayRevenue: 0,
+      allRevenue: 0
     };
   },
   mounted() {
@@ -273,40 +284,45 @@ export default {
   },
   methods: {
     fetchRoomCount() {
-      request("get", "admin/getRoomCount").then(res => {
+      // http://localhost:8081/api/admin/getAll
+      request("get", "admin/getAll").then(res => {
+        console.log(res[0]);
+        //일주일간 올라온 방의수
         let arr = [
           [
-            res.timestampdiff6,
-            res.timestampdiff5,
-            res.timestampdiff4,
-            res.timestampdiff3,
-            res.timestampdiff2,
-            res.timestampdiff1,
-            res.timestampdiff0
+            res[0].day_of_room_list[0].timestampdiff6,
+            res[0].day_of_room_list[0].timestampdiff5,
+            res[0].day_of_room_list[0].timestampdiff4,
+            res[0].day_of_room_list[0].timestampdiff3,
+            res[0].day_of_room_list[0].timestampdiff2,
+            res[0].day_of_room_list[0].timestampdiff1,
+            res[0].day_of_room_list[0].timestampdiff0
           ]
         ];
         this.emailsSubscriptionChart.data.series = arr;
+        console.log(res[0].day_of_room_list);
+        console.log(this.emailsSubscriptionChart.data.series);
+        this.roomCount = res[0].room_count;
+        this.userCount = res[0].user_count;
+        this.brokerCount = res[0].broker_count;
+        this.todayRevenue = res[0].today_revenue ? res[0].today_revenue : 0;
+        this.allRevenue = res[0].all_revenue;
       });
-      //   axios.get("http://localhost:8081/api/admin/getRoomCount").then(res => {
-      //             //alert("통신 성공");
-
-      //             console.log("방총 갯수는 " + res.data);
-      //             console.log("Stringify : " + JSON.stringify(res.data));
-      //             /*
-      //             this.todayCount = res.data;
-      //             console.log(this.todayCount);
-      //             myChart(res.data);
-      //             */
-      //             var myDate = res.data;
-
-      //             this.day0 = myDate.timestampdiff0;
-      //             this.day1 = myDate.timestampdiff1;
-      //             this.day2 = myDate.timestampdiff2;
-      //             this.day3 = myDate.timestampdiff3;
-      //             this.day4 = myDate.timestampdiff4;
-      //             this.day5 = myDate.timestampdiff5;
-      //             this.day6 = myDate.timestampdiff6;
-      // })
+      // request("get", "admin/getRoomCount").then(res => {
+      //   // console.log(res);
+      //   let arr = [
+      //     [
+      //       res.timestampdiff6,
+      //       res.timestampdiff5,
+      //       res.timestampdiff4,
+      //       res.timestampdiff3,
+      //       res.timestampdiff2,
+      //       res.timestampdiff1,
+      //       res.timestampdiff0
+      //     ]
+      //   ];
+      //   this.emailsSubscriptionChart.data.series = arr;
+      // });
     }
   }
 };

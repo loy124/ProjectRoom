@@ -20,6 +20,9 @@
         FROM USER
     </select>
 
+
+    <!-- <resultMap id="" type=""></resultMap> -->
+
     <select id="getAllBrokerList" parameterType="bit.com.a.admin.Param" resultType="bit.com.a.broker.BrokerDto">
         SELECT *
         FROM BROKER
@@ -186,11 +189,12 @@
         <result column="registered_at" property="registered_at" />
         <result column="auth" property="auth" />
         <!-- propety는 dto의 property coulm은 인자로 받을값(brokerId=#{id}등) select는 말그대로 select문의 id를 가져온다  -->
+        <!-- 방의갯수 -->
+        <association property="roomCount" column="id" select="roomCount"></association>
         <!-- 유저의 수 -->
         <association property="userCount" column="id" select="userCount"></association>
         <!-- 브로커의 수 -->
         <association property="brokerCount" column="id" select="brokerCount"></association>
-
         <!-- 일간 수익 -->
         <association property="todayRevenue" column="id" select="getTodayRevenue"></association>
         <!-- 누적 수익  -->
@@ -203,14 +207,19 @@
         <!-- <collection property="brokerList" column="id" javaType="java.util.ArrayList" select="getBrokerInformation"></collection> -->
     </resultMap>
 
+    <!-- 방의 수 -->
+    <select id="roomCount" resultType="int">
+        select count(id) as room_count from ROOM
+    </select>
+
     <!-- 유저들의 수 -->
     <select id="userCount" resultType="int">
-        select sum(id) as user_count from USER
+        select count(id) as user_count from USER
     </select>
 
     <!-- 브로커들의 수 -->
     <select id="brokerCount" resultType="int">
-        select sum(id) as broker_count from BROKER
+        select count(id) as broker_count from BROKER
     </select>
 
 
@@ -261,6 +270,7 @@
         <!-- 프로필 정보 받아오기 -->
     </resultMap>
 
+
     <!-- brokerMap에서 활용하기위한 join -->
     <!-- broker id를 통해 payment type을 가져온다 -->
     <select id="getPaymentList" resultType="bit.com.a.payment.PaymentDto">
@@ -277,5 +287,21 @@
         select * from ADMIN_USER where id = 2
     </select>
 
+
+    <resultMap id="userMap" type="bit.com.a.user.UserDto">
+        <result column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="user_password" property="userPassword" />
+        <result column="name" property="name" />
+        <result column="email" property="email" />
+        <result column="age" property="age" />
+        <result column="phone_number" property="phoneNumber" />
+        <result column="profile_image" property="profileImage" />
+        <result column="write_count" property="writeCount" />
+        <result column="registered_at" property="registeredAt" />
+        <result column="registered_by" property="registeredBy" />
+        <collection property="paymentList" column="id" javaType="java.util.ArrayList" select="getPaymentList"></collection>
+        <!-- 프로필 정보 받아오기 -->
+    </resultMap>
 
 </mapper>
