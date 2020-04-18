@@ -4,97 +4,132 @@
 <!-- DAO 적용 경로 설정 -->
 
 
- 
 <mapper namespace="bit.com.a.qna.QnADao">
 
-<!-- 게시판 메인 리스트 getBbsPageList -->
-    <select id="getQnAList" parameterType="bit.com.a.qna.Param" resultType="bit.com.a.qna.QnADto">
-        SELECT id, user_id, broker_id, ref, step, depth, title, content, wdate, del, auth, type, updateDate, admin_id
+	<!-- 게시판 메인 리스트 getBbsPageList -->
+	<select id="getQnAList" parameterType="bit.com.a.qna.Param" resultType="bit.com.a.qna.QnADto">
+		SELECT id, user_id, broker_id, ref, step, depth, title, content, wdate, del, auth, type, updateDate, admin_id
         FROM QNA
         WHERE 1=1
-        <if test="s_category != null and s_category != '' and s_keyword != null and s_keyword != ''">
-            AND del=0
-            <if test="s_category == 'title'">
-                AND title LIKE CONCAT("%", #{s_keyword}, "%") <!-- 오라클 || == 자바 + == mysql concat 와 같은것 -->
-            </if>
-            <if test="s_category == 'content'"> <!--  content가 아닌 contents니까 주의 검색시 -->
-                AND content LIKE CONCAT("%", #{s_keyword}, "%")
-            </if>
-            <if test="s_category == 'writer'">
+		<if test="s_category != null and s_category != '' and s_keyword != null and s_keyword != ''">
+			AND del=0
+			<if test="s_category == 'title'">
+				AND title LIKE CONCAT("%", #{s_keyword}, "%")
+				<!-- 오라클 || == 자바 + == mysql concat 와 같은것 -->
+			</if>
+			<if test="s_category == 'content'">
+				<!--  content가 아닌 contents니까 주의 검색시 -->
+				AND content LIKE CONCAT("%", #{s_keyword}, "%")
+			</if>
+			<if test="s_category == 'writer'">
 					AND (user_id=#{s_keyword} OR broker_id=#{s_keyword})
-			</if>	
-        </if>
-        ORDER BY ref DESC, step ASC
-        LIMIT #{start}, 10; 
+			</if>
+		</if>
+		ORDER BY ref DESC, step ASC
+        LIMIT #{start}, 10;
+	</select>
 
-    </select>
-    
 
-<!-- 페이징 / 전체 글 갯수 페이지당 보여주는 함수를 위함 getBbsCount-->
-    <select id="getQnACount" parameterType="bit.com.a.qna.Param" resultType="java.lang.Integer">
-        SELECT IFNULL(COUNT(*), 0) AS CNT <!-- 오라클nvl과 다름 -->
-        FROM QNA
+	<!-- 페이징 / 전체 글 갯수 페이지당 보여주는 함수를 위함 getBbsCount-->
+	<select id="getQnACount" parameterType="bit.com.a.qna.Param" resultType="java.lang.Integer">
+		SELECT IFNULL(COUNT(*), 0) AS CNT
+		<!-- 오라클nvl과 다름 -->
+		FROM QNA
         WHERE 1=1
-        <if test="s_category != null and s_category != '' and s_keyword != null and s_keyword != ''">
-            AND del=0
-            <if test="s_category == 'title'">
+		<if test="s_category != null and s_category != '' and s_keyword != null and s_keyword != ''">
+			AND del=0
+			<if test="s_category == 'title'">
                 AND title LIKE CONCAT("%", #{s_keyword}, "%") 
             </if>
-            <if test="s_category == 'content'"> <!--  content가 아닌 contents니까 주의 검색시 -->
-                AND content LIKE CONCAT("%", #{s_keyword}, "%")
-            </if>
-            <if test="s_category == 'writer'">
+			<if test="s_category == 'content'">
+				<!--  content가 아닌 contents니까 주의 검색시 -->
+				AND content LIKE CONCAT("%", #{s_keyword}, "%")
+			</if>
+			<if test="s_category == 'writer'">
 					AND (user_id=#{s_keyword} OR broker_id=#{s_keyword})
-			</if>	
-        </if>
-    </select>
-    
-    <!--  디테일 / 게시글 제목을 누를시 게시글 시퀀스를 받아 디테일을 보여준다.  getBbs-->
-    <select id="getQnA" parameterType="java.lang.Integer" resultType="bit.com.a.qna.QnADto">
+			</if>
+		</if>
+	</select>
+
+	<!--  디테일 / 게시글 제목을 누를시 게시글 시퀀스를 받아 디테일을 보여준다.  getBbs-->
+	<select id="getQnA" parameterType="java.lang.Integer" resultType="bit.com.a.qna.QnADto">
         SELECT id, user_id, broker_id, ref, step, depth, title, content, wdate, del, auth, type, updateDate, admin_id
         FROM QNA
         WHERE id=#{id}
-    </select> 
-  
-<!-- 글쓰기 -->     
-    <!-- 글쓰기 ref값가져오기  -->
-  	 <select id="getRef" parameterType="bit.com.a.qna.QnADto" resultType="java.lang.Integer">
+    </select>
+
+	<!-- 유저가 작성한 글들의 ref를 가져온다  -->
+	<!--ref를 기반으로 select를 조회해서 리스트를 가져온다-->
+
+	<resultMap id="QnaMap" type="bit.com.a.qna.QnADto">
+		<result column="id" property="id" />
+		<result column="userId" property="id" />
+		<result column="brokerId" property="id" />
+		<result column="adminId" property="id" />
+		<result column="ref" property="ref" />
+		<result column="step" property="step" />
+		<result column="depth" property="depth" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="wdate" property="wdate" />
+		<result column="del" property="del" />
+		<result column="auth" property="auth" />
+		<!-- 조회한 ref를 바로 column으로 넣는다 -->
+		<collection property="qnaList" column="ref" select="getQnaList" javaType="java.util.ArrayList"></collection>
+	</resultMap>
+
+	<!-- ref가 같을때 리스트 받아오기 -->
+	<select id="getQnaList" resultType="bit.com.a.qna.QnADto">
+		select * from QNA where ref = #{ref}
+	</select>
+
+	<select id="getQnaUserList" parameterType="bit.com.a.qna.QnADto" resultMap="QnaMap">
+		select * from QNA where user_id = #{userId}
+	</select>
+
+	<select id="getQnaBrokerList" parameterType="bit.com.a.qna.QnADto" resultMap="QnaMap">
+		select * from QNA where broker_id = #{brokerId}
+	</select>
+
+
+	<!-- 글쓰기 -->
+	<!-- 글쓰기 ref값가져오기  -->
+	<select id="getRef" parameterType="bit.com.a.qna.QnADto" resultType="java.lang.Integer">
 	    SELECT IFNULL(MAX(ref),0)+1 
 	    FROM QNA
-    </select> 
-    
-    <!-- 글쓰기 writeBbs-->
-     <insert id="writeQnA" parameterType="bit.com.a.qna.QnADto" useGeneratedKeys="true" keyProperty="id">
+    </select>
+
+	<!-- 글쓰기 writeBbs-->
+	<insert id="writeQnA" parameterType="bit.com.a.qna.QnADto" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO QNA(user_id, broker_id, ref, step, depth, title, content, wdate, del, auth, type, admin_id) 
 		VALUES(	#{userId}, #{brokerId}, #{ref}, 0, 0, #{title},#{content}, NOW(), 0, #{auth}, #{type}, #{adminId})
 	</insert>
-	
-	
 
-<!-- 수정   -->
+
+	<!-- 수정   -->
 	<update id="updateQnA" parameterType="bit.com.a.qna.QnADto">
 		UPDATE QNA
 		SET title=#{title}, content=#{content}, type=#{type}, updateDate=NOW()
 		WHERE id=#{id}
 	</update>
-	
-<!-- 삭제   -->
+
+	<!-- 삭제   -->
 	<update id="deleteQnA" parameterType="java.lang.Integer">
 		UPDATE QNA
 		SET del=1
 		WHERE id=#{id}
 	</update>
-	
-	
-<!-- 답글 타입도 넣어줄 것-->	
-	 <!-- 답글을 위한 사전 값가져오기  -->
-  	 <select id="getReply" parameterType="java.lang.Integer" resultType="bit.com.a.qna.QnADto">
+
+
+	<!-- 답글 타입도 넣어줄 것-->
+	<!-- 답글을 위한 사전 값가져오기  -->
+	<select id="getReply" parameterType="java.lang.Integer" resultType="bit.com.a.qna.QnADto">
 	    SELECT IFNULL(MAX(ref),0) as ref, IFNULL(MAX(step),0)+1 as step, IFNULL(MAX(depth),0)+1 as depth, type
 	    FROM QNA
 	    WHERE id=#{id}
-    </select> 
+    </select>
 
-	
+
 	<!-- 답글 insert -->
 	<insert id="replyQnAInsert" parameterType="bit.com.a.qna.QnADto" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO QNA( user_id, broker_id, ref, step, depth, title, content, wdate, del, auth, type, admin_id) 
@@ -102,7 +137,7 @@
 	</insert>
 
 
-<!-- 
+	<!-- 
 <update id="replyBbsUpdate"
 	parameterType="bit.com.a.model.BbsDto">
 	UPDATE BBS 
@@ -126,22 +161,3 @@
 
  -->
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

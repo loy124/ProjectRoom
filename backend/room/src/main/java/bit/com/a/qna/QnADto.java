@@ -1,36 +1,46 @@
 package bit.com.a.qna;
 
 import java.io.Serializable;
+import java.util.List;
 
-public class QnADto implements Serializable  {
-	
-	private int id;            // seq
-	
-	private String userId;    // 작성자 id = email 형식
+public class QnADto implements Serializable {
+
+	private int id; // seq
+
+	private String userId; // 작성자 id = email 형식
 	private String brokerId;
-	
-	private int ref;           // 그룹번호    //엮여있는 그룹
-	private int step;		   // 행(row) //번호 +1씩 늘어나는것. 1, 2, 3, 4, 5
-	private int depth; 		   // 깊이          //선택한 것의 들여쓰기
-	
+
+	private int ref; // 그룹번호 //엮여있는 그룹
+	private int step; // 행(row) //번호 +1씩 늘어나는것. 1, 2, 3, 4, 5
+	private int depth; // 깊이 //선택한 것의 들여쓰기
+
 	private String title;
 	private String content;
-	private String wdate;  	   // 작성일자
-	
-	private int del=0;
+	private String wdate; // 작성일자
+
+	private int del = 0;
 	private int auth;
-	
-	private String type;		// 문의유형
-	
-	private String updateDate;  // 수정일
-	private String adminId;     // 관리자 id
-	
-	//생성자
+
+	private String type; // 문의유형
+
+	private String updateDate; // 수정일
+	private String adminId; // 관리자 id
+
+	private List<QnADto> qnaList;
+
+	public List<QnADto> getQnaList() {
+		return this.qnaList;
+	}
+
+	public void setQnaList(List<QnADto> qnaList) {
+		this.qnaList = qnaList;
+	}
+
+	// 생성자
 	public QnADto() {
 		// TODO Auto-generated constructor stub
 	}
 
-	
 	public QnADto(int id, String userId, String brokerId, int ref, int step, int depth, String title, String content,
 			String wdate, int del, int auth, String type, String updateDate, String adminId) {
 		super();
@@ -50,14 +60,7 @@ public class QnADto implements Serializable  {
 		this.adminId = adminId;
 	}
 
-
-
-
-
-
-
-
-	//toString
+	// toString
 
 	@Override
 	public String toString() {
@@ -66,49 +69,31 @@ public class QnADto implements Serializable  {
 				+ ", auth=" + auth + ", type=" + type + ", updateDate=" + updateDate + ", adminId=" + adminId + "]";
 	}
 
-
-
-
-	//get set
+	// get set
 
 	public int getId() {
 		return id;
 	}
 
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
 
 	public String getUserId() {
 		return userId;
 	}
 
-
-
-
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-
-
-
 
 	public String getBrokerId() {
 		return brokerId;
 	}
 
-
-
-
 	public void setBrokerId(String brokerId) {
 		this.brokerId = brokerId;
 	}
-
-
-
 
 	public int getRef() {
 		return ref;
@@ -173,6 +158,7 @@ public class QnADto implements Serializable  {
 	public void setAuth(int auth) {
 		this.auth = auth;
 	}
+
 	public String getType() {
 		return type;
 	}
@@ -181,29 +167,20 @@ public class QnADto implements Serializable  {
 		this.type = type;
 	}
 
-
 	public String getUpdateDate() {
 		return updateDate;
 	}
-
 
 	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
 	}
 
-
 	public String getAdminId() {
 		return adminId;
 	}
-
 
 	public void setAdminId(String adminId) {
 		this.adminId = adminId;
 	}
 
-	
-	
-
-	
-	
 }
