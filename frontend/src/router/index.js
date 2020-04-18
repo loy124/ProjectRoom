@@ -7,6 +7,11 @@ import VCalendar from 'v-calendar';
 import VueSlider from 'vue-slider-component';
 import 'vue-slider-component/theme/default.css';
 
+import { Pagination, Table, TableColumn } from 'element-ui';
+import lang from 'element-ui/lib/locale/lang/ko';
+import locale from 'element-ui/lib/locale';
+
+import 'element-ui/lib/theme-chalk/index.css';
 // import ElementUI from 'element-ui';
 // import 'element-ui/lib/theme-chalk/index.css';
 // import locale from 'element-ui/lib/locale/lang/ko';
@@ -26,6 +31,7 @@ import RecentRoomBanner from '../components/banner/RecentSearchRoom.vue';
 import Profile from '../components/banner/Profile.vue';
 import RoomWrite from '../components/banner/RoomWrite.vue';
 import store from '../store';
+import Payment from '../components/banner/Payment.vue';
 
 Vue.use(VueRouter);
 Vue.use(VueTypedJs);
@@ -33,6 +39,12 @@ Vue.use(Toasted);
 Vue.use(Notifications);
 Vue.use(VCalendar);
 Vue.component('VueSlider', VueSlider);
+
+locale.use(lang);
+Vue.use(Pagination);
+Vue.use(Table);
+Vue.use(TableColumn);
+
 // Vue.use(ElementUI, { locale });
 
 const routes = [{
@@ -41,13 +53,13 @@ const routes = [{
         component: Main,
         children: [{
                 path: '/',
-                component: RecentSearchRoom
+                component: RecentSearchRoom,
             },
             {
                 path: '/keep',
-                component: KeepRoom
-            }
-        ]
+                component: KeepRoom,
+            },
+        ],
     },
 
     {
@@ -57,7 +69,7 @@ const routes = [{
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/About.vue')
+            import ( /* webpackChunkName: "about" */ '../views/About.vue'),
     },
 
     {
@@ -66,22 +78,24 @@ const routes = [{
         component: Attention,
         children: [{
                 path: '/',
-                component: RecentRoomBanner
+                component: RecentRoomBanner,
             },
             {
                 path: '/attention/keep',
-                component: KeepRoomBanner
-            }
-        ]
+                component: KeepRoomBanner,
+            },
+        ],
     },
     {
         path: '/mypage',
         name: 'Mypage',
         component: Mypage,
         children: [{
-            path: '/',
-            component: Profile
-        }]
+                path: '/',
+                component: Profile,
+            },
+            { path: '/mypage/payment', component: Payment },
+        ],
     },
     {
         path: '/sellRoom',
@@ -89,18 +103,18 @@ const routes = [{
         component: SellRoom,
         children: [{
             path: '/',
-            component: RoomWrite
-        }]
+            component: RoomWrite,
+        }, ],
     },
     {
         path: '/search',
         name: 'search',
-        component: SearchView
+        component: SearchView,
     },
     {
         path: '/search/detail/:roomId',
         name: 'detail',
-        component: RoomDetail
+        component: RoomDetail,
     },
     {
         path: '/*',
@@ -109,14 +123,14 @@ const routes = [{
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/About.vue')
-    }
+            import ( /* webpackChunkName: "about" */ '../views/About.vue'),
+    },
 ];
 
 const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
-    routes
+    routes,
 });
 router.beforeEach((to, from, next) => {
     // ${//to and from are Route Object,next() must be called to resolve the hook}
@@ -125,11 +139,11 @@ router.beforeEach((to, from, next) => {
     next();
 });
 
-router.afterEach(route => {
+router.afterEach((route) => {
     // ${//these hooks do not get a next function and cannot affect the navigation}
     setTimeout(() => {
         store.commit('SET_LOADING', false);
-    }, 100);
+    }, 0);
     console.log('hello');
 });
 

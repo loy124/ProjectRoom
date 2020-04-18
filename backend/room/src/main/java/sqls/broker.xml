@@ -19,7 +19,7 @@ INSERT INTO BROKER(broker_id, broker_password, name, email, age, phone_number, a
 
   <!-- 세션에 담기 위한 용도 -->
   <select id="login" parameterType="bit.com.a.broker.BrokerDto" resultType="bit.com.a.broker.BrokerDto">
-SELECT id, broker_id, auth, name
+SELECT *
 FROM BROKER
 WHERE broker_id = #{brokerId} AND broker_password = #{brokerPassword}
 </select>
@@ -38,6 +38,15 @@ WHERE broker_id = #{brokerId} AND broker_password = #{brokerPassword}
   FROM BROKER 
   WHERE id = #{id}
 </select>
+
+  <update id="updateProfile" parameterType="bit.com.a.broker.BrokerDto">
+  update USER set profile_image = #{profileImage} where broker_id = #{userId}
+</update>
+
+  <update id="updateUser" parameterType="bit.com.a.broker.BrokerDto">
+  update USER set name = #{name} , broker_id = #{userId} , phone_number = #{phoneNumber}
+  where id = #{id}
+</update>
 
 
 </mapper>

@@ -60,7 +60,13 @@ export default {
   },
   mounted() {
     this.name = this.loginData.name;
-    this.userId = this.loginData.user_id;
+
+    if (this.user_id) {
+      this.userId = this.loginData.user_id;
+    } else {
+      this.userId = this.loginData.broker_id;
+    }
+
     this.phoneNumber = this.loginData.phone_number;
   },
   computed: {

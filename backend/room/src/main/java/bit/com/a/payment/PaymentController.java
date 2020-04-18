@@ -52,4 +52,15 @@ public class PaymentController {
 		return dto;
 	}
 
+	@GetMapping("/getPaymentBrokerCount")
+	public int getPaymentBrokerCount(int id) {
+		return service.getPaymentBrokerCount(id);
+	}
+
+	// 회원의 결제 내역 리스트
+	@GetMapping("/getPaymentBrokerList")
+	public List<PaymentDto> getPaymentBrokerList(PaymentAdminParam paymentAdminParam) {
+		return service.getPaymentBrokerList(paymentAdminParam);
+	}
+
 }

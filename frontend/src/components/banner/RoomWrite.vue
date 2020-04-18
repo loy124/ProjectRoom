@@ -298,7 +298,7 @@
               v-model="date"
               :input-props="{
                 placeholder: '입주가능한 날짜를 선택하세요',
-                readonly: true
+                readonly: true,
               }"
             />
           </div>
@@ -521,11 +521,11 @@ export default {
       files: [], //업로드용 파일
       filesPreview: [],
       date: new Date(),
-      uploadImageIndex: 0 // 이미지 업로드를 위한 변수
+      uploadImageIndex: 0, // 이미지 업로드를 위한 변수
     };
   },
   watch: {
-    roomSpace() {}
+    roomSpace() {},
   },
   mounted() {
     console.log(this.loginData);
@@ -548,7 +548,7 @@ export default {
     ...mapState(['loginData']),
     createObject() {
       return URL.createObjectURL(file);
-    }
+    },
   },
   methods: {
     sample5_execDaumPostcode() {
@@ -564,7 +564,7 @@ export default {
           // let mapContainer = this.$refs.map; // 지도를 표시할 div
           let mapOption = {
             center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
-            level: 4 // 지도의 확대 레벨
+            level: 4, // 지도의 확대 레벨
           };
           let map = new daum.maps.Map(mapContainer, mapOption);
           //주소-좌표 변환 객체를 생성
@@ -572,7 +572,7 @@ export default {
           //마커를 미리 생성
           let marker = new daum.maps.Marker({
             position: new daum.maps.LatLng(37.537187, 127.005476),
-            map: map
+            map: map,
           });
           let addr = data.address; // 최종 주소 변수
           //
@@ -604,11 +604,11 @@ export default {
               marker.setPosition(coords);
             }
           });
-        }
+        },
       }).open({
         //검색어 넘기기
         popupName: '구해방', //이름 설정시 여러개의 팝업 방지
-        q: this.locationSearch
+        q: this.locationSearch,
       });
     },
     clickMonth() {
@@ -664,8 +664,8 @@ export default {
             //이미지 프리뷰
             preview: URL.createObjectURL(this.$refs.files.files[i]),
             //삭제및 관리를 위한 number
-            number: i
-          }
+            number: i,
+          },
         ];
         num = i;
         //이미지 업로드용 프리뷰
@@ -696,8 +696,8 @@ export default {
             //이미지 프리뷰
             preview: URL.createObjectURL(this.$refs.files.files[i]),
             //삭제및 관리를 위한 number
-            number: i + this.uploadImageIndex
-          }
+            number: i + this.uploadImageIndex,
+          },
         ];
         num = i;
       }
@@ -708,7 +708,7 @@ export default {
     },
     fileDeleteButton(e) {
       const name = e.target.getAttribute('name');
-      this.files = this.files.filter(data => data.number !== Number(name));
+      this.files = this.files.filter((data) => data.number !== Number(name));
       // console.log(this.files);
     },
     moveMain() {
@@ -727,11 +727,11 @@ export default {
       params.append('roomCount', this.roomCount);
       params.append(
         'addressDetail',
-        this.sample5_address + ' ' + this.dong + '동 ' + this.ho + '호 '
+        this.sample5_address + ' ' + this.dong + '동 ' + this.ho + '호 ',
       );
       params.append(
         'addressDetailZibun',
-        this.sample5_address_zibun + ' ' + this.dong + ' ' + this.ho
+        this.sample5_address_zibun + ' ' + this.dong + ' ' + this.ho,
       );
       params.append('deposit', this.deposit); //보증금
       params.append('monthRent', this.monthRent); //월세
@@ -755,7 +755,7 @@ export default {
 
       request('post', 'room/addroom', params)
         //성공시 파일업로드 실행
-        .then(res => {
+        .then((res) => {
           //res에는 roomid가 담겨있다
           console.log(res);
           for (let i = 0; i < this.files.length; i++) {
@@ -764,13 +764,13 @@ export default {
             params.append('file', this.files[i].file);
             console.log(res);
             requestFile('post', 'room/upload', params)
-              .then(response => {
+              .then((response) => {
                 if (response !== 'FAIL') {
                   this.$toasted.show(`글 작성에 성공했습니다`, {
                     type: 'success',
                     position: 'top-right',
                     duration: 2500,
-                    singleton: true
+                    singleton: true,
                   });
                   if (this.$route.path !== '/') {
                     this.$router.push('/');
@@ -779,7 +779,7 @@ export default {
                   error('글 작성에 실패했습니다', this);
                 }
               })
-              .catch(error => {
+              .catch((error) => {
                 console.log(error);
               });
           }
@@ -797,8 +797,8 @@ export default {
       //     error('글 작성에 실패했습니다', this);
       //   }
       // });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -810,7 +810,7 @@ export default {
   margin-top: 30px;
   border: 1px solid #dddddd;
   padding: 20px 40px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 5px 0px;
+  box-shadow: rgba(188, 196, 219, 0.77) 5px 5px 13px 0px;
 }
 .room-write-wrapper > li {
   color: #222222;
@@ -836,7 +836,7 @@ export default {
 }
 .room-write-type-container {
   border: 1px solid #bbbbbb;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 5px 0px;
+  box-shadow: rgba(188, 196, 219, 0.77) 5px 5px 13px 0px;
   color: #222222;
   margin-top: 50px;
 }
@@ -923,6 +923,7 @@ input[type='radio']:checked {
   color: #222222;
   margin-top: 30px;
   border: 1px solid #dddddd;
+  box-shadow: rgba(188, 196, 219, 0.77) 5px 5px 13px 0px;
 }
 
 .room-location-title-wrapper {
@@ -949,6 +950,7 @@ input[type='radio']:checked {
 .room-location-content-container {
   display: flex;
   height: 370px;
+  box-shadow: rgba(188, 196, 219, 0.77) 5px 5px 13px 0px;
 }
 .room-location-content-title {
   font-size: 15px;
@@ -1149,6 +1151,7 @@ input[type='radio']:checked {
   margin-top: 50px;
   color: #222222;
   border: 1px solid #dddddd;
+  box-shadow: rgba(188, 196, 219, 0.77) 5px 5px 13px 0px;
 }
 .room-deal-information-title {
   text-align: center;

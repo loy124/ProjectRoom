@@ -3,10 +3,20 @@ package bit.com.a.payment;
 import java.io.Serializable;
 
 public class PaymentAdminParam implements Serializable {
+	private int id;
+
 	private int pageNumber = 1;
 	private int recordCountPerPage = 10;
-	
+
 	private int start = 1;
+
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public int getPageNumber() {
 		return pageNumber;
@@ -34,6 +44,7 @@ public class PaymentAdminParam implements Serializable {
 
 	@Override
 	public String toString() {
-		return "PaymentAdminParam [pageNumber=" + pageNumber + ", recordCountPerPage=" + recordCountPerPage + ", start=" + start + "]";
+		return "PaymentAdminParam [pageNumber=" + pageNumber + ", recordCountPerPage=" + recordCountPerPage + ", start="
+				+ start + "]";
 	}
 }
