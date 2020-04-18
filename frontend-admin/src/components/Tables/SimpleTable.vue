@@ -1,11 +1,29 @@
 <template>
   <div>
-    <md-table v-model="users" :table-header-color="tableHeaderColor">
-      <md-table-row slot="md-table-row" slot-scope="{ item }">
+    <notifications group="notifyApp" position="right right" style="margin-right: 30vh;"></notifications>
+    <md-table v-model="users" :table-header-color="tableHeaderColor" style="height: 360px;">
+      <md-table-row slot="md-table-row" slot-scope="{ item, index }">
+        <md-table-cell md-label="index">{{index + 1}}</md-table-cell>
+        <md-table-cell md-label="profile">
+          <img style="width:40px; height:40px;" :src="item.profile_image" />
+        </md-table-cell>
         <md-table-cell md-label="Email">{{ item.user_id }}</md-table-cell>
         <md-table-cell md-label="Name">{{ item.name }}</md-table-cell>
         <md-table-cell md-label="PhoneNumber">{{ item.phone_number }}</md-table-cell>
-        <md-table-cell md-label="auth">{{ item.auth }}</md-table-cell>
+        <slot name="auth-table">
+          <md-table-cell v-if="item.auth == 6" md-label="auth">탈퇴한 회원</md-table-cell>
+          <md-table-cell v-if="item.auth == 3" md-label="auth">일반 회원</md-table-cell>
+        </slot>
+        <slot name="button-delete">
+          <md-table-cell class="user-delete-button" md-label="탈퇴">
+            <b-button
+              v-if="item.auth == 6"
+              variant="success"
+              @click="resurrectionUser(item.id, item.user_id)"
+            >복구</b-button>
+            <b-button v-else variant="danger" @click="deleteUser(item.id, item.user_id)">탈퇴</b-button>
+          </md-table-cell>
+        </slot>
       </md-table-row>
     </md-table>
 
@@ -19,7 +37,7 @@
           style="width:200px;"
           @input="getUserList"
         ></b-form-input>
-        <b-button variant="success" @click="getUserList">Button</b-button>
+        <b-button variant="success" @click="getUserList">검색</b-button>
       </div>
     </div>
   </div>
@@ -27,6 +45,7 @@
 
 <script>
 import { request, requestParams } from "../../util/axios";
+import { error } from "../../util/notification";
 export default {
   name: "simple-table",
   props: {
@@ -115,6 +134,30 @@ export default {
     },
     pageClick() {
       this.getUserList();
+    },
+    deleteUser(id, userId) {
+      console.log(id);
+      let confirmId = confirm(`${userId} 해당 회원을 탈퇴처리 하시겠습니까?`);
+      console.log(confirmId);
+      if (confirmId) {
+        requestParams("get", "admin/userForcedDeletion", {
+          id: id
+        });
+        this.getUserList();
+      }
+      // error("비밀번호를 입력해주세요", this);
+    },
+    resurrectionUser(id, userId) {
+      console.log(id);
+      let confirmId = confirm(`${userId} 해당 회원을 복구처리 하시겠습니까?`);
+      console.log(confirmId);
+      if (confirmId) {
+        requestParams("get", "admin/userResurrection", {
+          id: id
+        });
+        this.getUserList();
+      }
+      // error("비밀번호를 입력해주세요", this);
     }
   }
 };
@@ -141,5 +184,7 @@ export default {
 }
 .user-search-input-wrapper > * {
   margin-left: 10px;
+}
+.user-delete-button {
 }
 </style>

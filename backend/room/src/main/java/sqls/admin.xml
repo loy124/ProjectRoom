@@ -173,6 +173,17 @@
         LIMIT #{start}, 5;
     </select>
 
+    <update id="userResurrection" parameterType="java.lang.Integer">
+        UPDATE USER
+        SET AUTH=3, UN_REGISTERED_AT=null, UN_REGISTERED_BY=null
+        WHERE ID=#{id}
+    </update>
+
+    <update id="brokerResurrection" parameterType="java.lang.Integer">
+        UPDATE BROKER
+        SET AUTH=5, UN_REGISTERED_AT=null, UN_REGISTERED_BY=null
+        WHERE ID=#{id}
+    </update>
 
     <select id="getRegisterCount" resultType="bit.com.a.admin.RegiCountParam">
         SELECT 	IFNULL(COUNT(case when TIMESTAMPDIFF(DAY, SUBSTR(registered_at, 1, 10), SUBSTR(NOW(), 1, 10)) = 0 then 1 end), 0) AS todayRegisterCount,

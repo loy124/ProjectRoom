@@ -49,4 +49,8 @@ public interface AdminDao {
     public List<PaymentDto> getPaymentList();
 
     public List<AdminDto> getAll();
+
+    public void brokerResurrection(int id);
+
+    public void userResurrection(int id);
 }

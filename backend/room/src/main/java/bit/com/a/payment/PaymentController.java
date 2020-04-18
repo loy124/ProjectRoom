@@ -10,73 +10,46 @@ import org.springframework.web.bind.annotation.RestController;
 
 import bit.com.a.broker.BrokerDto;
 
-
 @RestController
 @RequestMapping("/api/payment")
 public class PaymentController {
-	
+
 	@Autowired
 	PaymentService service;
-	
+
 	@RequestMapping(value = "/payments", method = RequestMethod.GET)
 	public int payments(BrokerDto brokerDto, PaymentDto paymentDto) {
 		System.out.println("payments 컨트롤러 도착 ");
-		
+
 		int resulted = service.payments(brokerDto, paymentDto);
-		
-		System.out.println("insert된 PaymentDto = "+paymentDto);
-		System.out.println("update된 BrokerDto = "+brokerDto);
-		System.out.println("컨트롤러 최종 결과값은? resulted: "+resulted);
-		
-		
+
+		System.out.println("insert된 PaymentDto = " + paymentDto);
+		System.out.println("update된 BrokerDto = " + brokerDto);
+		System.out.println("컨트롤러 최종 결과값은? resulted: " + resulted);
+
 		return resulted;
 	}
 
-	@GetMapping(value="/getPaymentAdminCount")
+	@GetMapping(value = "/getPaymentAdminCount")
 	public int getPaymentAdminCount() {
 
 		return service.getPaymentAdminCount();
 	}
-	
+
 	@RequestMapping(value = "/getPaymentAdmin", method = RequestMethod.GET)
 	public List<PaymentDto> getPaymentAdmin(PaymentAdminParam paymentParam) {
-		//System.out.println("getPaymentAdmin 컨트롤러 도착");
+		// System.out.println("getPaymentAdmin 컨트롤러 도착");
 
-		int sn = paymentParam.getPageNumber() - 1;
+		// int sn = paymentParam.getPageNumber() - 1;
 
-		int start = sn * paymentParam.getRecordCountPerPage();
+		// int start = sn * paymentParam.getRecordCountPerPage();
 
-		paymentParam.setStart(start);
-		
+		// paymentParam.setStart(start);
+
 		List<PaymentDto> dto = service.getPaymentAdmin(paymentParam);
-		System.out.println("paymentList?"+dto);
+		System.out.println("paymentList?" + dto);
 
 		return dto;
 	}
-	
-	
-
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

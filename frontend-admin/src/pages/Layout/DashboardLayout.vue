@@ -11,15 +11,16 @@
         <md-icon>dashboard</md-icon>
         <p>Dashboard</p>
       </sidebar-link>
-      <sidebar-link to="/user">
-        <md-icon>person</md-icon>
-        <p>User Profile</p>
-      </sidebar-link>
+
       <sidebar-link to="/table">
         <md-icon>content_paste</md-icon>
-        <p>Table list</p>
+        <p>유저/공인중개사 관리</p>
       </sidebar-link>
-      <sidebar-link to="/typography">
+      <sidebar-link to="/user">
+        <md-icon>person</md-icon>
+        <p>결제 내역 조회</p>
+      </sidebar-link>
+      <!-- <sidebar-link to="/typography">
         <md-icon>library_books</md-icon>
         <p>Typography</p>
       </sidebar-link>
@@ -30,27 +31,23 @@
       <sidebar-link to="/maps">
         <md-icon>location_on</md-icon>
         <p>Maps</p>
-      </sidebar-link>
-      <sidebar-link to="/notifications">
+      </sidebar-link>-->
+      <!-- <sidebar-link to="/notifications">
         <md-icon>notifications</md-icon>
-        <p>Notifications</p>
-      </sidebar-link>
-      <sidebar-link to="/upgrade" class="active-pro">
+        <p>알림</p>
+      </sidebar-link>-->
+      <!-- <sidebar-link to="/upgrade" class="active-pro">
         <md-icon>unarchive</md-icon>
         <p>Upgrade to PRO</p>
-      </sidebar-link>
+      </sidebar-link>-->
     </side-bar>
 
     <div class="main-panel">
       <top-navbar></top-navbar>
 
-      <fixed-plugin
-        :color.sync="sidebarBackground"
-        :image.sync="sidebarBackgroundImage"
-      >
-      </fixed-plugin>
+      <fixed-plugin :color.sync="sidebarBackground" :image.sync="sidebarBackgroundImage"></fixed-plugin>
 
-      <dashboard-content> </dashboard-content>
+      <dashboard-content></dashboard-content>
 
       <content-footer v-if="!$route.meta.hideFooter"></content-footer>
     </div>
@@ -58,13 +55,13 @@
 </template>
 
 <script>
-import TopNavbar from './TopNavbar.vue';
-import ContentFooter from './ContentFooter.vue';
-import DashboardContent from './Content.vue';
-import MobileMenu from '@/pages/Layout/MobileMenu.vue';
-import FixedPlugin from './Extra/FixedPlugin.vue';
-import Login from '../Login';
-import { mapState, mapMutations } from 'vuex';
+import TopNavbar from "./TopNavbar.vue";
+import ContentFooter from "./ContentFooter.vue";
+import DashboardContent from "./Content.vue";
+import MobileMenu from "@/pages/Layout/MobileMenu.vue";
+import FixedPlugin from "./Extra/FixedPlugin.vue";
+import Login from "../Login";
+import { mapState, mapMutations } from "vuex";
 
 export default {
   components: {
@@ -77,12 +74,12 @@ export default {
   },
   data() {
     return {
-      sidebarBackground: 'green',
-      sidebarBackgroundImage: require('@/assets/img/sidebar-2.jpg')
+      sidebarBackground: "green",
+      sidebarBackgroundImage: require("@/assets/img/sidebar-2.jpg")
     };
   },
   computed: {
-    ...mapState(['loginModal'])
+    ...mapState(["loginModal"])
   }
 };
 </script>

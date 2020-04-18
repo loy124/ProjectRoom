@@ -92,4 +92,13 @@ public class AdminService {
     public List<AdminDto> getAll() {
         return adminDao.getAll();
     }
+
+    public void userResurrection(int id) {
+        adminDao.userResurrection(id);
+    };
+
+    public void brokerResurrection(int id) {
+        adminDao.brokerResurrection(id);
+    };
+
 }

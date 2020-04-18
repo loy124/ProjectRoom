@@ -42,11 +42,11 @@ public class AdminController {
         // System.out.println(param.toString());
         // System.out.println("현재 페이지 수는 " + param.getPageNumber());
 
-        int sn = param.getPageNumber() - 1; // 0, 1, 2...
-        // System.out.println("sn : " + sn);
-        int start = sn * param.getRecordCountPerPage();
+        // int sn = param.getPageNumber() - 1; // 0, 1, 2...
+        // // System.out.println("sn : " + sn);
+        // int start = sn * param.getRecordCountPerPage();
 
-        param.setStart(start);
+        // param.setStart(start);
 
         return adminService.getAllBrokerList(param);
     }
@@ -125,6 +125,7 @@ public class AdminController {
 
     @GetMapping("/userForcedDeletion")
     public void userForcedDeletion(int id) {
+        System.out.println(id);
         adminService.userForcedDeletion(id);
     }
 
@@ -143,6 +144,18 @@ public class AdminController {
         param.setStart(start);
 
         return adminService.getGoodByeBrokerList(param);
+    }
+
+    @GetMapping("/userResurrection")
+    public void userResurrection(int id) {
+        System.out.println("id " + id);
+        adminService.userResurrection(id);
+    }
+
+    @GetMapping("/brokerResurrection")
+    public void brokerResurrection(int id) {
+        System.out.println("id " + id);
+        adminService.brokerResurrection(id);
     }
 
     @GetMapping("/getRoomCount")
