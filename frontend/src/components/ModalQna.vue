@@ -41,6 +41,7 @@ export default {};
   background-color: rgba(0, 0, 0, 0.5);
   display: table;
   transition: opacity 0.3s ease;
+  color: #222222;
 }
 
 .modal-wrapper {
@@ -49,7 +50,7 @@ export default {};
 }
 
 .modal-container {
-  width: 360px;
+  width: 500px;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;
@@ -65,7 +66,7 @@ export default {};
 }
 
 .modal-body {
-  margin: 20px auto;
+  margin: 0 auto;
 }
 
 .modal-default-button {
