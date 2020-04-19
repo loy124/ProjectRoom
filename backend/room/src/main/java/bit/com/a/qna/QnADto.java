@@ -28,6 +28,35 @@ public class QnADto implements Serializable {
 
 	private List<QnADto> qnaList;
 
+	private int userCnt;
+	private int brokerCnt;
+
+	public int getUserCnt() {
+		return this.userCnt;
+	}
+
+	public void setUserCnt(int userCnt) {
+		this.userCnt = userCnt;
+	}
+
+	public int getBrokerCnt() {
+		return this.brokerCnt;
+	}
+
+	public void setBrokerCnt(int brokerCnt) {
+		this.brokerCnt = brokerCnt;
+	}
+
+	private int start;
+
+	public int getStart() {
+		return this.start;
+	}
+
+	public void setStart(int start) {
+		this.start = start;
+	}
+
 	public List<QnADto> getQnaList() {
 		return this.qnaList;
 	}

@@ -32,6 +32,9 @@ import Profile from '../components/banner/Profile.vue';
 import RoomWrite from '../components/banner/RoomWrite.vue';
 import store from '../store';
 import Payment from '../components/banner/Payment.vue';
+import Qna from '../components/banner/Qna.vue';
+import QnaWrite from '../components/banner/QnaWrite.vue';
+import QnaList from '../components/banner/QnaList.vue';
 
 Vue.use(VueRouter);
 Vue.use(VueTypedJs);
@@ -95,6 +98,19 @@ const routes = [{
                 component: Profile,
             },
             { path: '/mypage/payment', component: Payment },
+            {
+                path: '/mypage/qna',
+                component: Qna,
+                children: [{
+                        path: '/mypage/qna/write',
+                        component: QnaWrite,
+                    },
+                    {
+                        path: '/mypage/qna/list',
+                        component: QnaList,
+                    },
+                ],
+            },
         ],
     },
     {
@@ -135,7 +151,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     // ${//to and from are Route Object,next() must be called to resolve the hook}
     store.commit('SET_LOADING', true);
-    console.log('hello');
+    // console.log('hello');
     next();
 });
 
@@ -144,7 +160,7 @@ router.afterEach((route) => {
     setTimeout(() => {
         store.commit('SET_LOADING', false);
     }, 0);
-    console.log('hello');
+    // console.log('hello');
 });
 
 export default router;

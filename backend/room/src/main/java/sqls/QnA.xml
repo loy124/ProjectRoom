@@ -74,7 +74,11 @@
 		<result column="wdate" property="wdate" />
 		<result column="del" property="del" />
 		<result column="auth" property="auth" />
+		<association property="userCnt" column="user_id" select="getQnaUserCount"></association>
+		<association property="brokerCnt" column="broker_id" select="getQnaBrokerCount"></association>
+		<!-- <result column="start" property="start" /> -->
 		<!-- 조회한 ref를 바로 column으로 넣는다 -->
+
 		<collection property="qnaList" column="ref" select="getQnaList" javaType="java.util.ArrayList"></collection>
 	</resultMap>
 
@@ -83,12 +87,23 @@
 		select * from QNA where ref = #{ref}
 	</select>
 
+	<!-- 글의 갯수 받아오기 -->
+	<select id="getQnaUserCount" parameterType="bit.com.a.qna.QnADto" resultType="java.lang.Integer">
+		select IFNULL(COUNT(user_id), 0) AS userCnt from QNA where user_id = #{userId} 
+	</select>
+
+	<!-- 글의 갯수 받아오기 -->
+	<select id="getQnaBrokerCount" parameterType="bit.com.a.qna.QnADto" resultType="java.lang.Integer">
+		select IFNULL(COUNT(broker_id), 0) AS brokerCnt from QNA where broker_id = #{brokerId}
+	</select>
+
+
 	<select id="getQnaUserList" parameterType="bit.com.a.qna.QnADto" resultMap="QnaMap">
-		select * from QNA where user_id = #{userId}
+		select * from QNA where user_id = #{userId} ORDER BY ref DESC, step ASC LIMIT #{start}, 3
 	</select>
 
 	<select id="getQnaBrokerList" parameterType="bit.com.a.qna.QnADto" resultMap="QnaMap">
-		select * from QNA where broker_id = #{brokerId}
+		select * from QNA where broker_id = #{brokerId} ORDER BY ref DESC, step ASC LIMIT #{start}, 3
 	</select>
 
 

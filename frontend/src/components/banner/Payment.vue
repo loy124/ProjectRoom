@@ -3,9 +3,7 @@
     <div class="image-upload-wrapper">
       <div class="payment-title">
         글 쓰기 가능한 횟수:
-        <span class="remain-write-count-title"
-          >{{ loginData.write_count }}회</span
-        >
+        <span class="remain-write-count-title">{{ loginData.write_count }}회</span>
       </div>
       <div class="payment-button-container">
         <div class="payment-button-wrapper">
@@ -54,23 +52,15 @@
             width="180"
             header-align="center"
             align="center"
-          >
-          </el-table-column>
+          ></el-table-column>
           <el-table-column
             prop="payment"
             label="결제 금액"
             width="180"
             header-align="center"
             align="center"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="payment_at"
-            label="날짜"
-            header-align="center"
-            align="center"
-          >
-          </el-table-column>
+          ></el-table-column>
+          <el-table-column prop="payment_at" label="날짜" header-align="center" align="center"></el-table-column>
         </el-table>
       </div>
       <el-pagination
@@ -81,52 +71,51 @@
         :total="payCount"
         :current-page.sync="currentPage"
         @current-change="getPaymentList"
-      >
-      </el-pagination>
+      ></el-pagination>
     </div>
   </div>
 </template>
 
 <script>
 //axios를 모듈화해서 가져온다
-import { request, requestFile, requestParams } from '../../util/axios';
-import { mapState, mapMutations } from 'vuex';
+import { request, requestFile, requestParams } from "../../util/axios";
+import { mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {
-      name: '',
-      userId: '',
-      file: '',
-      phoneNumber: '',
+      name: "",
+      userId: "",
+      file: "",
+      phoneNumber: "",
       currentPage: 1,
       payCount: 10,
       tableData: [
         {
-          date: '2016-05-03',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
+          date: "2016-05-03",
+          name: "Tom",
+          address: "No. 189, Grove St, Los Angeles"
         },
         {
-          date: '2016-05-02',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
+          date: "2016-05-02",
+          name: "Tom",
+          address: "No. 189, Grove St, Los Angeles"
         },
         {
-          date: '2016-05-04',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
+          date: "2016-05-04",
+          name: "Tom",
+          address: "No. 189, Grove St, Los Angeles"
         },
         {
-          date: '2016-05-01',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
+          date: "2016-05-01",
+          name: "Tom",
+          address: "No. 189, Grove St, Los Angeles"
         },
         {
-          date: '2016-05-01',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-      ],
+          date: "2016-05-01",
+          name: "Tom",
+          address: "No. 189, Grove St, Los Angeles"
+        }
+      ]
     };
   },
   mounted() {
@@ -143,92 +132,26 @@ export default {
     this.getPaymentList();
   },
   computed: {
-    ...mapState(['loginData', 'profileImage']),
+    ...mapState(["loginData", "profileImage"])
   },
   methods: {
-    ...mapMutations(['SET_LOGIN', 'SET_PROFILE_IMAGE']),
-    profileUpload() {
-      console.log(this.$refs.file.files[0]);
-      this.file = this.$refs.file.files[0];
-      let formData = new FormData();
-      formData.append('userId', this.loginData.user_id);
-      formData.append('file', this.file);
-      requestFile('POST', 'user/updateProfile', formData)
-        .then((res) => {
-          console.log(res);
-          console.log(this.loginData);
-          console.log(this.loginData.user_id);
-
-          //세션및 vuex 업데이트
-          this.updateInformation();
-          this.$toasted.show('프로필 업로드가 완료되었습니다.', {
-            type: 'success',
-            position: 'top-right',
-            duration: 2500,
-          });
-          this.SET_PROFILE_IMAGE(data.profile_image);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    updateInformation() {
-      let params = new URLSearchParams();
-      params.append('id', this.loginData.id);
-      request('POST', 'user/getInformation', params)
-        .then((data) => {
-          if (data !== '') {
-            sessionStorage.setItem('login', JSON.stringify(data));
-            this.SET_LOGIN(data);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    // updateUser
-    updateUser() {
-      let params = new URLSearchParams();
-      params.append('id', this.loginData.id);
-      params.append('name', this.name);
-      params.append('userId', this.userId);
-      params.append('phoneNumber', this.phoneNumber);
-      console.log(this.loginData.id);
-      request('post', 'user/updateUser', params).then((res) => {
-        console.log(res);
-        console.log('성공적 으로 수정이 완료되었습니다');
-        if (res === 'OK') {
-          this.$toasted.show('회원 정보 수정이 완료되었습니다', {
-            type: 'success',
-            position: 'top-right',
-            duration: 2500,
-          });
-          this.updateInformation();
-        } else {
-          this.$toasted.show('회원 정보 수정에 실패하였습니다', {
-            type: 'error',
-            position: 'top-right',
-            duration: 2500,
-          });
-        }
-      });
-    },
+    ...mapMutations(["SET_LOGIN", "SET_PROFILE_IMAGE"]),
     getPaymentList() {
-      requestParams('get', 'payment/getPaymentBrokerCount/', {
-        id: this.loginData.id,
-      }).then((res) => {
+      requestParams("get", "payment/getPaymentBrokerCount/", {
+        id: this.loginData.id
+      }).then(res => {
         //결제 내역의 수가 리턴된다
         this.payCount = res;
-        requestParams('get', 'payment/getPaymentBrokerList/', {
+        requestParams("get", "payment/getPaymentBrokerList/", {
           id: this.loginData.id,
-          start: (this.currentPage - 1) * 3,
-        }).then((res) => {
+          start: (this.currentPage - 1) * 3
+        }).then(res => {
           console.log(res);
           this.tableData = res;
         });
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -339,7 +262,7 @@ export default {
   text-align: center;
 }
 
-.filebox input[type='file'] {
+.filebox input[type="file"] {
   position: absolute;
   width: 0;
   height: 0;
