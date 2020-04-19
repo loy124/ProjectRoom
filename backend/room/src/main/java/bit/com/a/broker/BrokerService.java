@@ -30,7 +30,17 @@ public class BrokerService {
 	public BrokerDto getInformation(BrokerDto user) {
 		return brokerDao.getInformation(user);
 	}
-	public Integer idCheck(BrokerDto user){
+
+	public Integer idCheck(BrokerDto user) {
 		return brokerDao.idCheck(user);
+	}
+
+	public Integer updateProfile(BrokerDto user) {
+		return brokerDao.updateProfile(user);
+	}
+
+	public Integer updateUser(BrokerDto user) {
+		System.out.println("옵니까?");
+		return brokerDao.updateUser(user);
 	}
 }

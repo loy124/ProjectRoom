@@ -5,13 +5,18 @@
         글 쓰기 가능한 횟수:
         <span class="remain-write-count-title">{{ loginData.write_count }}회</span>
       </div>
+      <notifications
+        group="notifyApp"
+        position="top right"
+        style="margin-top:20vh; margin-right: 30vh;"
+      />
       <div class="payment-button-container">
         <div class="payment-button-wrapper">
           <img src="../../assets/living.png" />
           <div class="payment-button-title">글쓰기 패키지</div>
           <div class="payment-button-count">10회</div>
           <div class="payment-button-cost">100,000원</div>
-          <div class="payment-button">
+          <div class="payment-button" @click="requestPay(100000)">
             <div class="payment">충전하기</div>
           </div>
         </div>
@@ -23,7 +28,7 @@
             <span class="count-sub">(2회 보너스)</span>
           </div>
           <div class="payment-button-cost">200,000원</div>
-          <div class="payment-button">
+          <div class="payment-button" @click="requestPay(200000)">
             <div class="payment">충전하기</div>
           </div>
         </div>
@@ -35,7 +40,7 @@
             <span class="count-sub">(5회 보너스)</span>
           </div>
           <div class="payment-button-cost">300,000원</div>
-          <div class="payment-button">
+          <div class="payment-button" @click="requestPay(300000)">
             <div class="payment">충전하기</div>
           </div>
         </div>
@@ -80,6 +85,7 @@
 //axios를 모듈화해서 가져온다
 import { request, requestFile, requestParams } from "../../util/axios";
 import { mapState, mapMutations } from "vuex";
+import { error, success } from "../../util/notification";
 export default {
   data() {
     return {
@@ -119,6 +125,7 @@ export default {
     };
   },
   mounted() {
+    this.updateBrokerInformation();
     this.name = this.loginData.name;
 
     if (this.user_id) {
@@ -150,6 +157,63 @@ export default {
           this.tableData = res;
         });
       });
+    },
+    // 아임포트 모듈 사용하기
+    requestPay(amount) {
+      IMP.request_pay(
+        {
+          // param
+          pg: "inicis",
+          pay_method: "card",
+          merchant_uid: "merchant_" + new Date().getTime(),
+          name: "구해방 글쓰기 패키지",
+          amount: amount,
+          buyer_email: this.loginData.broker_id,
+          buyer_name: this.loginData.name,
+          buyer_tel: this.loginData.phone_number,
+          buyer_addr: this.loginData.address,
+          buyer_postcode: "01181"
+        },
+        rsp => {
+          // callback
+          if (rsp.success) {
+            console.log("s");
+            requestParams("get", "payment/payments", {
+              payment: amount,
+              brokerId: this.loginData.id,
+              id: this.loginData.id
+            }).then(res => {
+              success("결제에 성공하였습니다", this);
+              this.getPaymentList();
+              this.updateBrokerInformation();
+            });
+          } else {
+            msg = "결제에 실패하였습니다.";
+            // msg += '에러내용 : ' + rsp.error_msg;
+            error(msg, this);
+
+            //실패!
+            // ...,
+            // // 결제 실패 시 로직,
+            // ...
+          }
+        }
+      );
+    },
+    // session및 vuex 갱신하기
+    updateBrokerInformation() {
+      let params = new URLSearchParams();
+      params.append("id", this.loginData.id);
+      request("POST", "broker/getInformation", params)
+        .then(data => {
+          if (data !== "") {
+            sessionStorage.setItem("login", JSON.stringify(data));
+            this.SET_LOGIN(data);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   }
 };

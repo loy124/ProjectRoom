@@ -19,16 +19,16 @@ INSERT INTO BROKER(broker_id, broker_password, name, email, age, phone_number, a
 
   <!-- 세션에 담기 위한 용도 -->
   <select id="login" parameterType="bit.com.a.broker.BrokerDto" resultType="bit.com.a.broker.BrokerDto">
-SELECT *
-FROM BROKER
-WHERE broker_id = #{brokerId} AND broker_password = #{brokerPassword}
+    SELECT *
+    FROM BROKER
+    WHERE broker_id = #{brokerId} AND broker_password = #{brokerPassword}
 </select>
 
 
   <select id="idCheck" parameterType="bit.com.a.broker.BrokerDto" resultType="java.lang.Integer">
-  select COUNT(*) 
-  from BROKER
-  where broker_id = #{brokerId}
+      select COUNT(*) 
+      from BROKER
+      where broker_id = #{brokerId}
   </select>
 
 
@@ -37,16 +37,17 @@ WHERE broker_id = #{brokerId} AND broker_password = #{brokerPassword}
   SELECT * 
   FROM BROKER 
   WHERE id = #{id}
+
 </select>
 
   <update id="updateProfile" parameterType="bit.com.a.broker.BrokerDto">
-  update USER set profile_image = #{profileImage} where broker_id = #{userId}
+  update BROKER set profile_image = #{profileImage} where broker_id = #{brokerId}
 </update>
 
   <update id="updateUser" parameterType="bit.com.a.broker.BrokerDto">
-  update USER set name = #{name} , broker_id = #{userId} , phone_number = #{phoneNumber}
+  update BROKER set name = #{name}, broker_id = #{brokerId}, phone_number = #{phoneNumber}
   where id = #{id}
-</update>
+  </update>
 
 
 </mapper>

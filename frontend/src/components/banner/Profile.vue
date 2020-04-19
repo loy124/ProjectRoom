@@ -7,7 +7,14 @@
         </div>
 
         <label for="file">프로필 사진 변경</label>
-        <input type="file" id="file" ref="file" @change="profileUpload" />
+        <input v-if="loginData.user_id" type="file" id="file" ref="file" @change="profileUpload" />
+        <input
+          v-if="loginData.broker_id"
+          type="file"
+          id="file"
+          ref="file"
+          @change="profileBrokerUpload"
+        />
       </div>
     </div>
 
@@ -38,7 +45,8 @@
     <div class="profile-button-container">
       <div class="profile-button-wrapper">
         <button class="profile-cancel-button">취소</button>
-        <button class="profile-apply-button" @click="updateUser">확인</button>
+        <button v-if="loginData.user_id" class="profile-apply-button" @click="updateUser">확인</button>
+        <button v-if="loginData.broker_id" class="profile-apply-button" @click="updateBroker">확인</button>
       </div>
       <button class="secession-button">회원탈퇴</button>
     </div>
@@ -93,7 +101,30 @@ export default {
             position: "top-right",
             duration: 2500
           });
-          this.SET_PROFILE_IMAGE(data.profile_image);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    profileBrokerUpload() {
+      console.log(this.$refs.file.files[0]);
+      this.file = this.$refs.file.files[0];
+      let formData = new FormData();
+      formData.append("brokerId", this.loginData.broker_id);
+      formData.append("file", this.file);
+      requestFile("POST", "broker/updateProfile", formData)
+        .then(res => {
+          console.log(res);
+          console.log(this.loginData);
+          console.log(this.loginData.broker_id);
+
+          //세션및 vuex 업데이트
+          this.updateBrokerInformation();
+          this.$toasted.show("프로필 업로드가 완료되었습니다.", {
+            type: "success",
+            position: "top-right",
+            duration: 2500
+          });
         })
         .catch(error => {
           console.log(error);
@@ -107,6 +138,23 @@ export default {
           if (data !== "") {
             sessionStorage.setItem("login", JSON.stringify(data));
             this.SET_LOGIN(data);
+            this.SET_PROFILE_IMAGE(this.loginData.profile_image);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    // 브로커 프로필 사진 업로드후 갱신
+    updateBrokerInformation() {
+      let params = new URLSearchParams();
+      params.append("id", this.loginData.id);
+      request("POST", "broker/getInformation", params)
+        .then(data => {
+          if (data !== "") {
+            sessionStorage.setItem("login", JSON.stringify(data));
+            this.SET_LOGIN(data);
+            this.SET_PROFILE_IMAGE(this.loginData.profile_image);
           }
         })
         .catch(error => {
@@ -131,6 +179,32 @@ export default {
             duration: 2500
           });
           this.updateInformation();
+        } else {
+          this.$toasted.show("회원 정보 수정에 실패하였습니다", {
+            type: "error",
+            position: "top-right",
+            duration: 2500
+          });
+        }
+      });
+    },
+    updateBroker() {
+      let params = new URLSearchParams();
+      params.append("id", this.loginData.id);
+      params.append("name", this.name);
+      params.append("brokerId", this.userId);
+      params.append("phoneNumber", this.phoneNumber);
+      console.log(this.loginData.id);
+      request("post", "broker/updateUser", params).then(res => {
+        console.log(res);
+        console.log("성공적 으로 수정이 완료되었습니다");
+        if (res === "OK") {
+          this.$toasted.show("회원 정보 수정이 완료되었습니다", {
+            type: "success",
+            position: "top-right",
+            duration: 2500
+          });
+          this.updateBrokerInformation();
         } else {
           this.$toasted.show("회원 정보 수정에 실패하였습니다", {
             type: "error",

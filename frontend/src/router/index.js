@@ -10,8 +10,8 @@ import 'vue-slider-component/theme/default.css';
 import { Pagination, Table, TableColumn } from 'element-ui';
 import lang from 'element-ui/lib/locale/lang/ko';
 import locale from 'element-ui/lib/locale';
-
 import 'element-ui/lib/theme-chalk/index.css';
+
 // import ElementUI from 'element-ui';
 // import 'element-ui/lib/theme-chalk/index.css';
 // import locale from 'element-ui/lib/locale/lang/ko';

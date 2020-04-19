@@ -17,4 +17,8 @@ public interface BrokerDao {
 	public Integer idCheck(BrokerDto broker);
 
 	public BrokerDto getInformation(BrokerDto broker);
+
+	public Integer updateProfile(BrokerDto user);
+
+	public Integer updateUser(BrokerDto user);
 }
