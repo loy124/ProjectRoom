@@ -99,11 +99,11 @@
 
 
 	<select id="getQnaUserList" parameterType="bit.com.a.qna.QnADto" resultMap="QnaMap">
-		select * from QNA where user_id = #{userId} ORDER BY ref DESC, step ASC LIMIT #{start}, 3
+		select * from QNA where user_id = #{userId} and depth=0 ORDER BY ref DESC, step ASC LIMIT #{start}, 3
 	</select>
 
 	<select id="getQnaBrokerList" parameterType="bit.com.a.qna.QnADto" resultMap="QnaMap">
-		select * from QNA where broker_id = #{brokerId} ORDER BY ref DESC, step ASC LIMIT #{start}, 3
+		select * from QNA where broker_id = #{brokerId} and depth=0 ORDER BY ref DESC, step ASC LIMIT #{start}, 3
 	</select>
 
 

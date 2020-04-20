@@ -13,7 +13,7 @@
         class="profile-payment-table-page qna-list-page"
         background
         layout="prev, pager, next"
-        :page-size="3"
+        :page-size="4"
         :total="qnaCount"
         :current-page.sync="currentPage"
         @current-change="getList"
@@ -173,6 +173,7 @@ export default {
           userId: this.loginData.user_id,
           start: (this.currentPage - 1) * 3
         }).then(res => {
+          console.log("aaa");
           // console.log(res);
           // console.log(res[0].user_cnt);
           // data에 qna_list만 담기
@@ -189,12 +190,14 @@ export default {
           brokerId: this.loginData.broker_id,
           start: (this.currentPage - 1) * 3
         }).then(res => {
+          console.log(res);
           // console.log(res[0].broker_cnt);
           // data에 qna_list만 담기
+          this.dataLists = [];
+          this.qnaCount = res[0].broker_cnt;
           res.map(data => {
             this.dataLists = this.dataLists.concat(data.qna_list);
           });
-          this.qnaCount = res[0].broker_cnt;
           // console.log(this.dataLists);
         });
       }
@@ -281,6 +284,7 @@ export default {
         console.log(res);
         success("답글 작성이 완료되었습니다", this);
         this.SET_QNA_REPLY_MODAL(false);
+
         this.getList();
       });
     }

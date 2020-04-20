@@ -69,9 +69,9 @@ export default {
   mounted() {
     this.name = this.loginData.name;
 
-    if (this.user_id) {
+    if (this.loginData.user_id) {
       this.userId = this.loginData.user_id;
-    } else {
+    } else if (this.loginData.broker_id) {
       this.userId = this.loginData.broker_id;
     }
 

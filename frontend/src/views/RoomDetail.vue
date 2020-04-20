@@ -201,7 +201,7 @@
                 <img src="../assets/microwave.png" />
                 <div class="room-detail-content-option-item-name">전자렌지</div>
               </div>
-              <div v-if="iconPrint('washer')">
+              <div v-if="iconPrint('washer')" class="room-detail-content-option-item">
                 <img src="../assets/washer.png" />
                 <div class="room-detail-content-option-item-name">세탁기</div>
               </div>
