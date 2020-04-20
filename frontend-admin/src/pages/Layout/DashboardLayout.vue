@@ -20,6 +20,10 @@
         <md-icon>person</md-icon>
         <p>결제 내역 조회</p>
       </sidebar-link>
+      <sidebar-link to="/qna">
+        <md-icon>person</md-icon>
+        <p>문의 게시판</p>
+      </sidebar-link>
       <!-- <sidebar-link to="/typography">
         <md-icon>library_books</md-icon>
         <p>Typography</p>

@@ -79,18 +79,18 @@
       <div slot="footer">
         <div class="modal-qna-footer-wrapper">
           <div
-            v-if="!updateModal&&loginData.user_id ===detailData.user_id"
+            v-if="!updateModal&&loginData.user_id ===detailData.user_id || !updateModal&&loginData.broker_id ===detailData.broker_id"
             class="modal-qna-button modal-qna-update"
             @click="updateModal = true"
           >수정하기</div>
           <div
-            v-else-if="loginData.user_id ===detailData.user_id"
+            v-else-if="loginData.user_id ===detailData.user_id || loginData.broker_id === detailData.broker_id"
             class="modal-qna-button modal-qna-update"
             @click="updateButton(detailData.id)"
           >작성하기</div>
           <div class="modal-qna-button modal-qna-reply" @click="goToReply(detailData.id)">답글 달기</div>
           <div
-            v-if="loginData.user_id ===detailData.user_id"
+            v-if="loginData.user_id ===detailData.user_id || loginData.broker_id ===detailData.broker_id"
             class="modal-qna-button modal-qna-delete"
             @click="deleteButton(detailData.id)"
           >삭제하기</div>

@@ -22,12 +22,12 @@ public class QnAController {
 		System.out.println("getQnAList 컨트롤러 도착");
 		System.out.println(param.toString());
 
-		int sn = param.getPageNumber() - 1; // 0 1 2
-		int start = sn * param.getRecordCountPerPage(); // 1 11
+		// int sn = param.getPageNumber() - 1; // 0 1 2
+		// int start = sn * param.getRecordCountPerPage(); // 1 11
 
-		// int end = ( sn + 1 ) * param.getRecordCountPerPage(); // 10 20
+		// // int end = ( sn + 1 ) * param.getRecordCountPerPage(); // 10 20
 
-		param.setStart(start); // paramDto에 start를 넣어준다.
+		// param.setStart(start); // paramDto에 start를 넣어준다.
 
 		// param.setEnd(end);
 

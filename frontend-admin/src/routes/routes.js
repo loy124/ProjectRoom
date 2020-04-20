@@ -2,6 +2,7 @@ import DashboardLayout from '@/pages/Layout/DashboardLayout.vue';
 
 import Dashboard from '@/pages/Dashboard.vue';
 import UserProfile from '@/pages/UserProfile.vue';
+import QnaProfile from '@/pages/QnaProfile.vue';
 import TableList from '@/pages/TableList.vue';
 import Typography from '@/pages/Typography.vue';
 import Icons from '@/pages/Icons.vue';
@@ -16,47 +17,52 @@ const routes = [{
     children: [{
             path: 'dashboard',
             name: 'Dashboard',
-            component: Dashboard
+            component: Dashboard,
         },
         {
             path: 'user',
             name: 'User Profile',
-            component: UserProfile
+            component: UserProfile,
+        },
+        {
+            path: 'qna',
+            name: 'Qna Profile',
+            component: QnaProfile,
         },
         {
             path: 'table',
             name: 'Table List',
-            component: TableList
+            component: TableList,
         },
         {
             path: 'typography',
             name: 'Typography',
-            component: Typography
+            component: Typography,
         },
         {
             path: 'icons',
             name: 'Icons',
-            component: Icons
+            component: Icons,
         },
         {
             path: 'maps',
             name: 'Maps',
             meta: {
-                hideFooter: true
+                hideFooter: true,
             },
-            component: Maps
+            component: Maps,
         },
         {
             path: 'notifications',
             name: 'Notifications',
-            component: Notifications
+            component: Notifications,
         },
         {
             path: 'upgrade',
             name: 'Upgrade to PRO',
-            component: UpgradeToPRO
-        }
-    ]
-}];
+            component: UpgradeToPRO,
+        },
+    ],
+}, ];
 
 export default routes;

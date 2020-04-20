@@ -18,7 +18,9 @@ export default new Vuex.Store({
         selectRegister: '',
         imageList: [],
         imageListModal: false,
-        loading: false //로딩 컴포넌트를 위함
+        loading: false, //로딩 컴포넌트를 위함
+        qnaModal: false,
+        qnaReplyModal: false,
     },
     mutations: {
         SET_LOGIN(state, data) {
@@ -54,8 +56,14 @@ export default new Vuex.Store({
         },
         SET_LOADING(state, data) {
             state.loading = data;
-        }
+        },
+        SET_QNA_MODAL(state, data) {
+            state.qnaModal = data;
+        },
+        SET_QNA_REPLY_MODAL(state, data) {
+            state.qnaReplyModal = data;
+        },
     },
     actions: {},
-    modules: {}
+    modules: {},
 });
