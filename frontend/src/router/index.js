@@ -23,6 +23,7 @@ import Mypage from '../views/MyPage.vue';
 import SellRoom from '../views/SellRoom.vue';
 import SearchView from '../views/SearchView.vue';
 import RoomDetail from '../views/RoomDetail.vue';
+import BrokerView from '../views/BrokerView.vue';
 //컴포넌트쪽
 import RecentSearchRoom from '../components/content2/RecentSearchRoom.vue';
 import KeepRoom from '../components/content2/KeepRoom.vue';
@@ -131,6 +132,11 @@ const routes = [{
         path: '/search/detail/:roomId',
         name: 'detail',
         component: RoomDetail,
+    },
+    {
+        path: '/broker/:brokerId',
+        name: 'broker',
+        component: BrokerView,
     },
     {
         path: '/*',

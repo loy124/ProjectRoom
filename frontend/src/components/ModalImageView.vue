@@ -84,8 +84,8 @@ export default {
 }
 
 .modal-container {
-  width: 100vh;
-  height: 80vh;
+  width: 800px;
+  /* height: 80%; */
   margin: 0 auto;
   position: relative;
   background-color: #fff;
@@ -146,7 +146,8 @@ export default {
 .image-modal-layout-header-image-wrapper {
   width: 140px;
   height: 100%;
-
+  display: flex;
+  justify-content: center;
   border: 1px solid #dddddd;
 }
 
@@ -195,10 +196,12 @@ export default {
 .image-modal-layout-main-image-wrapper {
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center;
 }
 .image-modal-layout-main-image-wrapper > img {
-  height: 100%;
-  width: 100%;
+  height: 80%;
+  width: 80%;
 }
 
 .modal-image-close-button {

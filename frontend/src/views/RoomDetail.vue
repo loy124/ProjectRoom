@@ -38,7 +38,7 @@
             </div>
             <div class="room-detail-broker-info">
               <div class="room-detail-broker-name">이름</div>
-              <div class="room-detail-broker-information">연락처 보기</div>
+              <div class="room-detail-broker-information" @click="brokerModalShow = true">연락처 보기</div>
             </div>
           </div>
           <div class="room-detail-header-service">
@@ -99,6 +99,38 @@
               </div>
             </div>
           </div>
+          <Modal v-if="brokerModalShow">
+            <div slot="header">
+              <div class="modal-broker-class-wrapper">
+                <div class="modal-broker-header">연락처 보기</div>
+                <div class="modal-broker-close-button" @click="brokerModalShow = false">X</div>
+              </div>
+            </div>
+            <div slot="body">
+              <div class="modal-broker-information-wrapper">
+                <div class="modal-broker-profile-image-wrapper">
+                  <img class="modal-broker-profile-image" :src="imageProfile" />
+                </div>
+                <div class="modal-broker-information-item-wrapper">
+                  <div class="modal-broker-information-item">성함</div>
+                  <div class="modal-broker-information-item1">{{brokerData.name}}</div>
+                </div>
+                <div class="modal-broker-information-item-wrapper">
+                  <div class="modal-broker-information-item">대표 번호</div>
+                  <div class="modal-broker-information-item1">{{brokerData.phone_number}}</div>
+                </div>
+              </div>
+            </div>
+            <div slot="footer">
+              <div class="modal-broker-information-button-wrapper">
+                <router-link
+                  style="text-decoration:none;"
+                  :to="`/broker/${brokerData.id}`"
+                  class="modal-broker-information-button"
+                >공인중개사 리뷰 확인하기</router-link>
+              </div>
+            </div>
+          </Modal>
           <ModalImageView v-if="imageListModal" />
           <div class="room-detail-content-image-container" @click="SET_IMAGE_LIST_MODAL(true)">
             <div class="room-detail-content-image-wrapper1">
@@ -268,16 +300,21 @@ import EtcContainer from "./EtcContainer";
 import { request } from "../util/axios";
 import { mapState, mapMutations } from "vuex";
 import ModalImageView from "../components/ModalImageView";
+import Modal from "../components/Modal";
 export default {
   name: "app",
   components: {
     EtcContainer,
-    ModalImageView
+    ModalImageView,
+    Modal
   },
   data() {
     return {
       roomDetail: [],
-      moveDate: ""
+      moveDate: "",
+      brokerData: "",
+      imageProfile: "",
+      brokerModalShow: false
     };
   },
   mounted() {
@@ -297,16 +334,25 @@ export default {
     ...mapMutations(["SET_IMAGE_LIST", "SET_IMAGE_LIST_MODAL"]),
     //방 detail 출력
     getRoomDetail() {
-      request("post", `room/getRoomDetail/${this.$route.params.roomId}`).then(
-        res => {
+      request("post", `room/getRoomDetail/${this.$route.params.roomId}`)
+        .then(res => {
           console.log(res);
           this.roomDetail = res;
           //vuex에 이미지리스트 담기
           this.SET_IMAGE_LIST(res.room_picture_dto_list);
-
           this.moveDate = new Date(res.move_day);
-        }
-      );
+          return res;
+        })
+        .then(res => {
+          console.log(res.brokerid);
+          let params = new URLSearchParams();
+          params.append("id", res.brokerid);
+          request("post", "broker/getInformation", params).then(resp => {
+            console.log(resp);
+            this.brokerData = resp;
+            this.imageProfile = resp.profile_image;
+          });
+        });
     },
     //broker의 다른 방 리스트 출력
     getRoomBrokerList() {
@@ -674,5 +720,84 @@ export default {
 .room-detail-content-other-room {
   border-top: 1px solid #dddddd;
   padding: 100px 0;
+}
+.modal-broker-class-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.modal-broker-close-button {
+  margin-left: auto;
+  border: 1px solid #dddddd;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.modal-broker-close-button:hover {
+  border: 1px solid #bbbbbbbb;
+}
+
+.modal-broker-header {
+  font-size: 27px;
+  font-weight: bold;
+  text-align: center;
+  margin-left: auto;
+}
+
+.modal-broker-profile-image-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.modal-broker-profile-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+.modal-broker-information-wrapper {
+  border-top: 1px solid #dddddd;
+  margin-top: 20px;
+}
+.modal-broker-information-item-wrapper {
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+}
+
+.modal-broker-information-item {
+  font-size: 17px;
+  width: 100px;
+}
+.modal-broker-information-item1 {
+  font-size: 17px;
+  margin-left: 10px;
+  font-weight: bold;
+}
+
+.modal-broker-information-button-wrapper {
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-broker-information-button {
+  cursor: pointer;
+  background-color: #1476fc;
+  color: #fff;
+  padding: 20px 10px;
+  font-size: 17px;
+}
+
+.modal-broker-information-button:hover {
+  opacity: 0.5;
 }
 </style>

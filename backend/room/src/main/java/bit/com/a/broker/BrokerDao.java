@@ -21,4 +21,5 @@ public interface BrokerDao {
 	public Integer updateProfile(BrokerDto user);
 
 	public Integer updateUser(BrokerDto user);
+
 }

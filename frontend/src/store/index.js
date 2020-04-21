@@ -21,6 +21,7 @@ export default new Vuex.Store({
         loading: false, //로딩 컴포넌트를 위함
         qnaModal: false,
         qnaReplyModal: false,
+        profileModal: false,
     },
     mutations: {
         SET_LOGIN(state, data) {
@@ -62,6 +63,9 @@ export default new Vuex.Store({
         },
         SET_QNA_REPLY_MODAL(state, data) {
             state.qnaReplyModal = data;
+        },
+        SET_PROFILE_MODAL(state, data) {
+            state.profileModal = data;
         },
     },
     actions: {},

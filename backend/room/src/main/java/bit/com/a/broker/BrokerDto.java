@@ -3,6 +3,8 @@ package bit.com.a.broker;
 import java.util.List;
 
 import bit.com.a.payment.PaymentDto;
+import bit.com.a.review.ReviewDto;
+import bit.com.a.room.RoomDto;
 
 public class BrokerDto {
 
@@ -47,6 +49,26 @@ public class BrokerDto {
 	private int writeCount;
 
 	private List<PaymentDto> paymentList;
+
+	private List<RoomDto> roomList;
+
+	private List<ReviewDto> reviewList;
+
+	public List<RoomDto> getRoomList() {
+		return this.roomList;
+	}
+
+	public void setRoomList(List<RoomDto> roomList) {
+		this.roomList = roomList;
+	}
+
+	public List<ReviewDto> getReviewList() {
+		return this.reviewList;
+	}
+
+	public void setReviewList(List<ReviewDto> reviewList) {
+		this.reviewList = reviewList;
+	}
 
 	public List<PaymentDto> getPaymentList() {
 		return this.paymentList;
