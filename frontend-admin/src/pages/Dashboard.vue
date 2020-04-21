@@ -29,7 +29,6 @@
         <chart-card
           :chart-data="emailsSubscriptionChart.data"
           :chart-options="emailsSubscriptionChart.options"
-          :chart-responsive-options="emailsSubscriptionChart.responsiveOptions"
           :chart-type="'Bar'"
           data-background-color="blue"
         >
@@ -49,7 +48,7 @@
         <chart-card
           :chart-data="dataCompletedTasksChart.data"
           :chart-options="dataCompletedTasksChart.options"
-          :chart-type="'Line'"
+          :chart-type="'Bar'"
           data-background-color="green"
         >
           <template slot="content">
@@ -87,7 +86,7 @@
       <div class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25">
         <stats-card data-background-color="orange">
           <template slot="header">
-            <md-icon>content_copy</md-icon>
+            <md-icon>attach_money</md-icon>
           </template>
 
           <template slot="content">
@@ -108,7 +107,7 @@
       <div class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25">
         <stats-card data-background-color="red">
           <template slot="header">
-            <md-icon>info_outline</md-icon>
+            <md-icon>attach_money</md-icon>
           </template>
 
           <template slot="content">
@@ -128,7 +127,7 @@
       <div class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25">
         <stats-card data-background-color="green">
           <template slot="header">
-            <i class="fab fa-twitter"></i>
+            <md-icon>attach_money</md-icon>
           </template>
 
           <template slot="content">
@@ -195,19 +194,21 @@ export default {
     SimpleTable,
     OrderedTable
   },
+
   data() {
     return {
       dailySalesChart: {
         data: {
-          labels: ["M", "T", "W", "T", "F", "S", "S"],
-          series: [[12, 17, 7, 17, 23, 18, 38]]
+          labels: ["월", "화", "수", "목", "금", "토", "일"],
+          series: [[230, 750, 450, 300, 280, 240, 200]]
         },
+
         options: {
           lineSmooth: this.$Chartist.Interpolation.cardinal({
             tension: 0
           }),
           low: 0,
-          high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+          high: 500, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
           chartPadding: {
             top: 0,
             right: 0,
@@ -218,8 +219,8 @@ export default {
       },
       dataCompletedTasksChart: {
         data: {
-          labels: ["12am", "3pm", "6pm", "9pm", "12pm", "3am", "6am", "9am"],
-          series: [[230, 750, 450, 300, 280, 240, 200, 190]]
+          labels: ["1", "2", "3"],
+          series: [[23, 75, 45]]
         },
 
         options: {
@@ -227,7 +228,7 @@ export default {
             tension: 0
           }),
           low: 0,
-          high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+          high: 500, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
           chartPadding: {
             top: 0,
             right: 0,
@@ -236,6 +237,26 @@ export default {
           }
         }
       },
+      // dataCompletedTasksChart: {
+      //   data: {
+      //     labels: ["12am", "3pm", "6pm", "1am", "2am", "3am", "5am"],
+      //     series: [[0, 0, 0, 0, 0, 0, 0, 0]]
+      //   },
+
+      //   options: {
+      //     lineSmooth: this.$Chartist.Interpolation.cardinal({
+      //       tension: 0
+      //     }),
+      //     low: 0,
+      //     high: 100, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+      //     chartPadding: {
+      //       top: 0,
+      //       right: 0,
+      //       bottom: 0,
+      //       left: 0
+      //     }
+      //   }
+      // },
       emailsSubscriptionChart: {
         data: {
           labels: ["7일", "6일", "5일", "4일", "3일", "2일", "어제", "오늘"],
@@ -275,6 +296,9 @@ export default {
       allRevenue: 0
     };
   },
+  created() {
+    this.fetchRoomCount();
+  },
   mounted() {
     this.fetchRoomCount();
   },
@@ -296,6 +320,39 @@ export default {
           ]
         ];
         this.emailsSubscriptionChart.data.series = arr;
+
+        let arr1 = [
+          [
+            res[0].day_of_month[0].payment / 10000,
+            res[0].day_of_month[1].payment / 10000,
+            res[0].day_of_month[2].payment / 10000,
+            res[0].day_of_month[3].payment / 10000,
+            res[0].day_of_month[4].payment / 10000,
+            res[0].day_of_month[5].payment / 10000,
+            res[0].day_of_month[6].payment / 10000
+          ]
+        ];
+        console.log(arr1);
+
+        this.dailySalesChart.data.series = arr1;
+
+        let arr2 = [
+          [
+            res[0].vip_list[0].payment / 10000,
+            res[0].vip_list[1].payment / 10000,
+            res[0].vip_list[2].payment / 10000
+          ]
+        ];
+        console.log("aar2");
+        console.log(arr2);
+        this.dataCompletedTasksChart.data.series = arr2;
+
+        let arr3 = [
+          res[0].vip_list[0].id,
+          res[0].vip_list[1].id,
+          res[0].vip_list[2].id
+        ];
+        // this.dataCompletedTasksChart.data.labels = arr3;
         console.log(res[0].day_of_room_list);
         console.log(this.emailsSubscriptionChart.data.series);
         this.roomCount = res[0].room_count;

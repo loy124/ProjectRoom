@@ -32,6 +32,26 @@ public class AdminDto {
 
 	private int memberCount;
 
+	private List<PaymentDto> dayOfMonth;
+
+	private List<PaymentDto> vipList;
+
+	public List<PaymentDto> getDayOfMonth() {
+		return this.dayOfMonth;
+	}
+
+	public void setDayOfMonth(List<PaymentDto> dayOfMonth) {
+		this.dayOfMonth = dayOfMonth;
+	}
+
+	public List<PaymentDto> getVipList() {
+		return this.vipList;
+	}
+
+	public void setVipList(List<PaymentDto> vipList) {
+		this.vipList = vipList;
+	}
+
 	public int getMemberCount() {
 		return this.memberCount;
 	}
