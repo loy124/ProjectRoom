@@ -270,8 +270,9 @@ export default {
           console.log(res);
           this.updateModal = false;
           this.modalUpdate = false;
-          this.modalReplyShow = false;
           success("삭제가 완료되었습니다", this);
+          this.modalShow = false;
+          this.modalReplyShow = false;
           this.getUserList();
           // this.SET_QNA_MODAL(true);
         });
