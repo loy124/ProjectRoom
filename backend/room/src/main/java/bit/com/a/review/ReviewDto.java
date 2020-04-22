@@ -3,23 +3,25 @@ package bit.com.a.review;
 import java.io.Serializable;
 //import java.sql.Date;
 
+import bit.com.a.user.UserDto;
+
 public class ReviewDto implements Serializable {
 
     private int id;
 
     private String content;
 
-    private int grade;      // 리뷰 평가 등급(3:최고예요, 2:좋아요, 1:괜찮아요, 0:글쎄요)
+    private int grade; // 리뷰 평가 등급(3:최고예요, 2:좋아요, 1:괜찮아요, 0:글쎄요)
 
-    private int reviewCount;    // 총 리뷰 수
+    private int reviewCount; // 총 리뷰 수
 
-    private int del;        // 삭제 유무(0 / 1)
+    private int del; // 삭제 유무(0 / 1)
 
-    private int ref;        // 그룹번호
+    private int ref; // 그룹번호
 
-    private int step;       // 행(row) 번호
+    private int step; // 행(row) 번호
 
-    private int depth;      // 깊이
+    private int depth; // 깊이
 
     private String userId;
 
@@ -27,9 +29,9 @@ public class ReviewDto implements Serializable {
 
     private int auth;
 
-    private String profileImage;    // 프로필 사진
-    
-    private String createdAt;   // 작성일
+    private String profileImage; // 프로필 사진
+
+    private String createdAt; // 작성일
 
     private String createdBy;
 
@@ -41,12 +43,42 @@ public class ReviewDto implements Serializable {
 
     private String deletedBy;
 
+    private String brokerReviewId;
+
+    private UserDto userInformation;
+
+    private String status;
+
+    public String getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public UserDto getUserInformation() {
+        return this.userInformation;
+    }
+
+    public void setUserInformation(UserDto userInformation) {
+        this.userInformation = userInformation;
+    }
+
+    public String getBrokerReviewId() {
+        return this.brokerReviewId;
+    }
+
+    public void setBrokerReviewId(String brokerReviewId) {
+        this.brokerReviewId = brokerReviewId;
+    }
 
     public ReviewDto() {
     }
 
-
-    public ReviewDto(int id, String content, int grade, int reviewCount, int del, int ref, int step, int depth, String userId, String brokerId, int auth, String profileImage, String createdAt, String createdBy, String updatedAt, String updatedBy, String deletedAt, String deletedBy) {
+    public ReviewDto(int id, String content, int grade, int reviewCount, int del, int ref, int step, int depth,
+            String userId, String brokerId, int auth, String profileImage, String createdAt, String createdBy,
+            String updatedAt, String updatedBy, String deletedAt, String deletedBy) {
         this.id = id;
         this.content = content;
         this.grade = grade;
@@ -213,27 +245,13 @@ public class ReviewDto implements Serializable {
 
     @Override
     public String toString() {
-        return "{" +
-            " id='" + getId() + "'" +
-            ", content='" + getContent() + "'" +
-            ", grade='" + getGrade() + "'" +
-            ", reviewCount='" + getReviewCount() + "'" +
-            ", del='" + getDel() + "'" +
-            ", ref='" + getRef() + "'" +
-            ", step='" + getStep() + "'" +
-            ", depth='" + getDepth() + "'" +
-            ", userId='" + getUserId() + "'" +
-            ", brokerId='" + getBrokerId() + "'" +
-            ", auth='" + getAuth() + "'" +
-            ", profileImage='" + getProfileImage() + "'" +
-            ", createdAt='" + getCreatedAt() + "'" +
-            ", createdBy='" + getCreatedBy() + "'" +
-            ", updatedAt='" + getUpdatedAt() + "'" +
-            ", updatedBy='" + getUpdatedBy() + "'" +
-            ", deletedAt='" + getDeletedAt() + "'" +
-            ", deletedBy='" + getDeletedBy() + "'" +
-            "}";
+        return "{" + " id='" + getId() + "'" + ", content='" + getContent() + "'" + ", grade='" + getGrade() + "'"
+                + ", reviewCount='" + getReviewCount() + "'" + ", del='" + getDel() + "'" + ", ref='" + getRef() + "'"
+                + ", step='" + getStep() + "'" + ", depth='" + getDepth() + "'" + ", userId='" + getUserId() + "'"
+                + ", brokerId='" + getBrokerId() + "'" + ", auth='" + getAuth() + "'" + ", profileImage='"
+                + getProfileImage() + "'" + ", createdAt='" + getCreatedAt() + "'" + ", createdBy='" + getCreatedBy()
+                + "'" + ", updatedAt='" + getUpdatedAt() + "'" + ", updatedBy='" + getUpdatedBy() + "'"
+                + ", deletedAt='" + getDeletedAt() + "'" + ", deletedBy='" + getDeletedBy() + "'" + "}";
     }
-    
-    
+
 }

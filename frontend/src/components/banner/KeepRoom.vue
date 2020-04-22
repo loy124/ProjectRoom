@@ -1,47 +1,64 @@
 <template>
   <div class="recent-room-container">
     <div class="recent-room-wrapper">
-      <div v-for="(recentData, index) in recentDatas" :key="index" class="recent-room">
+      <router-link
+        :to="`/search/detail/${recentData.id}`"
+        v-for="(recentData, index) in recentDatas"
+        :key="index"
+        class="recent-room"
+        style="text-decoration:none; outline: none; color:#222222;"
+      >
         <div class="recent-image-wrapper">
           <!-- v-if로 클릭시 class 추가 -->
-          <img class="recent-image" :src="recentData.img" />
-
+          <!-- <img class="recent-image" :src="recentData.img" /> -->
           <img
-            v-if="recentData.heart"
+            v-if="recentData.room_picture_dto_list && recentData.room_picture_dto_list[0]"
+            class="recent-image"
+            :src="recentData.room_picture_dto_list[0].file_name"
+            alt="이미지없음"
+          />
+          <img src="../../assets/room1.jpg" v-else class="recent-image" />
+          <img
             class="heart-image"
             src="../../assets/fillHeart.png"
-            @click="heartClick(recentData)"
+            @click.prevent.stop="heartClick(recentData)"
             alt
           />
-          <img
+          <!-- <img
             v-else
             class="heart-image"
             src="../../assets/heart.png"
             @click="heartClick(recentData)"
             alt
-          />
+          />-->
         </div>
         <div class="recent-information-wrapper">
           <div class="recent-information">
-            <div class="recent-information-room-type">{{recentData.type}}</div>
+            <div class="recent-information-room-type">{{recentData.room_type}}</div>
             <div class="recent-information-room-deposit">{{recentData.deposit}}</div>
-            <div class="recent-information-floor">{{recentData.fllor}}</div>
+            <div class="recent-information-floor">{{recentData.floor}}</div>
             <div class="recent-information-content">{{recentData.content}}</div>
           </div>
         </div>
-      </div>
+      </router-link>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  props: ["roomLists"],
+  mounted() {
+    console.log("마운트");
+    console.log(this.roomLists);
+    this.recentDatas = this.roomLists;
+  },
   data() {
     return {
       recentDatas: [
         {
           img: require("../../assets/room2.jpg"),
-          type: "원룸",
+          room_type: "원룸",
           deposit: "월세 300/40",
           floor: "2층 17평",
           content: "야옹이",
@@ -49,7 +66,7 @@ export default {
         },
         {
           img: require("../../assets/room5.jpg"),
-          type: "쓰리룸",
+          room_type: "쓰리룸",
           deposit: "전세 3억",
           floor: "2층 32평",
           content: "깔끔하게 리모델링 된 주차걱정 없는 3룸 2억에 모십니다",
@@ -57,7 +74,7 @@ export default {
         },
         {
           img: require("../../assets/room4.jpg"),
-          type: "원룸",
+          room_type: "원룸",
           deposit: "월세 300/38",
           floor: "2층 15평",
           content: "귀가길 안전한 역세권 방",
@@ -65,7 +82,7 @@ export default {
         },
         {
           img: require("../../assets/room3.jpg"),
-          type: "쓰리룸",
+          room_type: "쓰리룸",
           deposit: "매매 2억 30000",
           floor: "2층 50평",
           content: "남향, 일렬주차, 전세, 투자금 2천",
@@ -73,7 +90,7 @@ export default {
         },
         {
           img: require("../../assets/room2.jpg"),
-          type: "원룸",
+          room_type: "원룸",
           deposit: "월세 300/40",
           floor: "2층 17평",
           content: "야옹이",
@@ -81,7 +98,7 @@ export default {
         },
         {
           img: require("../../assets/room5.jpg"),
-          type: "쓰리룸",
+          room_type: "쓰리룸",
           deposit: "전세 3억",
           floor: "2층 32평",
           content: "깔끔하게 리모델링 된 주차걱정 없는 3룸 2억에 모십니다",
@@ -89,7 +106,7 @@ export default {
         },
         {
           img: require("../../assets/room4.jpg"),
-          type: "원룸",
+          room_type: "원룸",
           deposit: "월세 300/38",
           floor: "2층 15평",
           content: "귀가길 안전한 역세권 방",
@@ -97,7 +114,7 @@ export default {
         },
         {
           img: require("../../assets/room3.jpg"),
-          type: "쓰리룸",
+          room_type: "쓰리룸",
           deposit: "매매 2억 30000",
           floor: "2층 50평",
           content: "남향, 일렬주차, 전세, 투자금 2천",
@@ -105,7 +122,7 @@ export default {
         },
         {
           img: require("../../assets/room2.jpg"),
-          type: "원룸",
+          room_type: "원룸",
           deposit: "월세 300/40",
           floor: "2층 17평",
           content: "야옹이",
@@ -113,7 +130,7 @@ export default {
         },
         {
           img: require("../../assets/room5.jpg"),
-          type: "쓰리룸",
+          room_type: "쓰리룸",
           deposit: "전세 3억",
           floor: "2층 32평",
           content: "깔끔하게 리모델링 된 주차걱정 없는 3룸 2억에 모십니다",
@@ -121,7 +138,7 @@ export default {
         },
         {
           img: require("../../assets/room4.jpg"),
-          type: "원룸",
+          room_type: "원룸",
           deposit: "월세 300/38",
           floor: "2층 15평",
           content: "귀가길 안전한 역세권 방",
@@ -129,7 +146,7 @@ export default {
         },
         {
           img: require("../../assets/room3.jpg"),
-          type: "쓰리룸",
+          room_type: "쓰리룸",
           deposit: "매매 2억 30000",
           floor: "2층 50평",
           content: "남향, 일렬주차, 전세, 투자금 2천",
@@ -137,6 +154,11 @@ export default {
         }
       ]
     };
+  },
+  computed: {
+    getMap() {
+      return this.roomLists;
+    }
   },
   methods: {
     heartClick(recentData) {

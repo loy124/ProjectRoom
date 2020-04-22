@@ -37,7 +37,7 @@
               </div>
             </div>
             <div class="room-detail-broker-info">
-              <div class="room-detail-broker-name">이름</div>
+              <div class="room-detail-broker-name">{{brokerData.name}}</div>
               <div class="room-detail-broker-information" @click="brokerModalShow = true">연락처 보기</div>
             </div>
           </div>
@@ -452,6 +452,13 @@ export default {
   align-items: center;
   justify-content: center;
   margin-left: 15px;
+  background-color: #1476fc;
+  color: #fff;
+  cursor: pointer;
+}
+
+.room-detail-broker-information:hover {
+  opacity: 0.5;
 }
 
 .room-detail-header-service {
