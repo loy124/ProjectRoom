@@ -3,9 +3,12 @@
     <div class="broker-information-header-container">
       <div class="broker-information-profile-container">
         <div class="broker-information-profile-wrapper">
-          <img src="../assets/room1.jpg" />
+          <img v-if="brokerData" :src="brokerData.profile_image" />
+          <img v-else src="../assets/room1.jpg" />
         </div>
-        <div class="broker-name">더나은공인중개사사무소</div>
+        <div class="broker-name">
+          <span v-if="brokerData">{{brokerData.name}}</span>중개사사무소
+        </div>
         <div class="broker-satisfaction">
           <svg width="18" height="18" viewBox="0 0 18 18">
             <g fill="none" fill-rule="evenodd">
@@ -16,36 +19,49 @@
               <path fill="#3185F8" d="M5.322 7.002h1v8.586h-1z" />
             </g>
           </svg>
-          <span class="broker-satisfaction-title">2명이 상담후 만족했습니다</span>
+          <span
+            v-if="reviewLists"
+            class="broker-satisfaction-title"
+          >{{reviewLists[0].best_count}}명이 상담후 만족했습니다</span>
         </div>
 
         <div class="broker-information-detail-container">
           <div class="broker-information-wrapper">
             <div class="broker-information">
               <div class="broker-information-item">공인중개사이름</div>
-              <div class="broker-information-item1">더나은중개사사무소</div>
+              <div class="broker-information-item1">
+                <span v-if="brokerData">{{brokerData.name}}</span>중개사사무소
+              </div>
             </div>
             <div class="broker-information">
               <div class="broker-information-item">대표자명</div>
-              <div class="broker-information-item1">더나은중개사사무소</div>
+              <div class="broker-information-item1">
+                <span v-if="brokerData">{{brokerData.name}}</span>
+              </div>
             </div>
             <div class="broker-information">
               <div class="broker-information-item">대표번호</div>
-              <div class="broker-information-item1">더나은중개사사무소</div>
+              <div class="broker-information-item1">
+                <span v-if="brokerData">{{brokerData.phone_number}}</span>
+              </div>
             </div>
           </div>
           <div class="broker-information-wrapper">
             <div class="broker-information">
               <div class="broker-information-item">사업자등록번호</div>
-              <div class="broker-information-item1">더나은중개사사무소</div>
+              <div class="broker-information-item1">0000-0000-0000</div>
             </div>
             <div class="broker-information">
               <div class="broker-information-item">다방가입일</div>
-              <div class="broker-information-item1">더나은중개사사무소</div>
+              <div class="broker-information-item1">
+                <span v-if="brokerData">{{brokerData.registered_at.split(" ")[0]}}</span>
+              </div>
             </div>
             <div class="broker-information">
               <div class="broker-information-item">주소</div>
-              <div class="broker-information-item1">더나은중개사사무소</div>
+              <div class="broker-information-item1">
+                <span v-if="brokerData">{{brokerData.address}}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -61,9 +77,9 @@
         <div class="broker-review-container">
           <div class="broker-review-textarea-title">
             부동산리뷰
-            <span>(2)</span>
+            <span v-if="reviewLists">({{reviewLists.length}})</span>
           </div>
-          <div class="broker-review-textarea-wrapper">
+          <div v-if="loginData.user_id" class="broker-review-textarea-wrapper">
             <textarea
               v-model="content"
               class="broker-review-textarea"
@@ -71,7 +87,7 @@
 (상세한 리뷰는 도움이 되지만, 무조건적인 비방글은 삼가해주세요!)"
             ></textarea>
           </div>
-          <div class="broker-review-button-wrapper">
+          <div v-if="loginData.user_id" class="broker-review-button-wrapper">
             <p class="broker-review-button-title">평가를 선택하세요</p>
             <div @click="controllerIcon('best')" class="broker-review-icon-wrapper">
               <svg v-if="best" width="24" height="24" viewBox="0 0 24 24">
@@ -118,10 +134,10 @@
               <span>최고에요</span>
             </div>
             <div
-              @click="controllerIcon('like')"
+              @click="controllerIcon('good')"
               class="broker-review-icon-wrapper broker-review-icon2"
             >
-              <svg v-if="like" width="24" height="24" viewBox="0 0 24 24">
+              <svg v-if="good" width="24" height="24" viewBox="0 0 24 24">
                 <g fill="#FFF" fill-rule="evenodd">
                   <g stroke="#48d0ae" stroke-width="2">
                     <path
@@ -240,7 +256,7 @@
               </svg>
               <span>글쎄요</span>
             </div>
-            <button class="review-write-button">등록</button>
+            <button class="review-write-button" @click="writeReview">등록</button>
           </div>
 
           <div class="broker-icon-count-wrapper">
@@ -267,7 +283,9 @@
                 </g>
               </svg>
               <p class="broker-icon-sub">최고에요</p>
-              <p class="broker-icon-count-number">2</p>
+              <p class="broker-icon-count-number">
+                <span v-if="reviewLists">{{reviewLists[0].best_count}}</span>
+              </p>
             </div>
             <div class="broker-icon-count broker-icon-count2">
               <svg width="24" height="24" viewBox="0 0 24 24">
@@ -290,7 +308,9 @@
                 </g>
               </svg>
               <p class="broker-icon-sub">좋아요</p>
-              <p class="broker-icon-count-number">0</p>
+              <p class="broker-icon-count-number">
+                <span v-if="reviewLists">{{reviewLists[0].good_count}}</span>
+              </p>
             </div>
             <div class="broker-icon-count broker-icon-count3">
               <svg width="24" height="24" viewBox="0 0 24 24">
@@ -308,7 +328,9 @@
                 </g>
               </svg>
               <p class="broker-icon-sub">괜찮아요</p>
-              <p class="broker-icon-count-number">0</p>
+              <p class="broker-icon-count-number">
+                <span v-if="reviewLists">{{reviewLists[0].soso_count}}</span>
+              </p>
             </div>
             <div class="broker-icon-count broker-icon-count4">
               <svg width="24" height="24" viewBox="0 0 24 24">
@@ -332,7 +354,9 @@
                 </g>
               </svg>
               <p class="broker-icon-sub">별로에요</p>
-              <p class="broker-icon-count-number">2</p>
+              <p class="broker-icon-count-number">
+                <span v-if="reviewLists">{{reviewLists[0].nope_count}}</span>
+              </p>
             </div>
           </div>
           <div
@@ -399,6 +423,7 @@
                 </div>
                 <div class="broker-review-list-icon-text">글쎄요</div>
               </div>
+
               <div class="broker-review-list-information-wrapper">
                 <div class="broker-review-list-profile-wrapper">
                   <div class="broker-reivew-profile-image-wrapper">
@@ -417,6 +442,15 @@
                   <div class="broker-review-profile-register">{{reviewList.created_at}}</div>
                 </div>
                 <div class="broker-review-content">{{reviewList.content}}</div>
+                <div
+                  v-if="brokerData.broker_id === loginData.broker_id"
+                  class="broker-review-re-textarea-button-wrapper"
+                >
+                  <button
+                    class="broker-review-re-textarea-button"
+                    @click="replyModalOpen(reviewList.id)"
+                  >답글 작성하기</button>
+                </div>
               </div>
             </div>
 
@@ -436,33 +470,85 @@
             </div>
           </div>
         </div>
+
+        <ModalQna v-if="replyModalShow">
+          <div slot="header">
+            <div class="reply-modal-header-wrapper">
+              <div class="reply-modal-header-title">답글 작성하기</div>
+              <div class="reply-modal-close-button-wrapper" @click="closeButton">
+                <img src="../assets/close.png" />
+              </div>
+            </div>
+          </div>
+          <div slot="body">
+            <div class="reply-modal-body-wrapper">
+              <textarea class="reply-modal-textarea" v-model="replyContent"></textarea>
+            </div>
+          </div>
+          <div slot="footer">
+            <div class="reply-modal-button-wrapper">
+              <div class="reply-modal-button" @click="replyWrite">답글작성하기</div>
+            </div>
+          </div>
+        </ModalQna>
+
+        <ModalQna v-if="a = 0">
+          <div slot="header">
+            <div class="reply-modal-header-wrapper">
+              <div class="reply-modal-header-title">답글 작성하기</div>
+              <div class="reply-modal-close-button-wrapper">
+                <img src="../assets/close.png" />
+              </div>
+            </div>
+          </div>
+          <div slot="body">
+            <div class="reply-modal-body-wrapper">
+              <textarea class="reply-modal-textarea"></textarea>
+            </div>
+          </div>
+          <div slot="footer">
+            <div class="reply-modal-button-wrapper">
+              <div class="reply-modal-button">수정하기</div>
+            </div>
+          </div>
+        </ModalQna>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { request } from "../util/axios";
+import { request, requestParams } from "../util/axios";
 import KeepRoom from "../components/banner/KeepRoom";
+import ModalQna from "../components/ModalQna";
+import { mapState } from "vuex";
 export default {
   components: {
-    KeepRoom
+    KeepRoom,
+    ModalQna
   },
   data() {
     return {
       brokerData: "",
       roomLists: "",
       best: true,
-      like: false,
+      good: false,
       soso: false,
       nope: false,
       content: "",
-      reviewLists: ""
+      reviewLists: "",
+      replyModalShow: false,
+      replyDetail: "",
+      replyId: "", //reply저장 임시 변수
+      replyContent: ""
     };
   },
   mounted() {
     console.log(this.$route.params.brokerId);
     this.getBrokerInformation();
+  },
+  computed: {
+    ...mapState(["loginData"])
   },
   methods: {
     getBrokerInformation() {
@@ -483,8 +569,8 @@ export default {
       this.falseIcon();
       if (status === "best") {
         this.best = true;
-      } else if (status === "like") {
-        this.like = true;
+      } else if (status === "good") {
+        this.good = true;
       } else if (status === "soso") {
         this.soso = true;
       } else if (status === "nope") {
@@ -493,9 +579,54 @@ export default {
     },
     falseIcon() {
       this.best = false;
-      this.like = false;
+      this.good = false;
       this.soso = false;
       this.nope = false;
+    },
+    writeReview() {
+      // console.log(this.best);
+      // console.log(this.good);
+      // console.log(this.soso);
+      // console.log(this.nope);
+      let imgStatus = "";
+      if (this.best) imgStatus = "best";
+      else if (this.good) imgStatus = "good";
+      else if (this.soso) imgStatus = "soso";
+      else if (this.nope) imgStatus = "nope";
+      console.log(imgStatus);
+      requestParams("get", "review/write", {
+        content: this.content, // 내용
+        userId: this.loginData.user_id, //리뷰를 쓰는 유저의 아이디
+        brokerReviewId: this.brokerData.id, //리뷰를 쓰는 대상의 아이디
+        status: imgStatus
+        // brokerId: this.brokerId,
+        // auth: this.auth,
+      }).then(res => {
+        console.log(res);
+        this.getBrokerInformation();
+      });
+    },
+    replyModalOpen(id) {
+      this.replyModalShow = true;
+      console.log(id);
+      // this.replyDetail
+      this.replyId = id;
+    },
+    closeButton() {
+      this.replyModalShow = false;
+    },
+    replyWrite() {
+      console.log(this.replyId);
+      requestParams("get", "review/replyInsert", {
+        id: this.replyId,
+        content: this.replyContent,
+        brokerId: this.loginData.broker_id,
+        brokerReviewId: this.loginData.id
+      }).then(res => {
+        console.log(res);
+        this.getBrokerInformation();
+        this.replyModalShow = false;
+      });
     }
   }
 };
@@ -628,6 +759,39 @@ export default {
   border-top: 0px;
 }
 
+.broker-review-re-textarea {
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  resize: none;
+  width: 500px;
+  height: 70px;
+  color: rgb(136, 136, 136);
+  font-size: 14px;
+  line-height: 22px;
+  background-color: rgb(255, 255, 255);
+  position: relative;
+  border-radius: 4px 4px 0px 0px;
+  outline: none;
+  padding: 20px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(170, 170, 170) rgb(170, 170, 170) rgb(226, 226, 226);
+  border-image: initial;
+}
+
+.broker-review-re-textarea-button-wrapper {
+  text-align: right;
+  width: 100%;
+}
+.broker-review-re-textarea-button {
+  margin-left: 20px;
+  border: none;
+  background-color: rgb(21, 100, 249);
+  color: #fff;
+  padding: 10px;
+  cursor: pointer;
+  width: 150px;
+}
 .broker-review-textarea-title {
   height: 41px;
   margin-bottom: 20px;
@@ -756,12 +920,17 @@ export default {
   opacity: 0.5;
 }
 .broker-review-list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .broker-review-list-wrapper {
+  width: 700px;
   display: flex;
   min-height: 155px;
   align-items: center;
+
   border-top: 1px solid #dddddd;
 }
 
@@ -779,6 +948,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   padding: 0 10px;
+  width: 100%;
 }
 
 .broker-review-list-profile-wrapper {
@@ -825,5 +995,61 @@ export default {
   left: 122px;
   border-left: 1px solid rgb(151, 151, 151);
   border-bottom: 1px solid rgb(151, 151, 151);
+}
+.reply-modal-header-wrapper {
+  display: flex;
+}
+
+.reply-modal-header-title {
+  margin-left: auto;
+}
+.reply-modal-close-button-wrapper {
+  width: 30px;
+  height: 30px;
+  margin-left: auto;
+  cursor: pointer;
+}
+.reply-modal-close-button-wrapper > img {
+  width: 100%;
+  height: 100%;
+}
+.reply-modal-body-wrapper {
+  margin-top: 20px;
+  padding-left: 20px;
+}
+.reply-modal-textarea {
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  resize: none;
+  width: 400px;
+  height: 70px;
+  color: rgb(136, 136, 136);
+  font-size: 14px;
+  line-height: 22px;
+  background-color: rgb(255, 255, 255);
+  position: relative;
+  border-radius: 4px 4px 0px 0px;
+  outline: none;
+  padding: 20px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(170, 170, 170) rgb(170, 170, 170) rgb(226, 226, 226);
+  border-image: initial;
+}
+
+.reply-modal-button-wrapper {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.reply-modal-button {
+  background-color: #3185f8;
+  color: #fff;
+  width: 120px;
+  text-align: center;
+  margin-left: auto;
+  padding: 10px;
+  font-size: 15px;
+  cursor: pointer;
 }
 </style>

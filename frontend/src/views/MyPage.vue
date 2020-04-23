@@ -20,7 +20,7 @@
             :to="`/mypage/payment`"
           >결제 페이지(글쓰기)</router-link>
 
-          <router-link v-if="loginData.broker_id" class="mypage-select-item" :to="`bb`">내가 올린 방 목록</router-link>
+          <router-link class="mypage-select-item" :to="`/broker/${loginData.id}`">내가 올린 방 목록</router-link>
 
           <router-link class="mypage-select-item" :to="`/mypage/qna/write`">문의 게시판</router-link>
           <!-- <div class="mypage-select-item">찜한 방</div> -->
@@ -34,6 +34,7 @@
 <script scoped>
 import EtcContainer from "./EtcContainer";
 import { mapState } from "vuex";
+import { request } from "../util/axios";
 export default {
   name: "app",
   components: {
@@ -45,7 +46,8 @@ export default {
   computed: {
     ...mapState(["loginData"])
   },
-  mounted() {}
+  mounted() {},
+  methods: {}
 };
 </script>
 <style>

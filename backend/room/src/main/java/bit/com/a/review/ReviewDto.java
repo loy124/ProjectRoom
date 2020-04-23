@@ -49,6 +49,46 @@ public class ReviewDto implements Serializable {
 
     private String status;
 
+    private int bestCount;
+
+    private int goodCount;
+
+    public int getGoodCount() {
+        return this.goodCount;
+    }
+
+    public void setGoodCount(int goodCount) {
+        this.goodCount = goodCount;
+    }
+
+    private int sosoCount;
+
+    private int nopeCount;
+
+    public int getBestCount() {
+        return this.bestCount;
+    }
+
+    public void setBestCount(int bestCount) {
+        this.bestCount = bestCount;
+    }
+
+    public int getSosoCount() {
+        return this.sosoCount;
+    }
+
+    public void setSosoCount(int sosoCount) {
+        this.sosoCount = sosoCount;
+    }
+
+    public int getNopeCount() {
+        return this.nopeCount;
+    }
+
+    public void setNopeCount(int nopeCount) {
+        this.nopeCount = nopeCount;
+    }
+
     public String getStatus() {
         return this.status;
     }

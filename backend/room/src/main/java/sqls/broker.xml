@@ -137,8 +137,25 @@ INSERT INTO BROKER(broker_id, broker_password, name, email, age, phone_number, a
     <result column="user_id" property="userId" />
     <result column="broker_id" property="brokerId" />
     <result column="created_at" property="createdAt" />
+    <association property="bestCount" column="id" select="bestCount"></association>
+    <association property="goodCount" column="id" select="goodCount"></association>
+    <association property="sosoCount" column="id" select="sosoCount"></association>
+    <association property="nopeCount" column="id" select="nopeCount"></association>
     <association property="userInformation" column="user_id" select="getUserInformation"></association>
   </resultMap>
+
+  <select id="bestCount" resultType="java.lang.Integer">
+    select IFNULL(COUNT(status),0) AS bestCount from REVIEW where status = 'best'
+  </select>
+  <select id="goodCount" resultType="java.lang.Integer">
+    select IFNULL(COUNT(status),0) AS goodCount from REVIEW where status = 'good'
+  </select>
+  <select id="sosoCount" resultType="java.lang.Integer">
+    select IFNULL(COUNT(status),0) AS sosoCount from REVIEW where status = 'soso'
+  </select>
+  <select id="nopeCount" resultType="java.lang.Integer">
+    select IFNULL(COUNT(status),0) AS nopeCount from REVIEW where status = 'nope'
+  </select>
 
   <select id="getUserInformation" resultType="bit.com.a.user.UserDto">
     select * from USER where user_id = #{userId}

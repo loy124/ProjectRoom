@@ -36,6 +36,7 @@ import Payment from '../components/banner/Payment.vue';
 import Qna from '../components/banner/Qna.vue';
 import QnaWrite from '../components/banner/QnaWrite.vue';
 import QnaList from '../components/banner/QnaList.vue';
+import MyRoom from '../components/banner/MyRoom.vue';
 
 Vue.use(VueRouter);
 Vue.use(VueTypedJs);
@@ -111,6 +112,13 @@ const routes = [{
                         component: QnaList,
                     },
                 ],
+            },
+            {
+                // path: '/mypage/room/list',
+                // component: MyRoom,
+                path: '/broker/:brokerId',
+                name: 'broker',
+                component: BrokerView,
             },
         ],
     },
