@@ -58,6 +58,7 @@ INSERT INTO BROKER(broker_id, broker_password, name, email, age, phone_number, a
     <result column="name" property="name" />
     <result column="email" property="email" />
     <result column="age" property="age" />
+    <!-- <result column="start" property="start" /> -->
     <result column="phone_number" property="phoneNumber" />
     <result column="certification" property="certification" />
     <result column="profile_image" property="profileImage" />
@@ -117,12 +118,12 @@ INSERT INTO BROKER(broker_id, broker_password, name, email, age, phone_number, a
 	</select>
   <!-- 브로커 정보및 방의 리스트 가져오기 -->
   <select id="getRoomList" resultMap="RoomDtoMap">
-    select * from ROOM where BROKER_id = #{id}
+    select * from ROOM where BROKER_id = #{id} 
   </select>
 
 
   <select id="getInformation" parameterType="bit.com.a.broker.BrokerDto" resultMap="brokerMap">
-    select * from BROKER where id =#{id}
+    select * from BROKER where id = #{id} 
   </select>
   <!--  -->
   <resultMap id="reviewMap" type="bit.com.a.review.ReviewDto">

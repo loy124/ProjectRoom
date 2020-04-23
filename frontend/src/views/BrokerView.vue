@@ -313,7 +313,7 @@
               </svg>
               <p class="broker-icon-sub">좋아요</p>
               <p class="broker-icon-count-number">
-                <span v-if="reviewLists">{{reviewLists[0] ? reviewLists[0].like_count : 0}}</span>
+                <span v-if="reviewLists">{{reviewLists[0] ? reviewLists[0].good_count : 0}}</span>
                 <span v-else>0</span>
               </p>
             </div>
@@ -448,15 +448,28 @@
                   >{{reviewList.user_information.name}}</div>
                   <div class="broker-review-profile-register">{{reviewList.created_at}}</div>
                 </div>
-                <div class="broker-review-content">{{reviewList.content}}</div>
                 <div
-                  v-if="brokerData.broker_id === loginData.broker_id"
-                  class="broker-review-re-textarea-button-wrapper"
-                >
+                  class="broker-review-content"
+                  v-if="reviewList.del === 0"
+                >{{reviewList.content}}</div>
+                <div v-else class="broker-review-content">삭제 된 댓글입니다.</div>
+                <div class="broker-review-re-textarea-button-wrapper">
                   <button
+                    v-if="brokerData.broker_id === loginData.broker_id"
                     class="broker-review-re-textarea-button"
                     @click="replyModalOpen(reviewList.id)"
                   >답글 작성하기</button>
+
+                  <button
+                    v-if="reviewList.user_information !== null && reviewList.user_information.user_id === loginData.user_id && reviewList.del === 0"
+                    class="broker-review-re-textarea-button re-textarea-update"
+                    @click="updateModalOpen(reviewList.id, reviewList.content)"
+                  >수정하기</button>
+                  <button
+                    v-if="reviewList.user_information !== null && reviewList.user_information.user_id === loginData.user_id && reviewList.del === 0"
+                    class="broker-review-re-textarea-button re-textarea-delete"
+                    @click="deleteReply(reviewList.id)"
+                  >삭제하기</button>
                 </div>
               </div>
             </div>
@@ -472,7 +485,24 @@
                   <div class="broker-review-profile-name">{{brokerData.name}}</div>
                   <div class="broker-review-profile-register">{{reviewList.created_at}}</div>
                 </div>
-                <div class="broker-review-content">{{reviewList.content}}</div>
+                <div
+                  class="broker-review-content"
+                  v-if="reviewList.del === 0"
+                >{{reviewList.content}}</div>
+                <div v-else class="broker-review-content">삭제 된 댓글입니다.</div>
+                <div
+                  v-if="brokerData.broker_id === loginData.broker_id && reviewList.del === 0"
+                  class="broker-review-re-textarea-button-wrapper"
+                >
+                  <button
+                    class="broker-review-re-textarea-button re-textarea-update"
+                    @click="updateModalOpen(reviewList.id, reviewList.content)"
+                  >수정하기</button>
+                  <button
+                    class="broker-review-re-textarea-button re-textarea-delete"
+                    @click="deleteReply(reviewList.id)"
+                  >삭제하기</button>
+                </div>
               </div>
             </div>
           </div>
@@ -499,23 +529,23 @@
           </div>
         </ModalQna>
 
-        <ModalQna v-if="a = 0">
+        <ModalQna v-if="updateModalShow">
           <div slot="header">
             <div class="reply-modal-header-wrapper">
-              <div class="reply-modal-header-title">답글 작성하기</div>
-              <div class="reply-modal-close-button-wrapper">
+              <div class="reply-modal-header-title">수정하기</div>
+              <div class="reply-modal-close-button-wrapper" @click="closeUpdateModal">
                 <img src="../assets/close.png" />
               </div>
             </div>
           </div>
           <div slot="body">
             <div class="reply-modal-body-wrapper">
-              <textarea class="reply-modal-textarea"></textarea>
+              <textarea class="reply-modal-textarea" v-model="updateContent"></textarea>
             </div>
           </div>
           <div slot="footer">
             <div class="reply-modal-button-wrapper">
-              <div class="reply-modal-button">수정하기</div>
+              <div class="reply-modal-button" @click="updateReview">수정하기</div>
             </div>
           </div>
         </ModalQna>
@@ -547,7 +577,10 @@ export default {
       replyModalShow: false,
       replyDetail: "",
       replyId: "", //reply저장 임시 변수
-      replyContent: ""
+      replyContent: "",
+      updateModalShow: false,
+      updateId: "", //update를 위한 임시 변수
+      updateContent: ""
     };
   },
   mounted() {
@@ -561,6 +594,7 @@ export default {
     getBrokerInformation() {
       let params = new URLSearchParams();
       params.append("id", this.$route.params.brokerId);
+      params.append("start", 6);
       request("post", "broker/getInformation", params).then(res => {
         console.log(res);
         this.brokerData = res;
@@ -634,6 +668,42 @@ export default {
         this.getBrokerInformation();
         this.replyModalShow = false;
       });
+    },
+    updateModalOpen(id, content) {
+      console.log(id);
+      console.log(content);
+      this.updateId = id;
+      this.updateContent = content;
+      this.updateModalShow = true;
+    },
+    updateUserReview(id) {
+      console.log(id);
+    },
+    updateReview() {
+      console.log(this.updateId);
+      requestParams("get", "review/update", {
+        id: this.updateId,
+        content: this.updateContent
+      }).then(res => {
+        this.getBrokerInformation();
+        this.closeUpdateModal();
+      });
+    },
+    deleteReply(id) {
+      console.log(id);
+      let confirmDelete = confirm("해당 댓글을 삭제하시겠습니까?");
+      if (confirmDelete) {
+        requestParams("get", "review/delete", {
+          id: id
+        }).then(res => {
+          this.getBrokerInformation();
+          this.closeUpdateModal();
+        });
+      }
+    },
+
+    closeUpdateModal() {
+      this.updateModalShow = false;
     }
   }
 };
@@ -698,14 +768,14 @@ export default {
 }
 .broker-information-item {
   color: #555;
-  font-size: 16px;
-  width: 140px;
+  font-size: 12px;
+  width: 200px;
 }
 
 .broker-information-item1 {
   margin-left: 50px;
-  font-size: 15px;
-  width: 200px;
+  font-size: 13px;
+  width: 150px;
 }
 
 .broker-information {
@@ -797,7 +867,12 @@ export default {
   color: #fff;
   padding: 10px;
   cursor: pointer;
-  width: 150px;
+  width: 100px;
+  font-size: 12px;
+  border-radius: 4px;
+}
+.broker-review-re-textarea-button:hover {
+  opacity: 0.5;
 }
 .broker-review-textarea-title {
   height: 41px;
@@ -1058,5 +1133,15 @@ export default {
   padding: 10px;
   font-size: 15px;
   cursor: pointer;
+}
+
+.re-textarea-update {
+  width: 100px;
+  background-color: darkblue;
+}
+
+.re-textarea-delete {
+  width: 100px;
+  background-color: #ee5464;
 }
 </style>

@@ -12,7 +12,7 @@
           >-->
           <router-link v-if="loginData.user_id" class="mypage-select-item" :to="`bb`">내가 찜한 목록</router-link>
 
-          <router-link v-if="loginData.user_id" class="mypage-select-item" :to="`bb`">내가 쓴 리뷰</router-link>
+          <!-- <router-link v-if="loginData.user_id" class="mypage-select-item" :to="`bb`">내가 쓴 리뷰</router-link> -->
 
           <router-link
             v-if="loginData.broker_id"
@@ -20,7 +20,11 @@
             :to="`/mypage/payment`"
           >결제 페이지(글쓰기)</router-link>
 
-          <router-link class="mypage-select-item" :to="`/broker/${loginData.id}`">내가 올린 방 목록</router-link>
+          <router-link
+            v-if="loginData.broker_id"
+            class="mypage-select-item"
+            :to="`/mypage/broker/${loginData.id}`"
+          >내가 올린 방 목록</router-link>
 
           <router-link class="mypage-select-item" :to="`/mypage/qna/write`">문의 게시판</router-link>
           <!-- <div class="mypage-select-item">찜한 방</div> -->

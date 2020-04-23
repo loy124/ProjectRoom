@@ -116,7 +116,7 @@ const routes = [{
             {
                 // path: '/mypage/room/list',
                 // component: MyRoom,
-                path: '/broker/:brokerId',
+                path: '/mypage/broker/:brokerId',
                 name: 'broker',
                 component: BrokerView,
             },

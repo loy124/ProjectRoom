@@ -54,6 +54,16 @@ public class BrokerDto {
 
 	private List<ReviewDto> reviewList;
 
+	private int start;
+
+	public int getStart() {
+		return this.start;
+	}
+
+	public void setStart(int start) {
+		this.start = start;
+	}
+
 	public List<RoomDto> getRoomList() {
 		return this.roomList;
 	}
