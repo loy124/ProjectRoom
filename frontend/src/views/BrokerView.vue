@@ -20,9 +20,10 @@
             </g>
           </svg>
           <span
-            v-if="reviewLists"
+            v-if="reviewLists && brokerData.review_list"
             class="broker-satisfaction-title"
-          >{{reviewLists[0].best_count}}명이 상담후 만족했습니다</span>
+          >{{reviewLists[0] ? reviewLists[0].best_count : 0}}명이 상담후 만족했습니다</span>
+          <span v-else class="broker-satisfaction-title">0명이 상담후 만족했습니다</span>
         </div>
 
         <div class="broker-information-detail-container">
@@ -284,7 +285,10 @@
               </svg>
               <p class="broker-icon-sub">최고에요</p>
               <p class="broker-icon-count-number">
-                <span v-if="reviewLists">{{reviewLists[0].best_count}}</span>
+                <span
+                  v-if="reviewLists && brokerData.review_list"
+                >{{reviewLists[0] ? reviewLists[0].best_count : 0}}</span>
+                <span v-else>0</span>
               </p>
             </div>
             <div class="broker-icon-count broker-icon-count2">
@@ -309,7 +313,8 @@
               </svg>
               <p class="broker-icon-sub">좋아요</p>
               <p class="broker-icon-count-number">
-                <span v-if="reviewLists">{{reviewLists[0].good_count}}</span>
+                <span v-if="reviewLists">{{reviewLists[0] ? reviewLists[0].like_count : 0}}</span>
+                <span v-else>0</span>
               </p>
             </div>
             <div class="broker-icon-count broker-icon-count3">
@@ -329,7 +334,8 @@
               </svg>
               <p class="broker-icon-sub">괜찮아요</p>
               <p class="broker-icon-count-number">
-                <span v-if="reviewLists">{{reviewLists[0].soso_count}}</span>
+                <span v-if="reviewLists">{{reviewLists[0] ? reviewLists[0].soso_count : 0}}</span>
+                <span v-else>0</span>
               </p>
             </div>
             <div class="broker-icon-count broker-icon-count4">
@@ -355,7 +361,8 @@
               </svg>
               <p class="broker-icon-sub">별로에요</p>
               <p class="broker-icon-count-number">
-                <span v-if="reviewLists">{{reviewLists[0].nope_count}}</span>
+                <span v-if="reviewLists">{{reviewLists[0] ? reviewLists[0].nope_count : 0}}</span>
+                <span v-else>0</span>
               </p>
             </div>
           </div>
