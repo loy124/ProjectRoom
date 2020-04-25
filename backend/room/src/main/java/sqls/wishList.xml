@@ -114,7 +114,7 @@
 
 	<!-- USER_id : BIGINT -->
 	<select id="getWishList" parameterType="bit.com.a.wishlist.WishListDto" resultMap="WishListDtoMap">
-    SELECT * FROM WISH_LIST WHERE USER_id = #{USERId}
+    SELECT * FROM WISH_LIST WHERE USER_id = #{USERId} order by id desc
 </select>
 
 	<!-- OK

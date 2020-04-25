@@ -57,12 +57,13 @@ const routes = [{
         path: '/',
         name: 'Main',
         component: Main,
-        children: [{
-                path: '/',
-                component: RecentSearchRoom,
-            },
+        children: [
+            // {
+            //     path: '/',
+            //     component: RecentSearchRoom,
+            // },
             {
-                path: '/keep',
+                path: '/',
                 component: KeepRoom,
             },
         ],

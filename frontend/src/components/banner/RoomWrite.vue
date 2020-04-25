@@ -1,10 +1,6 @@
 <template>
   <div>
-    <notifications
-      group="notifyApp"
-      position="right right"
-      style="margin-right: 30vh;"
-    />
+    <notifications group="notifyApp" position="right right" style="margin-right: 30vh;" />
     <div class="room-write-notification-wrapper">
       <ul class="room-write-wrapper">
         <li>등록한 매물은 30일 동안 노출됩니다.</li>
@@ -71,17 +67,13 @@
       <div class="room-location-title-wrapper">
         <div></div>
         <div class="room-location-title">위치 정보</div>
-        <div class="room-location-sub-title">
-          *등기부등본 상의 주소를 입력해주세요
-        </div>
+        <div class="room-location-sub-title">*등기부등본 상의 주소를 입력해주세요</div>
       </div>
       <div class="room-location-content-container">
         <div class="room-location-content-title">주소</div>
         <div class="room-location-content-wrapper">
           <div class="room-location-content">
-            <div class="room-location-content-notification">
-              도로명 건물명 지번에 대해 통합검색이 가능합니다.
-            </div>
+            <div class="room-location-content-notification">도로명 건물명 지번에 대해 통합검색이 가능합니다.</div>
             <div class="room-location-input-wrapper">
               <input
                 class="room-location-input"
@@ -89,27 +81,16 @@
                 type="text"
                 placeholder="예)번동 10-1,강북구 번동"
               />
-              <div
-                @click="sample5_execDaumPostcode()"
-                class="room-location-search-button"
-              >
-                주소검색
-              </div>
+              <div @click="sample5_execDaumPostcode()" class="room-location-search-button">주소검색</div>
             </div>
             <div class="room-location-search-result" id="sample5_address">
               <div>
-                <span v-if="sample5_address" class="room-location-search-type"
-                  >도로명:</span
-                >
+                <span v-if="sample5_address" class="room-location-search-type">도로명:</span>
                 {{ sample5_address }}
               </div>
 
               <div>
-                <span
-                  v-if="sample5_address_zibun"
-                  class="room-location-search-type"
-                  >지번:</span
-                >
+                <span v-if="sample5_address_zibun" class="room-location-search-type">지번:</span>
                 {{ sample5_address_zibun }}
               </div>
             </div>
@@ -124,17 +105,11 @@
                 <div class="room-location-result-detail-sub">동</div>
               </diV>
               <diV class="room-location-result-detail">
-                <input
-                  v-model="ho"
-                  class="room-location-result-detail-input"
-                  placeholder="예)201호"
-                />
+                <input v-model="ho" class="room-location-result-detail-input" placeholder="예)201호" />
                 <div class="room-location-result-detail-sub">호</div>
               </diV>
             </div>
-            <label
-              class="room-location-dong-check-wrapper room-checkbox checkbox"
-            >
+            <label class="room-location-dong-check-wrapper room-checkbox checkbox">
               <input v-model="checkDong" type="checkbox" />
               <span>등본에 동정보가 없는경우 선택해주세요</span>
             </label>
@@ -169,18 +144,10 @@
                   <span
                     v-if="deposit || monthRent"
                     class="room-deal-information-example"
-                    >(예 월세{{ deposit }}만원/{{ monthRent }}만원)</span
-                  >
-                  <span v-else class="room-deal-information-example"
-                    >(예 월세 1000만원/50만원 )</span
-                  >
+                  >(예 월세{{ deposit }}만원/{{ monthRent }}만원)</span>
+                  <span v-else class="room-deal-information-example">(예 월세 1000만원/50만원 )</span>
                   <div class="room-deal-close-button-wrapper">
-                    <div
-                      class="room-deal-close-button"
-                      @click="showMonth = false"
-                    >
-                      X
-                    </div>
+                    <div class="room-deal-close-button" @click="showMonth = false">X</div>
                   </div>
                 </div>
               </div>
@@ -189,19 +156,10 @@
                 <div class="room-deal-information-item-wrapper">
                   <input v-model="lease" placeholder="전세" />
                   <span class="room-deal-inforamtion-won">만원</span>
-                  <span v-if="lease" class="room-deal-information-example"
-                    >(예 전세 {{ lease }}만원)</span
-                  >
-                  <span v-else class="room-deal-information-example"
-                    >(예 전세 2000만원)</span
-                  >
+                  <span v-if="lease" class="room-deal-information-example">(예 전세 {{ lease }}만원)</span>
+                  <span v-else class="room-deal-information-example">(예 전세 2000만원)</span>
                   <div class="room-deal-close-button-wrapper">
-                    <div
-                      class="room-deal-close-button"
-                      @click="showLease = false"
-                    >
-                      X
-                    </div>
+                    <div class="room-deal-close-button" @click="showLease = false">X</div>
                   </div>
                 </div>
               </div>
@@ -214,16 +172,12 @@
                 class="room-deal-option-item"
                 @click="clickMonth"
                 :class="{ 'room-deal-cliked': showMonth }"
-              >
-                월세
-              </div>
+              >월세</div>
               <div
                 class="room-deal-option-item room-deal-option-item-deposit"
                 @click="clickLease"
                 :class="{ 'room-deal-cliked': showLease }"
-              >
-                전세
-              </div>
+              >전세</div>
               <div class="room-deal-option-notice">
                 처음에 선택한 거래 종류가 우선노출됩니다. 예치금이 있는 경우
                 보증금 입력란에 필히 입력하세요.
@@ -269,10 +223,7 @@
               <div class="bulding-inforamtion-floor-wrapper">
                 <div class="bulding-information-floor">
                   <div class="bulding-information-floor-title">해당 층수</div>
-                  <select
-                    v-model="floor"
-                    class="bulding-information-floor-select"
-                  >
+                  <select v-model="floor" class="bulding-information-floor-select">
                     <option value="-2" disabled>건물 층수 선택</option>
                     <option value="-1">반지하</option>
                     <option value="0">옥탑</option>
@@ -280,8 +231,7 @@
                       v-for="(floor, index) in 50"
                       :key="index"
                       :value="index + 1"
-                      >{{ index + 1 }}층</option
-                    >
+                    >{{ index + 1 }}층</option>
                   </select>
                 </div>
               </div>
@@ -319,27 +269,15 @@
                 <p>TV</p>
               </label>
               <label class="room-option-type">
-                <input
-                  type="checkbox"
-                  v-model="roomOption"
-                  value="airconditioner"
-                />
+                <input type="checkbox" v-model="roomOption" value="airconditioner" />
                 <p>에어컨</p>
               </label>
               <label class="room-option-type">
-                <input
-                  type="checkbox"
-                  v-model="roomOption"
-                  value="refrigerator"
-                />
+                <input type="checkbox" v-model="roomOption" value="refrigerator" />
                 <p>냉장고</p>
               </label>
               <label class="room-option-type">
-                <input
-                  type="checkbox"
-                  v-model="roomOption"
-                  value="aircleaner"
-                />
+                <input type="checkbox" v-model="roomOption" value="aircleaner" />
                 <p>공기청정기</p>
               </label>
               <label class="room-option-type">
@@ -365,23 +303,16 @@
 
     <div class="room-deal-information-container">
       <div class="room-deal-information-title">상세 설명</div>
-      <div
-        class="room-deal-information-content-wrapper room-write-title-container"
-      >
+      <div class="room-deal-information-content-wrapper room-write-title-container">
         <div class="room-deal-informtaion-content-title">제목</div>
 
         <div class="room-deal-information-content">
           <div class="room-deal-information room-write-title-input-wrapper">
-            <input
-              v-model="title"
-              placeholder="예)신논현역 도보 5분거리, 혼자살기 좋은 방입니다."
-            />
+            <input v-model="title" placeholder="예)신논현역 도보 5분거리, 혼자살기 좋은 방입니다." />
           </div>
         </div>
       </div>
-      <div
-        class="room-deal-information-content-wrapper room-write-content-container"
-      >
+      <div class="room-deal-information-content-wrapper room-write-content-container">
         <div class="room-deal-informtaion-content-title">상세설명</div>
 
         <div class="room-deal-information-content">
@@ -407,9 +338,7 @@
       <div class="room-deal-information-title">사진 등록</div>
       <div class="room-picture-notice">
         <ul class="room-write-wrapper">
-          <li>
-            사진은 가로로 찍은 사진을 권장합니다. (가로 사이즈 최소 800px)
-          </li>
+          <li>사진은 가로로 찍은 사진을 권장합니다. (가로 사이즈 최소 800px)</li>
           <li>사진 용량은 사진 한 장당 10MB 까지 등록이 가능합니다.</li>
           <li>
             사진은 최소 3장 이상 등록해야하며, 최대 15장 까지 권장합니다. 그
@@ -421,9 +350,7 @@
         <div v-if="!files.length" class="room-file-upload-example-container">
           <div class="room-file-upload-example">
             <div class="room-file-image-example-wrapper">이미지</div>
-            <div class="room-file-notice-item">
-              실사진 최소 3장 이상 등록하셔야 하며, 가로사진을 권장합니다.
-            </div>
+            <div class="room-file-notice-item">실사진 최소 3장 이상 등록하셔야 하며, 가로사진을 권장합니다.</div>
             <div class="room-file-notice-item room-file-notice-item-red">
               구해방 로고를 제외한 불필요한 정보(워터마크,상호,전화번호 등)가
               있는 매물은 비공개처리됩니다
@@ -434,43 +361,21 @@
                 <img :src="profileImage" />
                 </div>-->
                 <label for="file">일반 사진 등록</label>
-                <input
-                  type="file"
-                  id="file"
-                  ref="files"
-                  @change="imageUpload"
-                  multiple
-                />
+                <input type="file" id="file" ref="files" @change="imageUpload" multiple />
               </div>
             </div>
           </div>
         </div>
         <div v-else class="file-preview-content-container">
           <div class="file-preview-container">
-            <div
-              v-for="(file, index) in files"
-              :key="index"
-              class="file-preview-wrapper"
-            >
-              <div
-                class="file-close-button"
-                @click="fileDeleteButton"
-                :name="file.number"
-              >
-                x
-              </div>
+            <div v-for="(file, index) in files" :key="index" class="file-preview-wrapper">
+              <div class="file-close-button" @click="fileDeleteButton" :name="file.number">x</div>
               <img :src="file.preview" />
             </div>
             <div class="file-preview-wrapper-upload">
               <div class="image-box">
                 <label for="file">추가 사진 등록</label>
-                <input
-                  type="file"
-                  id="file"
-                  ref="files"
-                  @change="imageAddUpload"
-                  multiple
-                />
+                <input type="file" id="file" ref="files" @change="imageAddUpload" multiple />
               </div>
               <!-- <div class="file-close-button" @click="fileDeleteButton" :name="file.number">x</div> -->
             </div>
@@ -486,69 +391,69 @@
 </template>
 
 <script>
-import { request, requestFile } from '../../util/axios';
-import { error } from '../../util/notification';
-import { mapState } from 'vuex';
+import { request, requestFile } from "../../util/axios";
+import { error } from "../../util/notification";
+import { mapState } from "vuex";
 // import { kakaoMap } from "../../util/kakaoMap";
 
 export default {
   data() {
     return {
-      roomCount: 'one',
-      roomType: 'apartment',
+      roomCount: "one",
+      roomType: "apartment",
       checkDong: false,
-      sample5_address: '',
-      address: '',
-      dong: '',
-      ho: '',
-      map: '',
-      locationSearch: '',
-      sample5_address_zibun: '',
-      lease: '',
-      deposit: '',
-      monthRent: '',
+      sample5_address: "",
+      address: "",
+      dong: "",
+      ho: "",
+      map: "",
+      locationSearch: "",
+      sample5_address_zibun: "",
+      lease: "",
+      deposit: "",
+      monthRent: "",
       showMonth: false,
       showLease: false,
       floor: -2, //floor -2는 미선택,
-      roomSpace: '',
-      squareMeter: '',
-      supplySpace: '',
-      supplyM2: '',
-      moveDay: '', //이사가능한 날짜
+      roomSpace: "",
+      squareMeter: "",
+      supplySpace: "",
+      supplyM2: "",
+      moveDay: "", //이사가능한 날짜
       roomOption: [], //옵션
-      title: '',
-      content: '', //내용
+      title: "",
+      content: "", //내용
       files: [], //업로드용 파일
       filesPreview: [],
       date: new Date(),
-      uploadImageIndex: 0, // 이미지 업로드를 위한 변수
+      uploadImageIndex: 0 // 이미지 업로드를 위한 변수
     };
   },
   watch: {
-    roomSpace() {},
+    roomSpace() {}
   },
   mounted() {
     console.log(this.loginData);
-    const script1 = document.createElement('script');
+    const script1 = document.createElement("script");
     script1.src =
-      'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
+      "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
     document.head.appendChild(script1);
     // if (window.kakao && window.kakao.maps) {
     //   // this.initMap();
     // } else {
-    const script = document.createElement('script');
+    const script = document.createElement("script");
     /* global kakao */
     script.onload = () => kakao.maps.load();
     script.src =
-      'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=0fe1d5fd101ab6d2078168510cdb7237&libraries=services';
+      "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=0fe1d5fd101ab6d2078168510cdb7237&libraries=services";
     document.head.appendChild(script);
     // }
   },
   computed: {
-    ...mapState(['loginData']),
+    ...mapState(["loginData"]),
     createObject() {
       return URL.createObjectURL(file);
-    },
+    }
   },
   methods: {
     sample5_execDaumPostcode() {
@@ -564,7 +469,7 @@ export default {
           // let mapContainer = this.$refs.map; // 지도를 표시할 div
           let mapOption = {
             center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
-            level: 4, // 지도의 확대 레벨
+            level: 4 // 지도의 확대 레벨
           };
           let map = new daum.maps.Map(mapContainer, mapOption);
           //주소-좌표 변환 객체를 생성
@@ -572,11 +477,11 @@ export default {
           //마커를 미리 생성
           let marker = new daum.maps.Marker({
             position: new daum.maps.LatLng(37.537187, 127.005476),
-            map: map,
+            map: map
           });
           let addr = data.address; // 최종 주소 변수
           //
-          console.log('a');
+          console.log("a");
           console.log(data.jibunAddress);
           console.log(data.bname);
           // 주소 정보를 해당 필드에 넣는다.
@@ -594,7 +499,7 @@ export default {
               // 해당 주소에 대한 좌표를 받아서
               let coords = new daum.maps.LatLng(result.y, result.x);
               // 지도를 보여준다.
-              mapContainer.style.display = 'block';
+              mapContainer.style.display = "block";
               map.relayout();
               map.setLevel(4);
               // 지도 중심을 변경한다.
@@ -604,11 +509,11 @@ export default {
               marker.setPosition(coords);
             }
           });
-        },
+        }
       }).open({
         //검색어 넘기기
-        popupName: '구해방', //이름 설정시 여러개의 팝업 방지
-        q: this.locationSearch,
+        popupName: "구해방", //이름 설정시 여러개의 팝업 방지
+        q: this.locationSearch
       });
     },
     clickMonth() {
@@ -626,25 +531,25 @@ export default {
       }
     },
     p() {
-      if (this.supplySpace !== '') {
+      if (this.supplySpace !== "") {
         this.supplyM2 = Math.round(this.supplySpace * 3.3058);
       }
     },
     //전용면적
     m() {
-      if (this.supplyM2 !== '') {
+      if (this.supplyM2 !== "") {
         this.supplySpace = Math.round(this.supplyM2 / 3.3058);
       }
       //    return nn / 3.3058;
     },
     p2() {
-      if (this.roomSpace !== '') {
+      if (this.roomSpace !== "") {
         this.squareMeter = Math.round(this.roomSpace * 3.3058);
       }
     },
     //공급면적
     m2() {
-      if (this.squareMeter !== '') {
+      if (this.squareMeter !== "") {
         this.roomSpace = Math.round(this.squareMeter / 3.3058);
       }
     },
@@ -664,8 +569,8 @@ export default {
             //이미지 프리뷰
             preview: URL.createObjectURL(this.$refs.files.files[i]),
             //삭제및 관리를 위한 number
-            number: i,
-          },
+            number: i
+          }
         ];
         num = i;
         //이미지 업로드용 프리뷰
@@ -696,8 +601,8 @@ export default {
             //이미지 프리뷰
             preview: URL.createObjectURL(this.$refs.files.files[i]),
             //삭제및 관리를 위한 number
-            number: i + this.uploadImageIndex,
-          },
+            number: i + this.uploadImageIndex
+          }
         ];
         num = i;
       }
@@ -707,12 +612,12 @@ export default {
       // console.log(this.filesPreview);
     },
     fileDeleteButton(e) {
-      const name = e.target.getAttribute('name');
-      this.files = this.files.filter((data) => data.number !== Number(name));
+      const name = e.target.getAttribute("name");
+      this.files = this.files.filter(data => data.number !== Number(name));
       // console.log(this.files);
     },
     moveMain() {
-      this.$router.push('/');
+      this.$router.push("/");
     },
     roomWrite() {
       console.log(this.roomCount); //방의갯수
@@ -720,26 +625,26 @@ export default {
 
       let params = new URLSearchParams();
 
-      params.append('title', this.title);
-      params.append('content', this.content);
-      params.append('roomType', this.roomType);
-      params.append('lease', this.lease); //전세
-      params.append('roomCount', this.roomCount);
+      params.append("title", this.title);
+      params.append("content", this.content);
+      params.append("roomType", this.roomType);
+      params.append("lease", this.lease); //전세
+      params.append("roomCount", this.roomCount);
       params.append(
-        'addressDetail',
-        this.sample5_address + ' ' + this.dong + '동 ' + this.ho + '호 ',
+        "addressDetail",
+        this.sample5_address + " " + this.dong + "동 " + this.ho + "호 "
       );
       params.append(
-        'addressDetailZibun',
-        this.sample5_address_zibun + ' ' + this.dong + ' ' + this.ho,
+        "addressDetailZibun",
+        this.sample5_address_zibun + " " + this.dong + " " + this.ho
       );
-      params.append('deposit', this.deposit); //보증금
-      params.append('monthRent', this.monthRent); //월세
-      params.append('supplySpace', this.supplySpace);
-      params.append('roomSpace', this.roomSpace);
-      params.append('floor', this.floor);
-      params.append('moveDay', this.date);
-      params.append('brokerId', this.loginData.id);
+      params.append("deposit", this.deposit); //보증금
+      params.append("monthRent", this.monthRent); //월세
+      params.append("supplySpace", this.supplySpace);
+      params.append("roomSpace", this.roomSpace);
+      params.append("floor", this.floor);
+      params.append("moveDay", this.date);
+      params.append("brokerId", this.loginData.id);
 
       //roomOption
       for (let i = 0; i < this.roomOption.length; i++) {
@@ -752,34 +657,51 @@ export default {
       // params.append('bed', this.roomOption[4]);
       // params.append('microwave', this.roomOption[5]);
       // params.append('washer', this.roomOption[6]);
+      // 글쓰기 방지처리
+      if (!this.address) {
+        error("주소를 입력해주세요", this);
+        return;
+      } else if ((!this.monthRent && !this.deposit) || !this.lease) {
+        error("보증금 + 월세 혹은 전세를 입력하세요 ", this);
+        return;
+      } else if (!this.roomSpace) {
+        error("전용면적을 입력하세요", this);
+        return;
+      } else if (!this.supplySpace) {
+        error("공급면적을 입력하세요", this);
+        return;
+      } else if (this.files.length < 3) {
+        error("최소 3장의 사진을 업로드 하세요", this);
+        return;
+      }
 
-      request('post', 'room/addroom', params)
+      request("post", "room/addroom", params)
         //성공시 파일업로드 실행
-        .then((res) => {
+        .then(res => {
           //res에는 roomid가 담겨있다
           console.log(res);
           for (let i = 0; i < this.files.length; i++) {
             let params = new FormData();
-            params.append('roomId', res);
-            params.append('file', this.files[i].file);
+            params.append("roomId", res);
+            params.append("file", this.files[i].file);
             console.log(res);
-            requestFile('post', 'room/upload', params)
-              .then((response) => {
-                if (response !== 'FAIL') {
+            requestFile("post", "room/upload", params)
+              .then(response => {
+                if (response !== "FAIL") {
                   this.$toasted.show(`글 작성에 성공했습니다`, {
-                    type: 'success',
-                    position: 'top-right',
+                    type: "success",
+                    position: "top-right",
                     duration: 2500,
-                    singleton: true,
+                    singleton: true
                   });
-                  if (this.$route.path !== '/') {
-                    this.$router.push('/');
+                  if (this.$route.path !== "/") {
+                    this.$router.push("/");
                   }
                 } else {
-                  error('글 작성에 실패했습니다', this);
+                  error("글 작성에 실패했습니다", this);
                 }
               })
-              .catch((error) => {
+              .catch(error => {
                 console.log(error);
               });
           }
@@ -797,8 +719,8 @@ export default {
       //     error('글 작성에 실패했습니다', this);
       //   }
       // });
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -824,7 +746,7 @@ export default {
 }
 
 .room-write-wrapper > li::before {
-  content: '';
+  content: "";
   width: 3px;
   height: 3px;
   background-color: rgb(34, 34, 34);
@@ -891,13 +813,13 @@ export default {
   margin-left: 10px;
 }
 
-.room-write-type > input[type='radio'] {
+.room-write-type > input[type="radio"] {
   position: relative;
   user-select: none;
 }
 
-.room-write-type > input[type='radio'],
-input[type='radio']:checked {
+.room-write-type > input[type="radio"],
+input[type="radio"]:checked {
   position: absolute;
   appearance: none;
   width: 0.9rem;
@@ -913,7 +835,7 @@ input[type='radio']:checked {
   border: 1px solid #dddddd;
 }
 
-.room-write-type > input[type='radio']:checked + p {
+.room-write-type > input[type="radio"]:checked + p {
   color: white;
   background-color: #1a5ae8;
   border: 1px solid #1a5ae8;
@@ -1084,13 +1006,13 @@ input[type='radio']:checked {
   cursor: pointer;
 }
 
-.checkbox > input[type='checkbox']:checked {
+.checkbox > input[type="checkbox"]:checked {
   border: 1px solid #1564f9;
   background-color: #1564f9;
 }
 
-.checkbox > input[type='checkbox']:checked + span::before {
-  content: '\2713';
+.checkbox > input[type="checkbox"]:checked + span::before {
+  content: "\2713";
   font-size: 15px;
   display: block;
   text-align: center;
@@ -1379,7 +1301,7 @@ select {
   padding: 0.8em 0.5em;
   border: 1px solid #999;
   font-family: inherit;
-  background: url('../../assets/arrow.jpeg') no-repeat 95% 50%;
+  background: url("../../assets/arrow.jpeg") no-repeat 95% 50%;
   background-size: 25px;
   border-radius: 0px;
   -webkit-appearance: none;
@@ -1416,12 +1338,12 @@ select::-ms-expand {
   margin-left: 20px;
 }
 
-.room-option-type > input[type='checkbox'] {
+.room-option-type > input[type="checkbox"] {
   position: relative;
   user-select: none;
 }
 
-.room-option-type > input[type='checkbox'] {
+.room-option-type > input[type="checkbox"] {
   position: absolute;
   appearance: none;
   width: 0.9rem;
@@ -1429,7 +1351,7 @@ select::-ms-expand {
   border-radius: 100%;
   margin-right: 0.1rem;
 }
-.room-option-type > input[type='checkbox']:checked {
+.room-option-type > input[type="checkbox"]:checked {
   position: absolute;
   appearance: none;
   width: 0.9rem;
@@ -1445,7 +1367,7 @@ select::-ms-expand {
   border: 1px solid #dddddd;
 }
 
-.room-option-type > input[type='checkbox']:checked + p {
+.room-option-type > input[type="checkbox"]:checked + p {
   color: white;
   background-color: #1a5ae8;
   border: 1px solid #1a5ae8;
@@ -1537,7 +1459,7 @@ select::-ms-expand {
   text-align: center;
 }
 
-.image-box input[type='file'] {
+.image-box input[type="file"] {
   position: absolute;
   width: 0;
   height: 0;
