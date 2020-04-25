@@ -1,73 +1,45 @@
 <template>
   <EtcContainer class="container">
     <div slot="banner">
-      <notifications
-        group="notifyApp"
-        position="right right"
-        style="margin-right: 30vh;"
-      />
+      <notifications group="notifyApp" position="right right" style="margin-right: 30vh;" />
       <div class="room-detail-container">
         <div class="room-detail-header">
           <div class="room-detail-header-container">
             <div class="room-detail-header-wrapper">
               <div class="room-detail-header-item">
                 <!-- <div class="room-detail-header-type">원룸</div> -->
-                <div
-                  v-if="roomDetail.room_type === 'apartment'"
-                  class="room-detail-header-type"
-                >
-                  아파트
-                </div>
-                <div
-                  v-if="roomDetail.room_type === 'studio'"
-                  class="room-detail-header-type"
-                >
-                  오피스텔
-                </div>
-                <div
-                  v-if="roomDetail.room_type === 'house'"
-                  class="room-detail-header-type"
-                >
-                  단독주택
-                </div>
+                <div v-if="roomDetail.room_type === 'apartment'" class="room-detail-header-type">아파트</div>
+                <div v-if="roomDetail.room_type === 'studio'" class="room-detail-header-type">오피스텔</div>
+                <div v-if="roomDetail.room_type === 'house'" class="room-detail-header-type">단독주택</div>
                 <div
                   v-if="roomDetail.room_type === 'multiunit'"
                   class="room-detail-header-type"
-                >
-                  빌라/연립/다세대
-                </div>
+                >빌라/연립/다세대</div>
                 <div
                   v-if="roomDetail.room_type === 'flatwithshop'"
                   class="room-detail-header-type"
-                >
-                  상가주택
-                </div>
+                >상가주택</div>
                 <div class="room-detail-header-information">
                   월세 {{ roomDetail.deposit }}/{{ roomDetail.month_rent }}
-                  <span class="gray-font-8 money-type">만원</span>
+                  <span
+                    class="gray-font-8 money-type"
+                  >만원</span>
                 </div>
               </div>
               <div class="room-detail-header-item">
                 <div class="room-detail-header-type">전용면적</div>
-                <div class="room-detail-header-information">
-                  {{ roomDetail.room_space }} 평
-                </div>
+                <div class="room-detail-header-information">{{ roomDetail.room_space }} 평</div>
               </div>
               <div class="room-detail-header-item">
                 <div class="room-detail-header-type">한달 생활비</div>
-                <div class="room-detail-header-information blue-font">
-                  {{ Number(roomDetail.month_rent) + 5 }}만 원 + α
-                </div>
+                <div
+                  class="room-detail-header-information blue-font"
+                >{{ Number(roomDetail.month_rent) + 5 }}만 원 + α</div>
               </div>
             </div>
             <div class="room-detail-broker-info">
               <div class="room-detail-broker-name">{{ brokerData.name }}</div>
-              <div
-                class="room-detail-broker-information"
-                @click="brokerModalShow = true"
-              >
-                연락처 보기
-              </div>
+              <div class="room-detail-broker-information" @click="brokerModalShow = true">연락처 보기</div>
             </div>
           </div>
           <div class="room-detail-header-service">
@@ -76,10 +48,7 @@
               <span class="room-detail-icon-text">0</span>
             </div>
             <div class="distance-dot">•</div>-->
-            <div
-              class="room-detail-icon-wrapper"
-              @click="copyClipBoard($event)"
-            >
+            <div class="room-detail-icon-wrapper" @click="copyClipBoard($event)">
               <img src="../assets/link.png" />
             </div>
             <div class="distance-dot">•</div>
@@ -97,16 +66,12 @@
         <div class="room-detail-content-container">
           <div class="room-detail-content-check-wrapper">
             <div class="room-detail-content-check-title">확인매물</div>
-            <div class="room-detail-content-check-content">
-              방주인과 공인중개사가 거래정보를 확인한 매물입니다
-            </div>
+            <div class="room-detail-content-check-content">방주인과 공인중개사가 거래정보를 확인한 매물입니다</div>
           </div>
           <div class="room-detail-content-header">
             <div class="room-detail-content-header-wrapper">
               <div class="room-detail-content-header-title">해당층</div>
-              <div class="room-detail-content-header-content">
-                {{ roomDetail.floor }}층
-              </div>
+              <div class="room-detail-content-header-content">{{ roomDetail.floor }}층</div>
             </div>
             <div class="room-detail-content-header-wrapper">
               <div class="room-detail-content-header-title">전용/공급면적</div>
@@ -116,12 +81,10 @@
               </div>
             </div>
             <div class="room-detail-content-header-wrapper">
-              <div class="room-detail-content-header-title">
-                전용/공급면적(평)
-              </div>
-              <div class="room-detail-content-header-content">
-                {{ roomDetail.room_space }}/{{ roomDetail.supply_space }}평
-              </div>
+              <div class="room-detail-content-header-title">전용/공급면적(평)</div>
+              <div
+                class="room-detail-content-header-content"
+              >{{ roomDetail.room_space }}/{{ roomDetail.supply_space }}평</div>
             </div>
             <div class="room-detail-content-header-wrapper">
               <div class="room-detail-content-header-title">입주가능일</div>
@@ -146,12 +109,7 @@
             <div slot="header">
               <div class="modal-broker-class-wrapper">
                 <div class="modal-broker-header">연락처 보기</div>
-                <div
-                  class="modal-broker-close-button"
-                  @click="brokerModalShow = false"
-                >
-                  X
-                </div>
+                <div class="modal-broker-close-button" @click="brokerModalShow = false">X</div>
               </div>
             </div>
             <div slot="body">
@@ -161,15 +119,11 @@
                 </div>
                 <div class="modal-broker-information-item-wrapper">
                   <div class="modal-broker-information-item">성함</div>
-                  <div class="modal-broker-information-item1">
-                    {{ brokerData.name }}
-                  </div>
+                  <div class="modal-broker-information-item1">{{ brokerData.name }}</div>
                 </div>
                 <div class="modal-broker-information-item-wrapper">
                   <div class="modal-broker-information-item">대표 번호</div>
-                  <div class="modal-broker-information-item1">
-                    {{ brokerData.phone_number }}
-                  </div>
+                  <div class="modal-broker-information-item1">{{ brokerData.phone_number }}</div>
                 </div>
               </div>
             </div>
@@ -179,48 +133,32 @@
                   style="text-decoration:none;"
                   :to="`/broker/${brokerData.id}`"
                   class="modal-broker-information-button"
-                  >공인중개사 리뷰 확인하기</router-link
-                >
+                >공인중개사 리뷰 확인하기</router-link>
               </div>
             </div>
           </Modal>
           <ModalImageView v-if="imageListModal" />
-          <div
-            class="room-detail-content-image-container"
-            @click="SET_IMAGE_LIST_MODAL(true)"
-          >
+          <div class="room-detail-content-image-container" @click="SET_IMAGE_LIST_MODAL(true)">
             <div class="room-detail-content-image-wrapper1">
               <!-- <img src="../assets/room1.jpg" /> -->
-              <img
-                v-if="imagePrint(0)"
-                :src="roomDetail.room_picture_dto_list[0].file_name"
-              />
+              <img v-if="imagePrint(0)" :src="roomDetail.room_picture_dto_list[0].file_name" />
               <!-- {{ roomDetail.room_picture_dto_list[3].file_name }} -->
             </div>
             <div class="room-detail-content-image-wrapper2">
               <div class="room-detail-content-image-wrapper3">
-                <img
-                  v-if="imagePrint(1)"
-                  :src="roomDetail.room_picture_dto_list[1].file_name"
-                />
-                <img
-                  v-if="imagePrint(2)"
-                  :src="roomDetail.room_picture_dto_list[2].file_name"
-                />
+                <img v-if="imagePrint(1)" :src="roomDetail.room_picture_dto_list[1].file_name" />
+                <img v-if="imagePrint(2)" :src="roomDetail.room_picture_dto_list[2].file_name" />
               </div>
               <div class="room-detail-content-image-wrapper3">
-                <img
-                  v-if="imagePrint(3)"
-                  :src="roomDetail.room_picture_dto_list[3].file_name"
-                />
+                <img v-if="imagePrint(3)" :src="roomDetail.room_picture_dto_list[3].file_name" />
                 <div v-else></div>
                 <div class="room-detail-content-click-image">
                   <div class="room-detail-content-click-image-item1">+</div>
                   <div class="room-detail-content-click-image-item2">
                     {{
-                      roomDetail.room_picture_dto_list
-                        ? roomDetail.room_picture_dto_list.length
-                        : ''
+                    roomDetail.room_picture_dto_list
+                    ? roomDetail.room_picture_dto_list.length
+                    : ''
                     }}개 전체보기
                   </div>
                 </div>
@@ -243,21 +181,19 @@
           </div>
 
           <div class="room-detail-content-pay-information-container">
-            <div class="room-detail-content-pay-information-title">
-              가격정보
-            </div>
+            <div class="room-detail-content-pay-information-title">가격정보</div>
             <div class="room-detail-content-pay-information-wrapper">
               <div class="room-detail-content-pay-information">
                 <div class="room-detail-content-pay-title">월세</div>
-                <div class="room-detail-content-pay-content">
-                  {{ roomDetail.deposit }}/{{ roomDetail.month_rent }} 만원
-                </div>
+                <div
+                  class="room-detail-content-pay-content"
+                >{{ roomDetail.deposit }}/{{ roomDetail.month_rent }} 만원</div>
               </div>
               <div class="room-detail-content-pay-information">
                 <div class="room-detail-content-pay-title">전세</div>
-                <div class="room-detail-content-pay-content">
-                  {{ roomDetail.lease ? roomDetail.lease + ' 만원' : '' }}
-                </div>
+                <div
+                  class="room-detail-content-pay-content"
+                >{{ roomDetail.lease ? roomDetail.lease + ' 만원' : '' }}</div>
               </div>
               <div class="room-detail-content-pay-information">
                 <div class="room-detail-content-pay-title">관리비</div>
@@ -269,9 +205,9 @@
               <div class="room-detail-content-pay-life-title">한달 생활비</div>
               <div class="room-detail-content-pay-life-content">
                 {{ Number(roomDetail.month_rent) + 5 }}만원 + α
-                <span class="room-detail-content-pay-life-content-sub"
-                  >(월세+ 관리비)</span
-                >
+                <span
+                  class="room-detail-content-pay-life-content-sub"
+                >(월세+ 관리비)</span>
               </div>
             </div>
           </div>
@@ -279,113 +215,45 @@
           <div class="room-detail-content-option-container">
             <div class="room-detail-content-option-title">옵션</div>
             <div class="room-detail-content-option-item-wrapper">
-              <div
-                v-if="iconPrint('tv')"
-                class="room-detail-content-option-item"
-              >
+              <div v-if="iconPrint('tv')" class="room-detail-content-option-item">
                 <img src="../assets/television.png" />
                 <div class="room-detail-content-option-item-name">TV</div>
               </div>
-              <div
-                v-if="iconPrint('airconditioner')"
-                class="room-detail-content-option-item"
-              >
+              <div v-if="iconPrint('airconditioner')" class="room-detail-content-option-item">
                 <img src="../assets/air-conditioner.png" />
                 <div class="room-detail-content-option-item-name">에어컨</div>
               </div>
-              <div
-                v-if="iconPrint('refrigerator')"
-                class="room-detail-content-option-item"
-              >
+              <div v-if="iconPrint('refrigerator')" class="room-detail-content-option-item">
                 <img src="../assets/fridge.png" />
                 <div class="room-detail-content-option-item-name">냉장고</div>
               </div>
-              <div
-                v-if="iconPrint('aircleaner')"
-                class="room-detail-content-option-item"
-              >
+              <div v-if="iconPrint('aircleaner')" class="room-detail-content-option-item">
                 <img src="../assets/air-purifier.png" />
-                <div class="room-detail-content-option-item-name">
-                  공기청정기
-                </div>
+                <div class="room-detail-content-option-item-name">공기청정기</div>
               </div>
-              <div
-                v-if="iconPrint('bed')"
-                class="room-detail-content-option-item"
-              >
+              <div v-if="iconPrint('bed')" class="room-detail-content-option-item">
                 <img src="../assets/bed.png" />
                 <div class="room-detail-content-option-item-name">침대</div>
               </div>
-              <div
-                v-if="iconPrint('microwave')"
-                class="room-detail-content-option-item"
-              >
+              <div v-if="iconPrint('microwave')" class="room-detail-content-option-item">
                 <img src="../assets/microwave.png" />
                 <div class="room-detail-content-option-item-name">전자렌지</div>
               </div>
-              <div
-                v-if="iconPrint('washer')"
-                class="room-detail-content-option-item"
-              >
+              <div v-if="iconPrint('washer')" class="room-detail-content-option-item">
                 <img src="../assets/washer.png" />
                 <div class="room-detail-content-option-item-name">세탁기</div>
               </div>
             </div>
           </div>
           <div class="room-detail-content-location-container">
-            <div class="room-detail-content-location-title">
-              위치 및 주변 시설
-            </div>
-            <div class="room-detail-content-location-title-sub">
-              서울특별시 관악구 신림동
-            </div>
+            <div class="room-detail-content-location-title">위치 및 주변 시설</div>
+            <div class="room-detail-content-location-title-sub">서울특별시 관악구 신림동</div>
             <div class="room-detail-content-location-wrapper">지도</div>
           </div>
 
           <div class="room-detail-content-other-room">
-            <!-- <router-link
-                v-for="(roomList, index) in roomLists"
-                :key="index"
-                class="search-room-list"
-                :id="roomList.id"
-                :to="`search/detail/${roomList.id}`"
-                style="text-decoration:none; outline: none; color:#222222;"
-              >
-                <div class="search-room-image-wrapper">
-                  <img
-                    v-if="roomList.room_picture_dto_list[0]"
-                    class="search-room-image"
-                    :src="roomList.room_picture_dto_list[0].file_name"
-                    alt="이미지없음"
-                  />
-                  <img v-else class="search-room-image" src="../assets/room1.jpg" />
-
-                  <img
-                    @click.prevent.stop="clickImage(roomList.id)"
-                    class="heart-image"
-                    src="../assets/fillHeart.png"
-                    alt
-                  />
-          
-                </div>
-                <div class="search-room-list-check">
-                   <div>플러스+</div>
-                  <div class="search-room-list-certification">공인중개사 확인</div>
-                </div>
-                 타입 처리부분 
-                <div v-if="roomList.room_type === 'apartment'" class="search-room-list-type">아파트</div>
-                <div v-if="roomList.room_type === 'studio'" class="search-room-list-type">오피스텔</div>
-                <div v-if="roomList.room_type === 'house'" class="search-room-list-type">단독주택</div>
-                <div
-                  v-if="roomList.room_type === 'multiunit'"
-                  class="search-room-list-type"
-                >빌라/연립/다세대</div>
-                <div v-if="roomList.room_type === 'flatwithshop'" class="search-room-list-type">상가주택</div>
-
-                <div class="search-room-pay-type">월세 {{roomList.deposit}}/{{roomList.month_rent}}</div>
-                <div class="search-room-detail">{{roomList.floor}}층. {{roomList.room_space}}평</div>
-                <div class="search-room-content">{{roomList.content}}</div>
-            </router-link>-->
+            <div class="room-detail-content-other-header">이 공인중개사의 다른 방</div>
+            <KeepRoomContent v-if="roomLists" :roomLists="roomLists" />
           </div>
         </div>
       </div>
@@ -393,47 +261,51 @@
   </EtcContainer>
 </template>
 <script scoped>
-import EtcContainer from './EtcContainer';
-import { request } from '../util/axios';
-import { mapState, mapMutations } from 'vuex';
-import ModalImageView from '../components/ModalImageView';
-import Modal from '../components/Modal';
-import { success } from '../util/notification';
+import KeepRoomContent from "../components/banner/KeepRoomContent";
+import EtcContainer from "./EtcContainer";
+import { request } from "../util/axios";
+import { mapState, mapMutations } from "vuex";
+import ModalImageView from "../components/ModalImageView";
+import Modal from "../components/Modal";
+import { success } from "../util/notification";
 export default {
-  name: 'app',
+  name: "app",
   components: {
     EtcContainer,
     ModalImageView,
     Modal,
+    KeepRoomContent
   },
   data() {
     return {
       roomDetail: [],
-      moveDate: '',
-      brokerData: '',
-      imageProfile: '',
+      moveDate: "",
+      brokerData: "",
+      imageProfile: "",
       brokerModalShow: false,
+      roomLists: ""
     };
   },
   mounted() {
     console.log(this.$route.params.roomId); //넘겨 받은 아이디
     this.getRoomDetail();
+    this.getRoomBrokerList();
   },
   computed: {
-    ...mapState(['imageListModal']),
+    ...mapState(["imageListModal"]),
     supplySpaceToM() {
       return Math.round(this.roomDetail.supply_space * 3.3058);
     },
     roomSpaceToM() {
       return Math.round(this.roomDetail.room_space * 3.3058);
-    },
+    }
   },
   methods: {
-    ...mapMutations(['SET_IMAGE_LIST', 'SET_IMAGE_LIST_MODAL']),
+    ...mapMutations(["SET_IMAGE_LIST", "SET_IMAGE_LIST_MODAL"]),
     //방 detail 출력
     getRoomDetail() {
-      request('post', `room/getRoomDetail/${this.$route.params.roomId}`)
-        .then((res) => {
+      request("post", `room/getRoomDetail/${this.$route.params.roomId}`)
+        .then(res => {
           console.log(res);
           this.roomDetail = res;
           //vuex에 이미지리스트 담기
@@ -441,11 +313,11 @@ export default {
           this.moveDate = new Date(res.move_day);
           return res;
         })
-        .then((res) => {
+        .then(res => {
           console.log(res.brokerid);
           let params = new URLSearchParams();
-          params.append('id', res.brokerid);
-          request('post', 'broker/getInformation', params).then((resp) => {
+          params.append("id", res.brokerid);
+          request("post", "broker/getInformation", params).then(resp => {
             console.log(resp);
             this.brokerData = resp;
             this.imageProfile = resp.profile_image;
@@ -455,9 +327,10 @@ export default {
     //broker의 다른 방 리스트 출력
     getRoomBrokerList() {
       request(
-        'post',
-        `room/getRoomBrokerList/${this.$route.params.roomId}`,
-      ).then((res) => {
+        "post",
+        `room/getRoomBrokerList/${this.$route.params.roomId}`
+      ).then(res => {
+        this.roomLists = res;
         console.log(res);
       });
     },
@@ -485,10 +358,10 @@ export default {
     copyClipBoard(e) {
       let t = this;
       this.$copyText(window.location.href).then(function(e) {
-        success('URL이 클립보드에 복사되었습니다.', t);
+        success("URL이 클립보드에 복사되었습니다.", t);
       });
-    },
-  },
+    }
+  }
 };
 </script>
 <style>
@@ -641,7 +514,7 @@ export default {
 }
 
 .room-detail-content-header-title:before {
-  content: '·';
+  content: "·";
   color: rgb(34, 34, 34);
   margin-right: 7px;
 }
@@ -834,7 +707,7 @@ export default {
 
 .room-detail-content-other-room {
   border-top: 1px solid #dddddd;
-  padding: 100px 0;
+  padding: 30px 0;
 }
 .modal-broker-class-wrapper {
   display: flex;
@@ -914,5 +787,11 @@ export default {
 
 .modal-broker-information-button:hover {
   opacity: 0.5;
+}
+
+.room-detail-content-other-header {
+  margin: 30px auto;
+  text-align: center;
+  font-size: 27px;
 }
 </style>

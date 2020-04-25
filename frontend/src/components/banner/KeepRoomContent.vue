@@ -1,7 +1,8 @@
 <template>
   <div class="recent-room-container">
     <div v-if="recentDatas.length" class="recent-room-wrapper">
-      <router-link
+      <a
+        :href="`/search/detail/${recentData.id}`"
         :to="`/search/detail/${recentData.id}`"
         v-for="(recentData, index) in recentDatas"
         :key="index"
@@ -72,10 +73,10 @@
             <div class="recent-information-content">{{ recentData.content }}</div>
           </div>
         </div>
-      </router-link>
+      </a>
     </div>
     <div v-else class="recent-room-wrapper">
-      <div class="nothing-like">다른 목록이 없습니다</div>
+      <div class="nothing-like">목록이 없습니다</div>
     </div>
   </div>
 </template>

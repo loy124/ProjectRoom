@@ -74,7 +74,7 @@
       </router-link>
     </div>
     <div v-else class="recent-room-wrapper">
-      <div class="nothing-like">찜한 목록이 없습니다</div>
+      <div class="nothing-like">목록이 없습니다</div>
     </div>
   </div>
 </template>
