@@ -99,16 +99,23 @@ INSERT INTO BROKER(broker_id, broker_password, name, email, age, phone_number, a
     <result column="updated_by" property="updatedBy" />
     <result column="deleted_at" property="deletedAt" />
     <result column="deleted_by" property="deletedBy" />
+
     <!-- <collection property="roomOptionDto" resultMap="RoomOptionDto" /> -->
     <!-- 1대1 매핑시에는 association -->
     <association property="roomOptionDto" column="id" select="getRoomOption"></association>
     <!-- list등 다수를 가져올때는 collection -->
     <collection property="roomPictureDtoList" column="id" javaType="java.util.ArrayList" ofType="bit.com.a.room.RoomPictureDto" select="getRoomPicture"></collection>
+    <!-- 위시리스트 가져오기 -->
+    <collection property="roomWishList" column="id" javaType="java.util.ArrayList" select="getWishList"></collection>
   </resultMap>
   <select id="getRoomOption" resultType="bit.com.a.room.RoomOptionDto">
 		select * from ROOM_OPTION where ROOM_id = #{id}
   </select>
 
+  <!-- 위시리스트 -->
+  <select id="getWishList" resultType="bit.com.a.wishlist.WishListDto">
+    SELECT * FROM WISH_LIST WHERE ROOM_id = #{id}
+  </select>
   <!-- <resultMap id="RoomPictureDto" type="bit.com.a.room.RoomPictureDto">
     <result column="file_name" property="fileName" />
     <result column="ROOM_id" property="roomId" />
@@ -118,7 +125,7 @@ INSERT INTO BROKER(broker_id, broker_password, name, email, age, phone_number, a
 	</select>
   <!-- 브로커 정보및 방의 리스트 가져오기 -->
   <select id="getRoomList" resultMap="RoomDtoMap">
-    select * from ROOM where BROKER_id = #{id} 
+    select * from ROOM where BROKER_id = #{id} order by created_at desc
   </select>
 
 

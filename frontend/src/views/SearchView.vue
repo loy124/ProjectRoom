@@ -188,13 +188,34 @@
                     alt="이미지없음"
                   />
                   <img v-else class="search-room-image" src="../assets/room1.jpg" />
+                  <div
+                    v-if="loginData.auth === '3' && filterMyLikeImage(roomList.room_wish_list).length"
+                  >
+                    <img
+                      @click.prevent.stop="like($event, roomList.id)"
+                      class="heart-image"
+                      :src="fillHeart"
+                      alt
+                    />
+                  </div>
+                  <div v-else-if="loginData.auth === '3'">
+                    <img
+                      @click.prevent.stop="like($event, roomList.id)"
+                      class="heart-image"
+                      :src="heart"
+                      alt
+                    />
+                  </div>
 
-                  <img
-                    @click.prevent.stop="clickImage(roomList.id)"
-                    class="heart-image"
-                    src="../assets/fillHeart.png"
-                    alt
-                  />
+                  <!-- 로그인 안했을때 -->
+                  <div v-else-if="!loginData">
+                    <img @click.prevent.stop="goToLogin()" class="heart-image" :src="heart" />
+                  </div>
+                  <!-- 일반 유저가 아닌 사람이 로그인했을때 하트 보여주지 않기 -->
+                  <div v-else-if="loginData.auth !== '3'"></div>
+                  <!--  -->
+
+                  <!-- {{filterMyLikeImage(roomList.room_wish_list)}} -->
                   <!-- <img
             v-else
             class="heart-image"
@@ -232,14 +253,16 @@
 </template>
 <script scoped>
 import EtcContainer from "./EtcContainer";
-import { request } from "../util/axios";
+import { request, requestParams } from "../util/axios";
 import { error } from "../util/notification";
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "app",
   components: {
     EtcContainer
   },
   computed: {
+    ...mapState(["loginData"])
     //데이터 처리
     // roomType(element) {
     //   console.log(element);
@@ -271,7 +294,9 @@ export default {
       lease: 0, //전세
       monthRent: 0, //월세
       roomSpace: 0, //몇평
-      roomLists: []
+      roomLists: [],
+      heart: require("../assets/heart.png"),
+      fillHeart: require("../assets/fillHeart.png")
     };
   },
   mounted() {
@@ -279,6 +304,7 @@ export default {
     console.log("aa");
   },
   methods: {
+    ...mapMutations(["SET_LOGIN_MODAL"]),
     openEvent(element) {
       if (this.optionModalType[element] === true) {
         this.closeEvent();
@@ -309,8 +335,40 @@ export default {
         })
         .catch(error => console.log(error));
     },
-    clickImage(id) {
-      console.log("heart click");
+    like(e, id) {
+      // 이미지 처리
+      // 하트가 차있을때 비우기
+      if (e.target.src.split("img/")[1] === this.fillHeart.split("img/")[1]) {
+        e.target.src = this.heart;
+        console.log(id);
+        requestParams("get", "wishlist/delWishList", {
+          USERId: this.loginData.id,
+          ROOMId: id
+        }).then(res => {
+          console.log(res);
+        });
+      }
+      // 하트가 비어있을때 채우기
+      else if (e.target.src.split("img/")[1] === this.heart.split("img/")[1]) {
+        e.target.src = this.fillHeart;
+        console.log(id);
+        requestParams("get", "wishlist/addLike", {
+          USERId: this.loginData.id,
+          ROOMId: id
+        }).then(res => {
+          console.log(res);
+        });
+      }
+    },
+    // 로그인 유저와
+    filterMyLikeImage(list) {
+      let filterLike = list.filter(li => {
+        return li.userid === this.loginData.id;
+      });
+      return filterLike;
+    },
+    goToLogin() {
+      this.SET_LOGIN_MODAL(true);
     }
   }
 };

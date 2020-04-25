@@ -12,7 +12,7 @@
     <div>
       <div class="menu-title">공인중개사 회원가입</div>
       <div class="menu-item">
-        <div>다방프로</div>
+        <div>구해방프로</div>
       </div>
     </div>
     <div>
@@ -27,7 +27,7 @@
       </div>
     </div>
     <div>
-      <div class="menu-title">다방 뉴스</div>
+      <div class="menu-title">구해방 뉴스</div>
       <div class="menu-item">
         <div>공지사항</div>
         <div>이벤트</div>
@@ -39,11 +39,11 @@
         <div>자주묻는 질문</div>
         <div>Android</div>
         <div>IOS</div>
-        <div>다방 이용 설명서</div>
+        <div>구해방 이용 설명서</div>
       </div>
     </div>
     <div>
-      <div class="menu-title">About 다방</div>
+      <div class="menu-title">About 구해방</div>
       <div class="menu-item">
         <div>회사소개</div>
         <div>오시는 길</div>

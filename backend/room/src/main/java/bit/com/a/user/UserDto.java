@@ -1,5 +1,9 @@
 package bit.com.a.user;
 
+import java.util.List;
+
+import bit.com.a.wishlist.WishListDto;
+
 public class UserDto {
 
 	private int id;
@@ -33,6 +37,16 @@ public class UserDto {
 	private String unRegisteredAt;
 
 	private String unRegisteredBy;
+
+	private List<WishListDto> wishList;
+
+	public List<WishListDto> getWishList() {
+		return this.wishList;
+	}
+
+	public void setWishList(List<WishListDto> wishList) {
+		this.wishList = wishList;
+	}
 
 	// 회원수 저장용
 	private int count;

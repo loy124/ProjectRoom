@@ -10,12 +10,12 @@
             </router-link>
           </div>
           <div class="header-left-site-button1">
-            <button>프로중개사이트</button>
+            <button>모든 방을 구해방!</button>
           </div>
-          <div class="vertical-line"></div>
-          <div class="header-left-site-button2">
-            <button>방주인사이트</button>
-          </div>
+          <!-- <div class="vertical-line"></div> -->
+          <!-- <div class="header-left-site-button2">
+            <button>구해방</button>
+          </div>-->
         </div>
       </div>
     </div>
@@ -27,21 +27,37 @@
             <button class="router-item">방찾기</button>
           </router-link>
         </div>
-        <div class="header-menu-item header-menu-item1">
-          <button>분양</button>
-        </div>
-        <div class="header-menu-item header-menu-item2">
-          <router-link class="room-selector1" :to="`/attention`">
-            <button class="router-item">관심목록</button>
+        <div v-if="loginData.auth === '3'" class="header-menu-item header-menu-item2">
+          <router-link class="room-selector1" :to="`/attention/keep`">
+            <button class="router-item">찜한 목록</button>
           </router-link>
         </div>
-        <div class="header-menu-item header-menu-item3">
+        <div v-if="loginData.auth === '3'" class="header-menu-item header-menu-item3">
+          <router-link style="border: none;" class="room-selector1" :to="`/mypage`">
+            <button>마이페이지</button>
+          </router-link>
+        </div>
+        <div
+          v-if="loginData.auth === '4' || loginData.auth === '5'"
+          class="header-menu-item header-menu-item3"
+        >
           <router-link style="border: none;" class="room-selector1" :to="`/sellRoom`">
             <button>방내놓기</button>
           </router-link>
         </div>
+        <div
+          v-if="loginData.auth === '4' || loginData.auth === '5'"
+          class="header-menu-item header-menu-item3"
+        >
+          <router-link style="border: none;" class="room-selector1" :to="`/mypage/payment`">
+            <button>결제 페이지</button>
+          </router-link>
+        </div>
+        <!-- 로그인 처리하기 -->
         <div class="header-menu-item header-menu-item4">
-          <button>알림</button>
+          <router-link style="border: none;" class="room-selector1" :to="`/mypage/qna/write`">
+            <button>문의 게시판</button>
+          </router-link>
         </div>
       </div>
 

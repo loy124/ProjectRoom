@@ -53,7 +53,7 @@
               <div class="broker-information-item1">0000-0000-0000</div>
             </div>
             <div class="broker-information">
-              <div class="broker-information-item">다방가입일</div>
+              <div class="broker-information-item">구해방가입일</div>
               <div class="broker-information-item1">
                 <span v-if="brokerData">{{brokerData.registered_at.split(" ")[0]}}</span>
               </div>

@@ -10,7 +10,11 @@
           <!-- <router-link class="mypage-select-item" :to="`aa`"
             >연락한 부동산</router-link
           >-->
-          <router-link v-if="loginData.user_id" class="mypage-select-item" :to="`bb`">내가 찜한 목록</router-link>
+          <router-link
+            v-if="loginData.user_id"
+            class="mypage-select-item"
+            :to="`/mypage/wishList`"
+          >내가 찜한 목록</router-link>
 
           <!-- <router-link v-if="loginData.user_id" class="mypage-select-item" :to="`bb`">내가 쓴 리뷰</router-link> -->
 

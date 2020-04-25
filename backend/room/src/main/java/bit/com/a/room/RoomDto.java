@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import bit.com.a.wishlist.WishListDto;
+
 public class RoomDto implements Serializable {
 
 	private int id;
@@ -64,6 +66,16 @@ public class RoomDto implements Serializable {
 	private RoomOptionDto roomOptionDto;
 
 	private List<RoomPictureDto> roomPictureDtoList;
+
+	private List<WishListDto> roomWishList;
+
+	public List<WishListDto> getRoomWishList() {
+		return this.roomWishList;
+	}
+
+	public void setRoomWishList(List<WishListDto> roomWishList) {
+		this.roomWishList = roomWishList;
+	}
 
 	private int start;
 

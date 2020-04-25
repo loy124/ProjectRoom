@@ -2,7 +2,7 @@
   <div class="recent-room-container">
     <div v-if="recentDatas.length" class="recent-room-wrapper">
       <router-link
-        :to="`/search/detail/${recentData.id}`"
+        :to="`/search/detail/${recentData.roomid}`"
         v-for="(recentData, index) in recentDatas"
         :key="index"
         class="recent-room"
@@ -24,25 +24,24 @@
           <div
             v-if="
               loginData.auth === '3' &&
-                recentData.room_wish_list &&
-                filterMyLikeImage(recentData.room_wish_list).length
-            "
+                recentData.userid === loginData.id"
           >
             <img
-              @click.prevent.stop="like($event, recentData.id)"
+              @click.prevent.stop="like($event, recentData.room_dto.id)"
               class="heart-image"
               :src="fillHeart"
               alt
             />
-          </div>
-          <div v-else-if="loginData.auth === '3'">
-            <img
-              @click.prevent.stop="like($event, recentData.id)"
+            <!-- <img
+              @click.prevent.stop="like($event, recentData.room_dto.id)"
               class="heart-image"
               :src="heart"
               alt
-            />
+            />-->
           </div>
+          <!-- <div v-else-if="loginData.auth === '3'">
+            
+          </div>-->
 
           <!-- 로그인 안했을때 -->
           <div v-else-if="!loginData">
@@ -65,11 +64,11 @@
           />-->
         </div>
         <div class="recent-information-wrapper">
-          <div class="recent-information">
-            <div class="recent-information-room-type">{{ recentData.room_type }}</div>
-            <div class="recent-information-room-deposit">{{ recentData.deposit }}</div>
-            <div class="recent-information-floor">{{ recentData.floor }}</div>
-            <div class="recent-information-content">{{ recentData.content }}</div>
+          <div v-if="recentData.room_dto" class="recent-information">
+            <div class="recent-information-room-type">{{ recentData.room_dto.room_type }}</div>
+            <div class="recent-information-room-deposit">{{ recentData.room_dto.deposit }}</div>
+            <div class="recent-information-floor">{{ recentData.room_dto.floor }}</div>
+            <div class="recent-information-content">{{ recentData.room_dto.content }}</div>
           </div>
         </div>
       </router-link>
@@ -84,13 +83,10 @@
 import { mapMutations, mapState } from "vuex";
 import { requestParams } from "../../util/axios";
 export default {
-  props: ["roomLists"],
+  // props: ["roomLists"],
   mounted() {
     console.log("마운트");
-    console.log(this.roomLists);
-    if (this.roomLists) {
-      this.recentDatas = this.roomLists;
-    }
+    this.getWishList();
   },
   data() {
     return {
@@ -100,13 +96,19 @@ export default {
     };
   },
   computed: {
-    ...mapState(["loginData"]),
-    getMap() {
-      return this.roomLists;
-    }
+    ...mapState(["loginData"])
   },
   methods: {
     ...mapMutations(["SET_LOGIN_MODAL"]),
+    getWishList() {
+      requestParams("get", "wishlist/getWishList", {
+        USERId: this.loginData.id
+      }).then(res => {
+        console.log(res);
+        this.recentDatas = res;
+        // this.roomLists = res;
+      });
+    },
     like(e, id) {
       // 이미지 처리
       // 하트가 차있을때 비우기

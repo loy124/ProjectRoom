@@ -1,13 +1,14 @@
 <template>
-  <div>
+  <div class="my-room">
     <KeepRoom v-if="roomLists" :roomLists="roomLists" />
+    <!-- <div class="my-room-not" v-else>찜한 목록이 없습니다</div> -->
   </div>
 </template>
 
 <script>
 import KeepRoom from "./KeepRoom";
 import { mapState } from "vuex";
-import { request } from "../../util/axios";
+import { request, requestParams } from "../../util/axios";
 export default {
   components: {
     KeepRoom
@@ -21,20 +22,16 @@ export default {
     ...mapState(["loginData"])
   },
   mounted() {
-    this.getBrokerInformation();
+    this.getInformation();
   },
   methods: {
-    getBrokerInformation() {
-      let params = new URLSearchParams();
-      params.append("id", this.loginData.id);
-      request("post", "broker/getInformation", params).then(res => {
+    getInformation() {
+      requestParams("get", "wishlist/getWishList", {
+        USERId: this.loginData.id
+      }).then(res => {
         console.log(res);
-        // this.brokerData = res;
-        // console.log(res.room_list);
-        this.roomLists = res.room_list;
-        console.log(this.roomLists);
-        // this.reviewLists = res.review_list;
-        // console.log(this.reviewLists);
+
+        // this.roomLists = res;
       });
     }
   }
@@ -42,4 +39,14 @@ export default {
 </script>
 
 <style>
+.my-room {
+  min-height: 400px;
+}
+.my-room-not {
+  height: 400px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 </style>

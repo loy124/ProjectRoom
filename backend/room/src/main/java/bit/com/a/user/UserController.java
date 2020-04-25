@@ -78,4 +78,5 @@ public class UserController {
 		int number = userService.updateUser(user);
 		return number > 0 ? "OK" : "FAIL";
 	}
+
 }

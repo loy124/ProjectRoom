@@ -6,6 +6,7 @@ import Notifications from 'vue-notification';
 import VCalendar from 'v-calendar';
 import VueSlider from 'vue-slider-component';
 import 'vue-slider-component/theme/default.css';
+import VueClipboard from 'vue-clipboard2';
 
 import { Pagination, Table, TableColumn } from 'element-ui';
 import lang from 'element-ui/lib/locale/lang/ko';
@@ -36,7 +37,7 @@ import Payment from '../components/banner/Payment.vue';
 import Qna from '../components/banner/Qna.vue';
 import QnaWrite from '../components/banner/QnaWrite.vue';
 import QnaList from '../components/banner/QnaList.vue';
-import MyRoom from '../components/banner/MyRoom.vue';
+import LikeRoom from '../components/banner/LikeRoom.vue';
 
 Vue.use(VueRouter);
 Vue.use(VueTypedJs);
@@ -44,7 +45,7 @@ Vue.use(Toasted);
 Vue.use(Notifications);
 Vue.use(VCalendar);
 Vue.component('VueSlider', VueSlider);
-
+Vue.use(VueClipboard);
 locale.use(lang);
 Vue.use(Pagination);
 Vue.use(Table);
@@ -87,7 +88,7 @@ const routes = [{
             },
             {
                 path: '/attention/keep',
-                component: KeepRoomBanner,
+                component: LikeRoom,
             },
         ],
     },
@@ -100,9 +101,11 @@ const routes = [{
                 component: Profile,
             },
             { path: '/mypage/payment', component: Payment },
+            { path: '/mypage/wishList', component: LikeRoom },
             {
                 path: '/mypage/qna',
                 component: Qna,
+
                 children: [{
                         path: '/mypage/qna/write',
                         component: QnaWrite,
@@ -115,7 +118,7 @@ const routes = [{
             },
             {
                 // path: '/mypage/room/list',
-                // component: MyRoom,
+                // component: LikeRoom,
                 path: '/mypage/broker/:brokerId',
                 name: 'broker',
                 component: BrokerView,

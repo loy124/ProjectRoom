@@ -52,6 +52,8 @@
 		<association property="roomOptionDto" column="id" select="getRoomOption"></association>
 		<!-- list등 다수를 가져올때는 collection -->
 		<collection property="roomPictureDtoList" column="id" javaType="java.util.ArrayList" ofType="bit.com.a.room.RoomPictureDto" select="getRoomPicture"></collection>
+		<!-- 각 room의 찜한 목록 리스트 가져오기 -->
+		<collection property="roomWishList" column="id" javaType="java.util.ArrayList" select="getWishList"></collection>
 	</resultMap>
 
 	<select id="getRoomOption" resultType="bit.com.a.room.RoomOptionDto">
@@ -61,6 +63,15 @@
 	<select id="getRoomPicture" resultType="bit.com.a.room.RoomPictureDto">
 		select id, file_name, ROOM_id, download_count from ROOM_PICTURE where ROOM_id = #{id}
 	</select>
+	<!-- room 좋아요 리스트 가져오기 -->
+	<!-- <select id="getWishList" resultType="bit.com.a.wishlist.WishListDto">
+    SELECT * FROM WISH_LIST WHERE USER_id = #{id}
+</select> -->
+
+	<select id="getWishList" resultType="bit.com.a.wishlist.WishListDto">
+	SELECT * FROM WISH_LIST WHERE ROOM_id = #{id}
+</select>
+
 	<!-- 디테일 -->
 
 	<select id="getRoomMap" resultMap="RoomDtoMap">
