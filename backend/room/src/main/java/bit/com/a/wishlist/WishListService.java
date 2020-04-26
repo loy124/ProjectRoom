@@ -28,4 +28,9 @@ public class WishListService {
         System.out.println("getWishList()");
         return dao.getWishList(dto);
     }
+
+    public List<WishListDto> getWishFourList(WishListDto dto) {
+        System.out.println("getWishFourList()");
+        return dao.getWishFourList(dto);
+    }
 }

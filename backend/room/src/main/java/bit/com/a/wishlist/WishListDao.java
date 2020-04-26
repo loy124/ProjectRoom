@@ -14,4 +14,6 @@ public interface WishListDao {
     public int deletelike(WishListDto dto);
 
     public List<WishListDto> getWishList(WishListDto dto);
+
+    public List<WishListDto> getWishFourList(WishListDto dto);
 }

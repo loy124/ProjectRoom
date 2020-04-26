@@ -33,4 +33,10 @@ public class WishListController {
         return service.getWishList(dto);
     }
 
+    @GetMapping("/getWishFourList")
+    public List<WishListDto> getWishFourList(WishListDto dto) {
+        System.out.println("getWishFourList()");
+        return service.getWishFourList(dto);
+    }
+
 }

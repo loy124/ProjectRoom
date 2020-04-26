@@ -26,8 +26,10 @@ import SearchView from '../views/SearchView.vue';
 import RoomDetail from '../views/RoomDetail.vue';
 import BrokerView from '../views/BrokerView.vue';
 import RoomUpdate from '../views/UpdateSellRoom.vue';
+import NotFound from '../views/NotFound.vue';
 
 //컴포넌트쪽
+import LikeRoomContent from '../components/banner/LikeRoomContent.vue';
 import RecentSearchRoom from '../components/content2/RecentSearchRoom.vue';
 import KeepRoom from '../components/content2/KeepRoom.vue';
 import KeepRoomBanner from '../components/banner/KeepRoom.vue';
@@ -54,6 +56,25 @@ Vue.use(Table);
 Vue.use(TableColumn);
 
 // Vue.use(ElementUI, { locale });
+const requireAuth = (to, from, next) => {
+    // const isAuth = localStorage.getItem("token");
+    const loginData = sessionStorage.getItem('login');
+    // 쿼리문자열은 encdoing이 필요하다
+    console.log(to);
+    console.log(next);
+
+    //로그인에 갔다가 현재페이지로 돌아와야해서 path
+    //로그인 완료 후에 rPath로 redirect
+    //현재경로는 파라미터 to 에 있다
+    // to 대상 route 객체로 이동
+    // from 현재 라우트로 오기전 라우트
+    // next를 실행해야지 한다
+    // next안에 인자가 있을경우 다른위치로 redirection 된다
+    // const loginPath = `/login?rPath=${encodeURIComponent(to.path)}`;
+    // console.log(loginPath);
+    //토큰이 없을때는 loginPath로 redirect 해버리기
+    loginData ? next() : next('/');
+};
 
 const routes = [{
         path: '/',
@@ -66,7 +87,7 @@ const routes = [{
             // },
             {
                 path: '/',
-                component: KeepRoom,
+                component: LikeRoomContent,
             },
         ],
     },
@@ -85,6 +106,7 @@ const routes = [{
         path: '/attention',
         name: Attention,
         component: Attention,
+        beforeEnter: requireAuth,
         children: [{
                 path: '/',
                 component: RecentRoomBanner,
@@ -99,6 +121,7 @@ const routes = [{
         path: '/mypage',
         name: 'Mypage',
         component: Mypage,
+        beforeEnter: requireAuth,
         children: [{
                 path: '/',
                 component: Profile,
@@ -159,12 +182,11 @@ const routes = [{
     },
     {
         path: '/*',
-        name: 'About',
+        name: 'ERROR',
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/About.vue'),
+        component: NotFound,
     },
 ];
 

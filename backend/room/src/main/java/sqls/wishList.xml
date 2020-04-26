@@ -117,6 +117,10 @@
     SELECT * FROM WISH_LIST WHERE USER_id = #{USERId} order by id desc
 </select>
 
+	<select id="getWishFourList" parameterType="bit.com.a.wishlist.WishListDto" resultMap="WishListDtoMap">
+	SELECT * FROM WISH_LIST WHERE USER_id = #{USERId} order by id desc limit 0, 4
+</select>
+
 	<!-- OK
 SELECT * FROM room.WISH_LIST w INNER JOIN room.ROOM r ON w.ROOM_id = r.id WHERE w.USER_id = #{USERId}
 SELECT w.id, w.USER_id, w.ROOM_id FROM room.WISH_LIST w INNER JOIN room.ROOM r ON w.ROOM_id = r.id WHERE w.USER_id = #{USERId}
