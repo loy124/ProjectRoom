@@ -35,6 +35,27 @@ public class RoomService {
         return -1;
     }
 
+    public int updateRoom(RoomDto dto, RoomOptionDto optionDto, RoomPictureDto roomPictureDto) {
+        int room = roomDao.updateRoom(dto);
+        optionDto.setRoomId(dto.getId());
+        int option = roomDao.updateRoomOption(optionDto);
+        roomPictureDto.setRoomId(dto.getId());
+        int del = roomDao.deletePictures(roomPictureDto);
+        if (room != 0 && option != 0) {
+            return 1;
+        }
+        // 실패
+        if (room != 0 && option == 0) { // addRoom만 실행
+            return 2;
+        }
+        // 실패
+        if (room == 0 && option != 0) { // addRoomOption만 실행
+            return 3;
+        }
+
+        return -1;
+    }
+
     public int uploadFile(RoomPictureDto roomPictureDto) {
         return roomDao.addRoomPicture(roomPictureDto);
     }
@@ -55,6 +76,9 @@ public class RoomService {
         return roomDao.getRoomBrokerList(dto);
     }
 
+    public int deleteRoom(RoomDto dto) {
+        return roomDao.deleteRoom(dto);
+    }
     // 방 등록 방 + 옵션
     /*
      * public int addRoom(RoomDto dto, RoomOptionDto optionDto) { int room =

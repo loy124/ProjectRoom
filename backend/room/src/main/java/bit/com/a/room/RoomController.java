@@ -78,6 +78,27 @@ public class RoomController {
         return roomService.getRoomBrokerList(roomDto);
     }
 
+    @PostMapping("/updateRoom")
+    public String updateRoom(RoomDto dto, RoomOptionDto optionDto, RoomPictureDto roomPictureDto) {
+        System.out.println("addroom 컨트롤러 도착");
+        int number = 0;
+        number = roomService.updateRoom(dto, optionDto, roomPictureDto);
+        // 아이디 값 받아오기
+        System.out.println("아이디 들어오나요?");
+        // dto에 id가 담겨있다.(마이바티스에서 매핑해준다)
+        System.out.println(dto.getId());
+
+        // System.out.println(number);
+
+        // 성공시 res에 dto의 id가 담긴다 (파일업로드에서 사용하기위해서 id값을 리턴한다 )
+        return number > 0 ? (dto.getId() + "") : "NO";
+    }
+
+    @PostMapping("/deleteRoom")
+    public int deleteRoom(RoomDto dto) {
+        return roomService.deleteRoom(dto);
+    }
+
     // @PostMapping("/addroom") // 다중 mapping
     // public String addroom(RoomDto dto, RoomOptionDto optionDto) {
 

@@ -82,7 +82,7 @@
 
 	<!-- 리스트 가져오기 -->
 	<select id="getRoomMapList" resultMap="RoomDtoMap">
-		select * from ROOM ORDER BY created_at DESC LIMIT 10 OFFSET 0;
+		select * from ROOM where del = 0 ORDER BY created_at DESC LIMIT 10 OFFSET 0;
 	</select>
 
 	<!-- 디테일 가져오기 -->
@@ -105,7 +105,9 @@
 		INSERT INTO ROOM_OPTION(tv)
 		VALUES(#{tv})
 	 </insert> -->
-
+	<update id="deleteRoom" parameterType="bit.com.a.room.RoomDto">
+	update ROOM set del = 1 where id =#{id}
+</update>
 
 	<!-- now() = SYSOUT -->
 	<!-- 방올리기 페이지  -->
@@ -119,12 +121,31 @@
 	 </insert>
 
 
+	<update id="updateRoom" parameterType="bit.com.a.room.RoomDto">
+		UPDATE ROOM SET title = #{title}, content=  #{content}, address_detail=#{addressDetail},
+		 address_detail_zibun =  #{addressDetailZibun}, room_type = #{roomType}, room_count= #{roomCount}, 
+							deposit=  #{deposit}, lease= #{lease}, supply_space= #{supplySpace} ,room_space= #{roomSpace}, move_day= #{moveDay}, payment_type= #{paymentType},
+						 floor = #{floor}, month_rent = #{monthRent}, updated_at = NOW() 
+						 where id = #{id}
+		</update>
+	<update id="updateRoomOption" parameterType="bit.com.a.room.RoomOptionDto">
+			UPDATE ROOM_OPTION SET tv =#{tv}, airconditioner =#{airconditioner}, airconditioner =#{airconditioner},
+			refrigerator = #{refrigerator}, aircleaner=#{aircleaner}, bed=#{bed}, microwave = #{microwave}, washer = #{washer}
+			where ROOM_id = #{roomId}
+		 </update>
+
 	<!-- 파일 업로드 -->
 
 	<insert id="addRoomPicture" parameterType="bit.com.a.room.RoomPictureDto" useGeneratedKeys="true" keyProperty="id">
 		 INSERT INTO ROOM_PICTURE(file_name, real_file_name, ROOM_id, download_count)
 		 VALUES(#{fileName}, #{realFileName}, #{roomId}, #{downloadCount})
 	 </insert>
+
+	<delete id="deletePictures" parameterType="bit.com.a.room.RoomPictureDto">
+		 delete from ROOM_PICTURE where ROOM_id = #{roomId}
+	 </delete>
+
+	<!-- 글 삭제하기  -->
 
 
 	<!-- 	 <insert id="addRoom" parameterType="bit.com.a.room.RoomDto"  useGeneratedKeys="true" keyProperty="id">

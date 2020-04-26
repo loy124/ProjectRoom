@@ -61,6 +61,26 @@
               <img src="../assets/crisis.png" />
               <span class="room-detail-icon-text">허위매물신고</span>
             </router-link>
+            <div
+              v-if="brokerData.broker_id &&loginData.broker_id === brokerData.broker_id"
+              class="distance-dot"
+            >•</div>
+            <router-link
+              v-if="brokerData.broker_id && loginData.broker_id === brokerData.broker_id"
+              :to="`/search/detail/update/${$route.params.roomId}`"
+              class="room-detail-icon-wrapper"
+              style="border:none; text-decoration:none; color:#222"
+            >수정하기</router-link>
+
+            <div
+              v-if="brokerData.broker_id &&loginData.broker_id === brokerData.broker_id"
+              class="distance-dot"
+            >•</div>
+            <div
+              v-if="brokerData.broker_id &&loginData.broker_id === brokerData.broker_id"
+              class="room-detail-icon-wrapper"
+              @click="deleteRoom"
+            >삭제하기</div>
           </div>
         </div>
         <div class="room-detail-content-container">
@@ -292,7 +312,7 @@ export default {
     this.getRoomBrokerList();
   },
   computed: {
-    ...mapState(["imageListModal"]),
+    ...mapState(["imageListModal", "loginData"]),
     supplySpaceToM() {
       return Math.round(this.roomDetail.supply_space * 3.3058);
     },
@@ -360,6 +380,23 @@ export default {
       this.$copyText(window.location.href).then(function(e) {
         success("URL이 클립보드에 복사되었습니다.", t);
       });
+    },
+    deleteRoom() {
+      console.log("hello");
+      let con = confirm("해당 게시글을 삭제하시겠습니까?");
+      if (con) {
+        let param = new URLSearchParams();
+        param.append("id", this.$route.params.roomId);
+        request("post", "room/deleteRoom", param).then(res => {
+          this.$toasted.show(`글 삭제가 완료되었습니다`, {
+            type: "error",
+            position: "top-right",
+            duration: 2500,
+            singleton: true
+          });
+          this.$router.push("/");
+        });
+      }
     }
   }
 };

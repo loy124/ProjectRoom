@@ -25,6 +25,13 @@ public interface RoomDao {
 
 	public List<RoomDto> getRoomBrokerList(RoomDto dto);
 
+	public int deletePictures(RoomPictureDto roomPictureDto);
+
+	public int updateRoom(RoomDto dto);
+
+	public int updateRoomOption(RoomOptionDto optionDto);
+
+	public int deleteRoom(RoomDto dto);
 	// 방 등록
 	// public int addRoom(RoomDto dto);
 	// public int addRoomOption(RoomOptionDto optionDto);

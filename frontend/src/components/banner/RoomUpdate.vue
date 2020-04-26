@@ -349,7 +349,7 @@
       <div class="room-file-upload-wrapper">
         <div v-if="!files.length" class="room-file-upload-example-container">
           <div class="room-file-upload-example">
-            <div class="room-file-image-example-wrapper">이미지</div>
+            <div class="room-file-image-example-wrapper">(글 수정시 이미지는 새로 등록해주세요!)</div>
             <div class="room-file-notice-item">실사진 최소 3장 이상 등록하셔야 하며, 가로사진을 권장합니다.</div>
             <div class="room-file-notice-item room-file-notice-item-red">
               구해방 로고를 제외한 불필요한 정보(워터마크,상호,전화번호 등)가
@@ -433,6 +433,7 @@ export default {
     roomSpace() {}
   },
   mounted() {
+    this.getRoomDetail();
     console.log(this.loginData);
     const script1 = document.createElement("script");
     script1.src =
@@ -456,6 +457,52 @@ export default {
     }
   },
   methods: {
+    getRoomDetail() {
+      request("post", `room/getRoomDetail/${this.$route.params.roomId}`).then(
+        res => {
+          console.log(res);
+          this.roomDetail = res;
+          this.roomCount = res.room_count;
+          this.room_type = res.room_type;
+          this.sample5_address = res.address_detail.split("/")[0];
+          this.sample5_address_zibun = res.address_detail_zibun.split("/")[0];
+          this.dong = res.address_detail.split("/")[1];
+          this.ho = res.address_detail.split("/")[2];
+          this.showMonth = true;
+          this.deposit = res.deposit;
+          this.monthRent = res.month_rent;
+          this.showLease = true;
+          this.lease = res.lease;
+          this.supplySpace = res.supply_space;
+          this.roomSpace = res.room_space;
+          this.floor = res.floor;
+          this.moveDay = res.move_day;
+          // console.log(aa);
+          //옵션정하기
+          let option = [
+            res.room_option_dto.aircleaner,
+            res.room_option_dto.airconditioner,
+            res.room_option_dto.bed,
+            res.room_option_dto.microwave,
+            res.room_option_dto.refrigerator,
+            res.room_option_dto.tv,
+            res.room_option_dto.washer
+          ];
+          console.log(option);
+          this.roomOption = option;
+          this.title = res.title;
+          this.content = res.content;
+          let aa = res.room_picture_dto_list.map(li => li.file_name);
+          console.log(aa);
+          // this.dong =
+          //vuex에 이미지리스트 담기
+          // this.SET_IMAGE_LIST(res.room_picture_dto_list);
+          this.moveDate = new Date(res.move_day);
+          return res;
+        }
+      );
+    },
+
     sample5_execDaumPostcode() {
       // console.log(this);
       let vueData = this; //vue의 this 값 바인딩 new daum.Postcode에서는 this를 사용시 자체 함수를 가리킨다
@@ -620,45 +667,7 @@ export default {
       this.$router.push("/");
     },
     roomWrite() {
-      console.log(this.roomCount); //방의갯수
-      console.log(this.roomType);
-
-      let params = new URLSearchParams();
-
-      params.append("title", this.title);
-      params.append("content", this.content);
-      params.append("roomType", this.roomType);
-      params.append("lease", this.lease); //전세
-      params.append("roomCount", this.roomCount);
-      params.append(
-        "addressDetail",
-        this.sample5_address + "/" + this.dong + "동/" + this.ho + "호 "
-      );
-      params.append(
-        "addressDetailZibun",
-        this.sample5_address_zibun + "/" + this.dong + "동/" + this.ho + "호 "
-      );
-      params.append("deposit", this.deposit); //보증금
-      params.append("monthRent", this.monthRent); //월세
-      params.append("supplySpace", this.supplySpace);
-      params.append("roomSpace", this.roomSpace);
-      params.append("floor", this.floor);
-      params.append("moveDay", this.date);
-      params.append("brokerId", this.loginData.id);
-
-      //roomOption
-      for (let i = 0; i < this.roomOption.length; i++) {
-        params.append(this.roomOption[i], this.roomOption[i]);
-      }
-      // params.append('tv', this.roomOption[0]);
-      // params.append('airconditioner', this.roomOption[1]);
-      // params.append('refrigerator', this.roomOption[2]);
-      // params.append('aircleaner', this.roomOption[3]);
-      // params.append('bed', this.roomOption[4]);
-      // params.append('microwave', this.roomOption[5]);
-      // params.append('washer', this.roomOption[6]);
-      // 글쓰기 방지처리
-      if (!this.address) {
+      if (!this.sample5_address) {
         error("주소를 입력해주세요", this);
         return;
       } else if ((!this.monthRent && !this.deposit) || !this.lease) {
@@ -674,8 +683,50 @@ export default {
         error("최소 3장의 사진을 업로드 하세요", this);
         return;
       }
+      console.log(this.roomCount); //방의갯수
+      console.log(this.roomType);
 
-      request("post", "room/addroom", params)
+      let params = new URLSearchParams();
+
+      params.append("title", this.title);
+      params.append("content", this.content);
+      params.append("roomType", this.roomType);
+      params.append("lease", this.lease); //전세
+      params.append("roomCount", this.roomCount);
+      params.append(
+        "addressDetail",
+        this.sample5_address + " " + this.dong + "동 " + this.ho + "호 "
+      );
+      params.append(
+        "addressDetailZibun",
+        this.sample5_address_zibun + " " + this.dong + " " + this.ho
+      );
+      params.append("deposit", this.deposit); //보증금
+      params.append("monthRent", this.monthRent); //월세
+      params.append("supplySpace", this.supplySpace);
+      params.append("roomSpace", this.roomSpace);
+      params.append("floor", this.floor);
+      params.append("moveDay", this.date);
+      params.append("brokerId", this.loginData.id);
+      params.append("roomId", this.$route.params.roomId);
+      params.append("id", this.$route.params.roomId);
+      //roomOption
+      for (let i = 0; i < this.roomOption.length; i++) {
+        params.append(this.roomOption[i], this.roomOption[i]);
+      }
+      // params.append('tv', this.roomOption[0]);
+      // params.append('airconditioner', this.roomOption[1]);
+      // params.append('refrigerator', this.roomOption[2]);
+      // params.append('aircleaner', this.roomOption[3]);
+      // params.append('bed', this.roomOption[4]);
+      // params.append('microwave', this.roomOption[5]);
+      // params.append('washer', this.roomOption[6]);
+      // 글쓰기 방지처리
+
+      // 글 내용 업데이트 + 사진 내역 다 지우기 + 사진 새로 업로드 하기
+      // 업데이트 백엔드 생성하기
+      // 사진 내역 지우기및 새로 업로드하는 백엔드 생성하고
+      request("post", "room/updateRoom", params)
         //성공시 파일업로드 실행
         .then(res => {
           //res에는 roomid가 담겨있다
@@ -688,15 +739,6 @@ export default {
             requestFile("post", "room/upload", params)
               .then(response => {
                 if (response !== "FAIL") {
-                  this.$toasted.show(`글 작성이 완료되었습니다`, {
-                    type: "success",
-                    position: "top-right",
-                    duration: 2500,
-                    singleton: true
-                  });
-                  if (this.$route.path !== "/") {
-                    this.$router.push("/");
-                  }
                 } else {
                   error("글 작성에 실패했습니다", this);
                 }
@@ -704,6 +746,15 @@ export default {
               .catch(error => {
                 console.log(error);
               });
+          }
+          this.$toasted.show(`글 수정이 완료되었습니다`, {
+            type: "success",
+            position: "top-right",
+            duration: 2500,
+            singleton: true
+          });
+          if (this.$route.path !== "/") {
+            this.$router.push("/");
           }
         });
       // .then((res) => {

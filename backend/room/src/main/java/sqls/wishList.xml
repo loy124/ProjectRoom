@@ -92,7 +92,7 @@
 </select>
 
 	<select id="getRoom" resultType="bit.com.a.room.RoomDto">
-	SELECT * FROM ROOM WHERE id = #{id}
+	SELECT * FROM ROOM WHERE id = #{id} and del = 0
 </select>
 	<select id="getRoomOption" resultType="bit.com.a.room.RoomOptionDto">
 	select * from ROOM_OPTION where ROOM_id = #{id}
