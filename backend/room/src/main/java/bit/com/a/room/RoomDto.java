@@ -48,6 +48,10 @@ public class RoomDto implements Serializable {
 
 	private int BROKERId;
 
+	private Double latitude;
+
+	private Double longitude;
+
 	private String createdAt;
 
 	private String createdBy;
@@ -90,19 +94,6 @@ public class RoomDto implements Serializable {
 	// 디폴트 생성자
 	public RoomDto() {
 
-	}
-
-	@Override
-	public String toString() {
-		return "{" + " id='" + id + "'" + ", title='" + title + "'" + ", content='" + content + "'" + ", addressDetail='"
-				+ addressDetail + "'" + ", addressDetailZibun='" + addressDetailZibun + "'" + ", roomType='" + roomType + "'"
-				+ ", roomCount='" + roomCount + "'" + ", deposit='" + deposit + "'" + ", lease='" + lease + "'"
-				+ ", supplySpace='" + supplySpace + "'" + ", roomSpace='" + roomSpace + "'" + ", moveDay='" + moveDay + "'"
-				+ ", paymentType='" + paymentType + "'" + ", floor='" + floor + "'" + ", monthRent='" + monthRent + "'"
-				+ ", readcount='" + readcount + "'" + ", wishcount='" + wishcount + "'" + ", del='" + del + "'" + ", DONGId='"
-				+ DONGId + "'" + ", BROKERId='" + BROKERId + "'" + ", createdAt='" + createdAt + "'" + ", createdBy='"
-				+ createdBy + "'" + ", updatedAt='" + updatedAt + "'" + ", updatedBy='" + updatedBy + "'" + ", deletedAt='"
-				+ deletedAt + "'" + ", deletedBy='" + deletedBy + "'" + "}";
 	}
 
 	public int getId() {
@@ -337,6 +328,22 @@ public class RoomDto implements Serializable {
 		this.roomPictureDtoList = roomPictureDtoList;
 	}
 
+	public Double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
+
 	public RoomDto(int id, String title, String content, String addressDetail, String addressDetailZibun, String roomType,
 			String roomCount, String deposit, String lease, String supplySpace, String roomSpace, String moveDay,
 			String paymentType, String floor, String monthRent, int readcount, int wishcount, int del, int DONGId,
@@ -368,6 +375,62 @@ public class RoomDto implements Serializable {
 		this.updatedBy = updatedBy;
 		this.deletedAt = deletedAt;
 		this.deletedBy = deletedBy;
+	}
+
+	@Override
+	public String toString() {
+		return "RoomDto [BROKERId=" + BROKERId + ", DONGId=" + DONGId + ", addressDetail=" + addressDetail
+				+ ", addressDetailZibun=" + addressDetailZibun + ", content=" + content + ", count=" + count
+				+ ", createdAt=" + createdAt + ", createdBy=" + createdBy + ", del=" + del + ", deletedAt=" + deletedAt
+				+ ", deletedBy=" + deletedBy + ", deposit=" + deposit + ", floor=" + floor + ", id=" + id
+				+ ", latitude=" + latitude + ", lease=" + lease + ", longitude=" + longitude + ", monthRent="
+				+ monthRent + ", moveDay=" + moveDay + ", paymentType=" + paymentType + ", readcount=" + readcount
+				+ ", roomCount=" + roomCount + ", roomOptionDto=" + roomOptionDto + ", roomPictureDtoList="
+				+ roomPictureDtoList + ", roomSpace=" + roomSpace + ", roomType=" + roomType + ", roomWishList="
+				+ roomWishList + ", start=" + start + ", supplySpace=" + supplySpace + ", title=" + title
+				+ ", updatedAt=" + updatedAt + ", updatedBy=" + updatedBy + ", wishcount=" + wishcount + "]";
+	}
+
+	public RoomDto(int id, String title, String content, String addressDetail, String addressDetailZibun,
+			String roomType, String roomCount, String deposit, String lease, String supplySpace, String roomSpace,
+			String moveDay, String paymentType, String floor, String monthRent, int readcount, int wishcount, int del,
+			int dONGId, int bROKERId, Double latitude, Double longitude, String createdAt, String createdBy,
+			String updatedAt, String updatedBy, String deletedAt, String deletedBy, int count,
+			RoomOptionDto roomOptionDto, List<RoomPictureDto> roomPictureDtoList, List<WishListDto> roomWishList,
+			int start) {
+		this.id = id;
+		this.title = title;
+		this.content = content;
+		this.addressDetail = addressDetail;
+		this.addressDetailZibun = addressDetailZibun;
+		this.roomType = roomType;
+		this.roomCount = roomCount;
+		this.deposit = deposit;
+		this.lease = lease;
+		this.supplySpace = supplySpace;
+		this.roomSpace = roomSpace;
+		this.moveDay = moveDay;
+		this.paymentType = paymentType;
+		this.floor = floor;
+		this.monthRent = monthRent;
+		this.readcount = readcount;
+		this.wishcount = wishcount;
+		this.del = del;
+		DONGId = dONGId;
+		BROKERId = bROKERId;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.createdAt = createdAt;
+		this.createdBy = createdBy;
+		this.updatedAt = updatedAt;
+		this.updatedBy = updatedBy;
+		this.deletedAt = deletedAt;
+		this.deletedBy = deletedBy;
+		this.count = count;
+		this.roomOptionDto = roomOptionDto;
+		this.roomPictureDtoList = roomPictureDtoList;
+		this.roomWishList = roomWishList;
+		this.start = start;
 	}
 
 	// Timestamp

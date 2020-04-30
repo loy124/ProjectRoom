@@ -19,11 +19,15 @@
                   v-if="roomDetail.room_type === 'flatwithshop'"
                   class="room-detail-header-type"
                 >상가주택</div>
-                <div class="room-detail-header-information">
+                <div v-if="roomDetail.deposit" class="room-detail-header-information">
                   월세 {{ roomDetail.deposit }}/{{ roomDetail.month_rent }}
                   <span
                     class="gray-font-8 money-type"
                   >만원</span>
+                </div>
+                <div v-else-if="roomDetail.lease" class="room-detail-header-information">
+                  전세 {{ roomDetail.lease }}
+                  <span class="gray-font-8 money-type">만원</span>
                 </div>
               </div>
               <div class="room-detail-header-item">
@@ -267,8 +271,10 @@
           </div>
           <div class="room-detail-content-location-container">
             <div class="room-detail-content-location-title">위치 및 주변 시설</div>
-            <div class="room-detail-content-location-title-sub">서울특별시 관악구 신림동</div>
-            <div class="room-detail-content-location-wrapper">지도</div>
+            <div class="room-detail-content-location-title-sub">{{ address_detail_zibun }}</div>
+            <div class="room-detail-content-location-wrapper">
+              <div id="kakao-map2" style="width:100%;height:400px;"></div>
+            </div>
           </div>
 
           <div class="room-detail-content-other-room">
@@ -303,13 +309,17 @@ export default {
       brokerData: "",
       imageProfile: "",
       brokerModalShow: false,
-      roomLists: ""
+      roomLists: "",
+      address_detail_zibun: "",
+      latitude: 0.0,
+      longitude: 0.0
     };
   },
   mounted() {
     console.log(this.$route.params.roomId); //넘겨 받은 아이디
     this.getRoomDetail();
     this.getRoomBrokerList();
+    window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
   },
   computed: {
     ...mapState(["imageListModal", "loginData"]),
@@ -327,10 +337,16 @@ export default {
       request("post", `room/getRoomDetail/${this.$route.params.roomId}`)
         .then(res => {
           console.log(res);
+
+          this.latitude = res.latitude;
+          this.longitude = res.longitude;
+          this.address_detail_zibun = res.address_detail_zibun;
+
           this.roomDetail = res;
           //vuex에 이미지리스트 담기
           this.SET_IMAGE_LIST(res.room_picture_dto_list);
           this.moveDate = new Date(res.move_day);
+          this.initMap();
           return res;
         })
         .then(res => {
@@ -397,6 +413,34 @@ export default {
           this.$router.push("/");
         });
       }
+    },
+    initMap() {
+      //alert("init")
+      let container = document.getElementById("kakao-map2");
+      let center = new kakao.maps.LatLng(this.latitude, this.longitude);
+      //alert("위도 : " + this.latitude);
+      //alert(this.longitude)
+      let mapOption = {
+        center: center, // 지도의 중심좌표
+        level: 3, // 지도의 초기 레벨
+        disableDoubleClickZoom: true
+      };
+      let map = new kakao.maps.Map(container, mapOption);
+      map.relayout();
+
+      map.setMinLevel(2); //확대 최소 레벨 2
+      map.setMaxLevel(10); //확대 최대 레벨 10
+
+      let marker = new kakao.maps.Marker({ position: center });
+      marker.setMap(map);
+    },
+    addScript() {
+      //alert("addScript");
+      const script = document.createElement("script");
+      script.onload = () => kakao.maps.load(this.initMap);
+      script.src =
+        "http://dapi.kakao.com/v2/maps/sdk.js?appkey=0fe1d5fd101ab6d2078168510cdb7237&libraries=services,clusterer,drawing&autoload=false";
+      document.head.appendChild(script);
     }
   }
 };

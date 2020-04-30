@@ -15,7 +15,7 @@
       <div class="room-search-icon">
         <img src="../../assets/search.png" />
       </div>
-      <input @focus="SET_SEARCH_MODAL(true)" @blur="SET_SEARCH_MODAL(false)" />
+      <input @focus="SET_SEARCH_MODAL(true)" @blur="SET_SEARCH_MODAL(false)" @input="axiosSearch" v-model="keyword" />
       <div class="searchButton">방찾기</div>
       <div class="modal">
         <ModalSearch v-if="searchModal" />
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { request, requestParams } from "../../util/axios";
 import ModalSearch from "../../components/ModalSearch";
 import { mapState, mapMutations } from "vuex";
 ("vuex");
@@ -33,13 +34,35 @@ export default {
     ModalSearch
   },
   data() {
-    return {};
+    return {
+      keyword: "",
+    };
   },
   computed: {
-    ...mapState(["searchModal"])
+    ...mapState(["searchModal", "searchList"])
   },
   methods: {
-    ...mapMutations(["SET_SEARCH_MODAL"])
+    ...mapMutations(["SET_SEARCH_MODAL", "SET_SEARCH_LIST"] ),
+    
+    axiosSearch() {
+      //console.log(this.keyword);
+
+      let params = new URLSearchParams();
+      params.append("keyword", this.keyword);
+
+      request("post", "search/getRoomList", params)
+        .then(res => {
+          console.log(res);
+
+          this.SET_SEARCH_LIST(res);
+
+          console.log(this.searchList);
+          //리스트를 data안에 집어넣기
+          //this.roomLists = res;
+        })
+        .catch(error => console.log(error));
+
+    }
   }
 };
 </script>

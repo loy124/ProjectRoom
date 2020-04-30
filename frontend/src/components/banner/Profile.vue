@@ -3,7 +3,8 @@
     <div class="image-upload-wrapper">
       <div class="filebox">
         <div class="image-profile">
-          <img :src="profileImage" />
+          <img v-if="profileImage" :src="profileImage" />
+          <img v-else src="../../assets/room1.jpg" />
         </div>
 
         <label for="file">프로필 사진 변경</label>

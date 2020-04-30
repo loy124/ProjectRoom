@@ -238,7 +238,11 @@
                 >빌라/연립/다세대</div>
                 <div v-if="roomList.room_type === 'flatwithshop'" class="search-room-list-type">상가주택</div>
 
-                <div class="search-room-pay-type">월세 {{roomList.deposit}}/{{roomList.month_rent}}</div>
+                <div
+                  v-if="roomList.deposit"
+                  class="search-room-pay-type"
+                >월세 {{roomList.deposit}}/{{roomList.month_rent}}</div>
+                <div v-else-if="roomList.lease" class="search-room-pay-type">전세 {{roomList.lease}}</div>
                 <div class="search-room-detail">{{roomList.floor}}층. {{roomList.room_space}}평</div>
                 <div class="search-room-content">{{roomList.content}}</div>
               </router-link>
@@ -246,20 +250,26 @@
             <div>페이지 표시</div>
           </div>
         </div>
-        <div class="search-room-map-container">지도</div>
+        <div class="search-room-map-container">
+          <div>
+            <Map />
+          </div>
+        </div>
       </div>
     </div>
   </EtcContainer>
 </template>
 <script scoped>
 import EtcContainer from "./EtcContainer";
+import Map from "../components/map/Map";
 import { request, requestParams } from "../util/axios";
 import { error } from "../util/notification";
 import { mapState, mapMutations } from "vuex";
 export default {
   name: "app",
   components: {
-    EtcContainer
+    EtcContainer,
+    Map
   },
   computed: {
     ...mapState(["loginData"])

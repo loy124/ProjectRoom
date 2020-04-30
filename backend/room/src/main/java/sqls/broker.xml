@@ -145,24 +145,25 @@ INSERT INTO BROKER(broker_id, broker_password, name, email, age, phone_number, a
     <result column="user_id" property="userId" />
     <result column="broker_id" property="brokerId" />
     <result column="created_at" property="createdAt" />
-    <association property="bestCount" column="id" select="bestCount"></association>
-    <association property="goodCount" column="id" select="goodCount"></association>
-    <association property="sosoCount" column="id" select="sosoCount"></association>
-    <association property="nopeCount" column="id" select="nopeCount"></association>
+    <result column="broker_review_id" property="brokerReviewId" />
+    <association property="bestCount" column="broker_review_id" select="bestCount"></association>
+    <association property="goodCount" column="broker_review_id" select="goodCount"></association>
+    <association property="sosoCount" column="broker_review_id" select="sosoCount"></association>
+    <association property="nopeCount" column="broker_review_id" select="nopeCount"></association>
     <association property="userInformation" column="user_id" select="getUserInformation"></association>
   </resultMap>
 
   <select id="bestCount" resultType="java.lang.Integer">
-    select IFNULL(COUNT(status),0) AS bestCount from REVIEW where status = 'best'
+    select IFNULL(COUNT(status),0) AS bestCount from REVIEW where status = 'best' and  broker_review_id = #{brokerReviewId}
   </select>
   <select id="goodCount" resultType="java.lang.Integer">
-    select IFNULL(COUNT(status),0) AS goodCount from REVIEW where status = 'good'
+    select IFNULL(COUNT(status),0) AS goodCount from REVIEW where status = 'good' and  broker_review_id = #{brokerReviewId}
   </select>
   <select id="sosoCount" resultType="java.lang.Integer">
-    select IFNULL(COUNT(status),0) AS sosoCount from REVIEW where status = 'soso'
+    select IFNULL(COUNT(status),0) AS sosoCount from REVIEW where status = 'soso'  and broker_review_id = #{brokerReviewId}
   </select>
-  <select id="nopeCount" resultType="java.lang.Integer">
-    select IFNULL(COUNT(status),0) AS nopeCount from REVIEW where status = 'nope'
+  <select id="nopeCount" resultType="java.lang.Integer"> 
+    select IFNULL(COUNT(status),0) AS nopeCount from REVIEW where status = 'nope' and  broker_review_id = #{brokerReviewId}
   </select>
 
   <select id="getUserInformation" resultType="bit.com.a.user.UserDto">

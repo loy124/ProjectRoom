@@ -183,7 +183,7 @@ export default {
         return;
       } else if (passwordValidation === false) {
         error(
-          "비밀번호는 최소 1개의 숫자혹은 특수문자를 포함해야합니다.",
+          "비밀번호는 최소 1개의 숫자 및 문자 그리고 특수문자를 포함해야합니다.",
           this
         );
         return;
@@ -262,7 +262,10 @@ export default {
         error("휴대폰 번호를 모두 입력해주세요", this);
         return;
       } else if (passwordValidation === false) {
-        error("최소 1개의 숫자혹은 특수문자를 포함해야합니다.", this);
+        error(
+          "비밀번호는 최소 1개의 숫자 및 문자 그리고 특수문자를 포함해야합니다.",
+          this
+        );
         return;
       }
       this.registerBrokerRequest();

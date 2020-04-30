@@ -146,7 +146,7 @@ export default {
       s_category: "sel",
       s_keyword: "",
       currentPage: 1,
-      qnaCount: 10,
+      qnaCount: 0,
       dataLists: [],
       detailData: "",
       title: "",

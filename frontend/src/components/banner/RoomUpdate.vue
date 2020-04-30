@@ -707,7 +707,7 @@ export default {
       params.append("roomSpace", this.roomSpace);
       params.append("floor", this.floor);
       params.append("moveDay", this.date);
-      params.append("brokerId", this.loginData.id);
+      params.append("BROKERId", this.loginData.id);
       params.append("roomId", this.$route.params.roomId);
       params.append("id", this.$route.params.roomId);
       //roomOption

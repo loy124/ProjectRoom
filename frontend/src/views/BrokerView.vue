@@ -3,7 +3,7 @@
     <div class="broker-information-header-container">
       <div class="broker-information-profile-container">
         <div class="broker-information-profile-wrapper">
-          <img v-if="brokerData" :src="brokerData.profile_image" />
+          <img v-if="brokerData&&brokerData.profile_image" :src="brokerData.profile_image" />
           <img v-else src="../assets/room1.jpg" />
         </div>
         <div class="broker-name">

@@ -8,7 +8,13 @@
               <div class="header-content">
                 <div class="header-content-popular">인기검색</div>
                 <div class="header-content-popular-search">
-                  판교동 원룸,잠실동 오피스텔, 신사역 오피스텔
+                    <ul>
+                      <li v-for="res in searchList">
+                        <router-link style="border: none;" class="room-selector1" :to="`/search`">
+                          <button v-on:click="moveSearch(res.d_name , res.latitude , res.longitude)" class="router-item"> {{res.s_name}} {{res.g_name}} {{res.d_name}} </button>
+                        </router-link>
+                      </li>
+                    </ul>
                 </div>
               </div>
             </slot>
@@ -33,8 +39,23 @@
   </transition>
 </template>
 
+
 <script>
-export default {};
+import { mapState, mapMutations } from "vuex";
+export default {
+  computed: {
+    ...mapState(["searchList"])
+  },
+  methods: {
+    ...mapMutations(["SET_DONG_LATITUDE", "SET_DONG_LONGITUDE"] ),
+
+    moveSearch(d_name, latitude, longitude) {
+      alert(d_name + " " + latitude + " " + longitude);
+      this.SET_DONG_LATITUDE(latitude);
+      this.SET_DONG_LONGITUDE(longitude);
+    },
+  },
+};
 </script>
 
 <style scoped>

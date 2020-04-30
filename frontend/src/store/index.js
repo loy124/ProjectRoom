@@ -22,8 +22,22 @@ export default new Vuex.Store({
         qnaModal: false,
         qnaReplyModal: false,
         profileModal: false,
+
+        searchList: [ ],
+
+        dongLatitude: 0.0,  //DONG의 위도
+        dongLongitude: 0.0, //DONG의 경도
     },
     mutations: {
+        SET_DONG_LONGITUDE(state, data) {
+            state.dongLongitude = data;
+        },
+        SET_DONG_LATITUDE(state, data) {
+            state.dongLatitude = data;
+        },
+        SET_SEARCH_LIST(state, data) {
+            state.searchList = data;
+        },
         SET_LOGIN(state, data) {
             state.loginData = data;
         },

@@ -426,7 +426,9 @@ export default {
       files: [], //업로드용 파일
       filesPreview: [],
       date: new Date(),
-      uploadImageIndex: 0 // 이미지 업로드를 위한 변수
+      uploadImageIndex: 0, // 이미지 업로드를 위한 변수
+      latitude : 0.0, //위도
+      longitude : 0.0 //경도
     };
   },
   watch: {
@@ -498,6 +500,9 @@ export default {
 
               // 해당 주소에 대한 좌표를 받아서
               let coords = new daum.maps.LatLng(result.y, result.x);
+              vueData.latitude = result.y;
+              vueData.longitude = result.x;
+
               // 지도를 보여준다.
               mapContainer.style.display = "block";
               map.relayout();
@@ -625,6 +630,9 @@ export default {
 
       let params = new URLSearchParams();
 
+      params.append('latitude', this.latitude);
+      params.append('longitude', this.longitude);
+
       params.append("title", this.title);
       params.append("content", this.content);
       params.append("roomType", this.roomType);
@@ -644,7 +652,7 @@ export default {
       params.append("roomSpace", this.roomSpace);
       params.append("floor", this.floor);
       params.append("moveDay", this.date);
-      params.append("brokerId", this.loginData.id);
+      params.append("BROKERId", this.loginData.id);
 
       //roomOption
       for (let i = 0; i < this.roomOption.length; i++) {
@@ -658,13 +666,13 @@ export default {
       // params.append('microwave', this.roomOption[5]);
       // params.append('washer', this.roomOption[6]);
       // 글쓰기 방지처리
-      if (!this.address) {
+      if (!this.sample5_address) {
         error("주소를 입력해주세요", this);
         return;
-      } else if ((!this.monthRent && !this.deposit) || !this.lease) {
+      } /* else if ((!this.monthRent && !this.deposit) || !this.lease) {
         error("보증금 + 월세 혹은 전세를 입력하세요 ", this);
         return;
-      } else if (!this.roomSpace) {
+      } */else if (!this.roomSpace) {
         error("전용면적을 입력하세요", this);
         return;
       } else if (!this.supplySpace) {

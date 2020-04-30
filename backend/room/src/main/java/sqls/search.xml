@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- bit.com.a.dao.BbsDao -->
+<mapper namespace="bit.com.a.search.SearchDao">
+
+  <select id="getDong" resultType="bit.com.a.dummyData.DongDto">
+    select * from DONG where 
+    latitude > #{swLat} 
+    AND #{neLat} > latitude
+    AND longitude > #{swLng} 
+    AND #{neLng} > longitude 
+  </select>
+
+  <select id="getGu" resultType="bit.com.a.dummyData.GuDto">
+    select * from GU where 
+    latitude > #{swLat} 
+    AND #{neLat} > latitude
+    AND longitude > #{swLng} 
+    AND #{neLng} > longitude 
+  </select>
+
+  <select id="getSi" resultType="bit.com.a.dummyData.SiDto">
+    select * from SI where 
+    latitude > #{swLat} 
+    AND #{neLat} > latitude
+    AND longitude > #{swLng} 
+    AND #{neLng} > longitude 
+  </select>
+
+  <select id="getRoomList" resultType="bit.com.a.search.SGDDto">
+    select DONG.id as id, DONG.name as d_name, GU.name as g_name, SI.name as s_name, DONG.count as count, DONG.latitude , DONG.longitude
+    from DONG
+    left join GU on GU.id = DONG.GU_id
+    left join SI on SI.id = GU.SI_id
+    where DONG.count != 0
+    <if test="keyword != null and keyword != ''">
+      AND (DONG.name LIKE CONCAT("%", #{keyword}, "%")) OR (SI.name LIKE CONCAT("%", #{keyword}, "%")) OR (GU.name LIKE CONCAT("%", #{keyword}, "%"))
+    </if>
+    order by DONG.count desc
+    LIMIT 5; 
+  </select>
+
+  <!--
+  <select id="getAllBrokerList" parameterType="bit.com.a.admin.Param" resultType="bit.com.a.broker.BrokerDto">
+        SELECT *
+        FROM BROKER
+        WHERE 1=1
+        <if test="s_category != null and s_category != '' and s_keyword != null and s_keyword != ''">
+            <if test="s_category == 'brokerId'">
+                AND BROKER_ID LIKE CONCAT("%", #{s_keyword}, "%")
+            </if>
+            <if test="s_category == 'name'">
+                AND NAME LIKE CONCAT("%", #{s_keyword}, "%")
+            </if>
+        </if>
+        ORDER BY REGISTERED_AT DESC
+        LIMIT #{start}, 5;
+    </select>
+    -->
+
+
+</mapper>
