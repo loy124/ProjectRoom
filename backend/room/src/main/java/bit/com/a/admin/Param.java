@@ -9,11 +9,11 @@ public class Param implements Serializable {
 	private String s_keyword;
 
 	// paging
-	private int pageNumber = 1;	// 현재 페이지
-	private int recordCountPerPage = 5;	// 표현할 페이지의 글수
+	private int pageNumber = 1; // 현재 페이지
+	private int recordCountPerPage = 5; // 표현할 페이지의 글수
 	// DB
 	private int start = 1;
-	
+
 	public Param() {
 	}
 

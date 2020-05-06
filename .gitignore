@@ -24,8 +24,8 @@ yarn-error.log*
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**
-!**/src/test/**
+# !**/src/main/**
+# !**/src/test/**
 
 ### STS ###
 .apt_generated
