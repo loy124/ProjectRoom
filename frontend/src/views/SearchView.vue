@@ -3,8 +3,27 @@
     <div slot="banner">
       <div class="search-option-container">
         <div class="search-option-wrapper1">
-          <div @mousedown="closeEvent" class="search-option-search-input-wrapper">
-            <input placeholder="신림동 원룸" />
+          <div @click="openEvent('option6')" class="search-option-search-input-wrapper">
+            <input placeholder="신림동" @input="axiosSearch" v-model="keyword2" />
+            <div
+              :class="{ 'search-option-active' : optionModalType.option6}"
+              v-if="optionModalType.option6"
+              class="option-modal-wrapper-input"
+            >
+              <ul>
+                <li
+                  style="list-style:none; margin-top:8px;"
+                  v-for="(res, index) in searchList"
+                  :key="index"
+                >
+                  <div
+                    style="margin-top:3px;"
+                    v-on:click.prevent.stop="moveSearch(res.d_name , res.latitude , res.longitude)"
+                    class="router-item router-item-search"
+                  >{{res.s_name}} {{res.g_name}} {{res.d_name}}</div>
+                </li>
+              </ul>
+            </div>
           </div>
           <div
             :class="{ 'search-option-active' : optionModalType.option1}"
@@ -22,15 +41,30 @@
                 <div class="option-modal-type-wrapper">
                   <div class="option-modal-check-wrapper">
                     <label class="login-check checkbox">
-                      <input v-model="roomTypeOption" type="checkbox" value="one" />
+                      <input
+                        v-model="roomTypeOption"
+                        type="checkbox"
+                        value="one"
+                        @change="valueSetting()"
+                      />
                       <span>원룸</span>
                     </label>
                     <label class="login-check checkbox">
-                      <input v-model="roomTypeOption" type="checkbox" value="twoOrThree" />
+                      <input
+                        v-model="roomTypeOption"
+                        type="checkbox"
+                        value="twoOrThree"
+                        @change="valueSetting()"
+                      />
                       <span>투·쓰리룸</span>
                     </label>
                     <label class="login-check checkbox">
-                      <input v-model="roomTypeOption" type="checkbox" value="officetel" />
+                      <input
+                        v-model="roomTypeOption"
+                        type="checkbox"
+                        value="officetel"
+                        @change="valueSetting()"
+                      />
                       <span>오피스텔</span>
                     </label>
                   </div>
@@ -54,15 +88,30 @@
                 <div class="option-modal-type-wrapper">
                   <div class="option-modal-check-wrapper">
                     <label class="login-check checkbox">
-                      <input v-model="roomPayOption" type="checkbox" value="one" />
+                      <input
+                        v-model="roomPayOption"
+                        type="checkbox"
+                        value="monthly"
+                        @change="valueSetting()"
+                      />
                       <span>월세</span>
                     </label>
                     <label class="login-check checkbox">
-                      <input v-model="roomPayOption" type="checkbox" value="twoOrThree" />
+                      <input
+                        v-model="roomPayOption"
+                        type="checkbox"
+                        value="charter"
+                        @change="valueSetting()"
+                      />
                       <span>전세</span>
                     </label>
                     <label class="login-check checkbox">
-                      <input v-model="roomPayOption" type="checkbox" value="officetel" />
+                      <input
+                        v-model="roomPayOption"
+                        type="checkbox"
+                        value="Trading"
+                        @change="valueSetting()"
+                      />
                       <span>매매</span>
                     </label>
                   </div>
@@ -91,7 +140,7 @@
                           <span class="option-modal-pay-text">({{ lease }}만원)</span>
                         </div>
                       </label>
-                      <vue-slider :min="0" :max="100000" v-model="lease"></vue-slider>
+                      <vue-slider :min="0" :max="100000" v-model="lease" @change="valueSetting()"></vue-slider>
                     </div>
 
                     <div class="option-modal-type-pay-wrapper">
@@ -104,7 +153,7 @@
                         </div>
                       </label>
 
-                      <vue-slider :min="0" :max="10000" v-model="deposit"></vue-slider>
+                      <vue-slider :min="0" :max="10000" v-model="deposit" @change="valueSetting()"></vue-slider>
                     </div>
                     <div class="option-modal-type-pay-wrapper">
                       <label class="login-check checkbox">
@@ -113,7 +162,7 @@
                           <span class="option-modal-pay-text">({{ monthRent }}만원)</span>
                         </div>
                       </label>
-                      <vue-slider :min="0" :max="1000" v-model="monthRent"></vue-slider>
+                      <vue-slider :min="0" :max="1000" v-model="monthRent" @change="valueSetting()"></vue-slider>
                     </div>
                     <div>
                       <div class="option-modal-delete-option-wrapper">
@@ -146,7 +195,7 @@
                           <span class="option-modal-pay-text">({{ roomSpace }}평)</span>
                         </div>
                       </label>
-                      <vue-slider :min="0" :max="300" v-model="roomSpace"></vue-slider>
+                      <vue-slider :min="0" :max="300" v-model="roomSpace" @change="valueSetting()"></vue-slider>
                     </div>
                     <div class="option-modal-delete-option-wrapper">
                       <div class="option-modal-delete-option" @click="deleteRoomOption">조건 삭제</div>
@@ -166,7 +215,7 @@
       </div>
       <div @click="closeEvent" class="search-result-container">
         <div class="search-room-list-container">
-          <div class="search-room-list-all-count">전체방 {{roomLists.length}}개</div>
+          <div class="search-room-list-all-count">전체방 {{roomListsCount}}개</div>
           <div class="search-room-list-wrapper-wrapper">
             <div class="search-room-list-wrapper">
               <!-- v-for로 묶을부분 -->
@@ -247,7 +296,17 @@
                 <div class="search-room-content">{{roomList.content}}</div>
               </router-link>
             </div>
-            <div>페이지 표시</div>
+            <div>
+              <el-pagination
+                class="profile-payment-table-page qna-list-page"
+                background
+                layout="prev, pager, next"
+                :page-size="10"
+                :total="roomListsCount"
+                :current-page.sync="currentPage"
+                @current-change="refreshRoomList"
+              ></el-pagination>
+            </div>
           </div>
         </div>
         <div class="search-room-map-container">
@@ -272,7 +331,8 @@ export default {
     Map
   },
   computed: {
-    ...mapState(["loginData"])
+    ...mapState(["loginData", "swLat", "swLng", "neLat", "neLng", "searchList"])
+
     //데이터 처리
     // roomType(element) {
     //   console.log(element);
@@ -289,32 +349,142 @@ export default {
     //   }
     // }
   },
+  watch: {
+    swLat: function() {
+      this.getRoomList();
+      //alert("값 변경 감지!");
+    },
+    roomTypeOption: function() {
+      this.getRoomList();
+    },
+    roomPayOption: function() {
+      this.getRoomList();
+    },
+    deposit: function() {
+      this.getRoomList();
+    },
+    lease: function() {
+      this.getRoomList();
+    },
+    monthRent: function() {
+      this.getRoomList();
+    },
+    roomSpace: function() {
+      this.getRoomList();
+    }
+  },
   data() {
     return {
       roomTypeOption: [],
-      roomPayOption: [],
+      roomPayOption: ["monthly", "charter"],
       optionModalType: {
         option1: false,
         option2: false,
         option3: false,
         option4: false,
-        option5: false
+        option5: false,
+        option6: false
       },
       deposit: 0, //보증금
       lease: 0, //전세
       monthRent: 0, //월세
       roomSpace: 0, //몇평
       roomLists: [],
+      roomListsCount: 0,
       heart: require("../assets/heart.png"),
-      fillHeart: require("../assets/fillHeart.png")
+      fillHeart: require("../assets/fillHeart.png"),
+      currentPage: 1,
+      keyword2: ""
     };
   },
   mounted() {
+    this.SET_ROOM_TYPE_OPTION(this.roomTypeOption);
+    this.SET_ROOM_PAY_OPTION(this.roomPayOption);
+    this.SET_ROOM_SPACE(this.roomSpace);
+    this.SET_MONTH_RENT(this.monthRent);
+    this.SET_LEASE(this.lease);
+    this.SET_DEPOSIT(this.deposit);
     this.getRoomList();
     console.log("aa");
   },
   methods: {
-    ...mapMutations(["SET_LOGIN_MODAL"]),
+    moveSearch(d_name, latitude, longitude) {
+      //alert(d_name + " " + latitude + " " + longitude);
+      this.closeEvent();
+      this.SET_DONG_LATITUDE(latitude);
+      this.SET_DONG_LONGITUDE(longitude);
+    },
+    axiosSearch() {
+      //console.log(this.keyword);
+
+      let params = new URLSearchParams();
+      params.append("keyword", this.keyword2);
+
+      request("post", "search/getRoomList", params)
+        .then(res => {
+          console.log(res);
+
+          this.SET_SEARCH_LIST(res);
+
+          console.log(this.searchList);
+          //리스트를 data안에 집어넣기
+          //this.roomLists = res;
+        })
+        .catch(error => console.log(error));
+    },
+    refreshRoomList() {
+      //alert("test" + this.currentPage);
+      let cpTemp = this.currentPage;
+      const a = this;
+      setTimeout(function() {
+        if (cpTemp == a.currentPage) {
+          let params = new URLSearchParams();
+
+          params.append("swLat", a.swLat);
+          params.append("swLng", a.swLng);
+          params.append("neLat", a.neLat);
+          params.append("neLng", a.neLng);
+
+          params.append("roomTypeOption", JSON.stringify(a.roomTypeOption)); //방 종류
+          params.append("roomPayOption", JSON.stringify(a.roomPayOption)); // 전세 매매 등
+          params.append("deposit", a.deposit); // 보증금
+          params.append("lease", a.lease); // 전세
+          params.append("monthRent", a.monthRent); //월세
+          params.append("roomSpace", a.roomSpace); //몇평
+          params.append("currentPage", (a.currentPage - 1) * 10); //몇쪽
+
+          request("post", "room/getRoomMapList", params)
+            .then(res => {
+              console.log(res);
+              //리스트를 data안에 집어넣기
+              a.roomLists = res;
+            })
+            .catch(error => console.log(error));
+        }
+      }, 750); //750ms
+    },
+    ...mapMutations([
+      "SET_LOGIN_MODAL",
+      "SET_ROOM_TYPE_OPTION",
+      "SET_ROOM_PAY_OPTION",
+      "SET_ROOM_SPACE",
+      "SET_MONTH_RENT",
+      "SET_LEASE",
+      "SET_DEPOSIT",
+      "SET_SEARCH_LIST",
+      "SET_DONG_LATITUDE",
+      "SET_DONG_LONGITUDE"
+    ]),
+
+    valueSetting() {
+      //alert(this.roomTypeOption);
+      this.SET_ROOM_TYPE_OPTION(this.roomTypeOption);
+      this.SET_ROOM_PAY_OPTION(this.roomPayOption);
+      this.SET_ROOM_SPACE(this.roomSpace);
+      this.SET_MONTH_RENT(this.monthRent);
+      this.SET_LEASE(this.lease);
+      this.SET_DEPOSIT(this.deposit);
+    },
     openEvent(element) {
       if (this.optionModalType[element] === true) {
         this.closeEvent();
@@ -329,21 +499,66 @@ export default {
       this.optionModalType.option3 = false;
       this.optionModalType.option4 = false;
       this.optionModalType.option5 = false;
+      this.optionModalType.option6 = false;
     },
     deleteOption() {
       this.deposit = this.lease = this.monthRent = 0;
+      this.SET_MONTH_RENT(this.monthRent);
+      this.SET_LEASE(this.lease);
+      this.SET_DEPOSIT(this.deposit);
     },
     deleteRoomOption() {
       this.roomSpace = 0;
+      this.SET_ROOM_SPACE(this.roomSpace);
     },
     getRoomList() {
-      request("post", "room/getRoomMapList")
-        .then(res => {
-          console.log(res);
-          //리스트를 data안에 집어넣기
-          this.roomLists = res;
-        })
-        .catch(error => console.log(error));
+      let swLatTemp = this.swLat;
+      let swLngTemp = this.swLng;
+      let neLatTemp = this.neLat;
+      let neLngTemp = this.neLng;
+      const a = this;
+      setTimeout(function() {
+        if (
+          swLatTemp == a.swLat &&
+          swLngTemp == a.swLng &&
+          neLatTemp == a.neLat &&
+          neLngTemp == a.neLng
+        ) {
+          let params = new URLSearchParams();
+          console.log("test");
+
+          params.append("swLat", a.swLat);
+          params.append("swLng", a.swLng);
+          params.append("neLat", a.neLat);
+          params.append("neLng", a.neLng);
+
+          params.append("roomTypeOption", JSON.stringify(a.roomTypeOption)); //방 종류
+          params.append("roomPayOption", JSON.stringify(a.roomPayOption)); // 전세 매매 등
+          params.append("deposit", a.deposit); // 보증금
+          params.append("lease", a.lease); // 전세
+          params.append("monthRent", a.monthRent); //월세
+          params.append("roomSpace", a.roomSpace); //몇평
+
+          request("post", "room/getRoomMapListCount", params)
+            .then(res => {
+              console.log(res);
+              //리스트를 data안에 집어넣기
+              a.roomListsCount = res;
+            })
+            .catch(error => console.log(error));
+
+          a.currentPage = 1; //초기화
+          params.append("currentPage", (a.currentPage - 1) * 10); //몇쪽
+
+          request("post", "room/getRoomMapList", params)
+            .then(res => {
+              console.log(res);
+              //리스트를 data안에 집어넣기
+              a.roomLists = res;
+            })
+            .catch(error => console.log(error));
+        }
+      }, 750); //750ms
     },
     like(e, id) {
       // 이미지 처리
@@ -427,6 +642,7 @@ export default {
 .search-option-search-input-wrapper {
   width: 248px;
   height: 100%;
+  position: relative;
 }
 
 .search-option-search-input-wrapper > input {
@@ -660,5 +876,31 @@ export default {
 }
 .option-modal-delete-option:hover {
   opacity: 0.5;
+}
+.option-modal-wrapper-input {
+  position: absolute;
+  border: 1px solid #dddddd;
+  top: 70px;
+  left: 3px;
+  width: 250px;
+  height: 250px;
+  background-color: #fff;
+  z-index: 101;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 15px 18px -10px;
+  padding: 20px 30px 0;
+  color: #222222;
+}
+
+.router-item-search {
+  font-size: 14px;
+  margin-top: 3px;
+}
+
+.router-item-search {
+  cursor: pointer;
+  margin-top: 3px;
+}
+.router-item-search:hover {
+  font-weight: bold;
 }
 </style>

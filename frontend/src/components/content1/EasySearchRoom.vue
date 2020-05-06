@@ -4,7 +4,9 @@
       <div class="easy-search-room-title">쉬운 방찾기</div>
       <div class="easy-search-room-sub-title">방찾기 초보를 위한 초간단 솔루션!</div>
       <div class="easy-searh-room-wrapper">
-        <div
+        <router-link
+          style="text-decoration:none; outline: none; color:#222222;"
+          :to="`/search`"
           v-for="(easyRoomData, index) in easyRoomDatas"
           v-bind:key="index"
           class="easy-search-room"
@@ -16,7 +18,7 @@
             <div class="easy-search-room-content-title">{{easyRoomData.title}}</div>
             <div class="easy-search-room-content">{{easyRoomData.content}}</div>
           </div>
-        </div>
+        </router-link>
       </div>
     </div>
     <div></div>

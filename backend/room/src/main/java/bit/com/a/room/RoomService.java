@@ -1,9 +1,13 @@
 package bit.com.a.room;
 
+import java.text.ParseException;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -113,8 +117,117 @@ public class RoomService {
         return roomDao.getRoomMap(dto);
     }
 
-    public List<RoomDto> getRoomMapList() {
-        return roomDao.getRoomMapList();
+    public List<RoomDto> getRoomMapList(Double swLat, Double swLng, Double neLat, Double neLng, String roomTypeOption, String roomPayOption,
+    int deposit , int lease , int monthRent , int roomSpace, int currentPage) {
+
+        roomTypeOption = "{ \"roomTypeOption\":" + roomTypeOption + " }";
+        roomPayOption = "{ \"roomPayOption\":" + roomPayOption + " }";
+
+        String RoomOption1 = "";
+        String RoomOption2 = "";
+        String RoomOption3 = "";
+        String PayOption1 = "";
+        String PayOption2 = "";
+        String PayOption3 = "";
+
+        try {
+            JSONParser parser1 = new JSONParser();
+            JSONParser parser2 = new JSONParser();
+            Object obj1 = parser1.parse(roomTypeOption);
+            JSONObject jsonObject1 = (JSONObject) obj1;
+            Object obj2 = parser2.parse(roomPayOption);
+            JSONObject jsonObject2 = (JSONObject) obj2;
+
+            JSONArray jsonArray1 = (JSONArray)jsonObject1.get("roomTypeOption");
+            JSONArray jsonArray2 = (JSONArray)jsonObject2.get("roomPayOption");
+
+            switch (jsonArray1.size()) {
+                case 3:
+                RoomOption3 = (String)jsonArray1.get(2);
+                case 2:
+                RoomOption2 = (String)jsonArray1.get(1);
+                case 1:
+                RoomOption1 = (String)jsonArray1.get(0);
+            }
+            switch (jsonArray2.size()) {
+                case 3:
+                PayOption3 = (String)jsonArray2.get(2);
+                case 2:
+                PayOption2 = (String)jsonArray2.get(1);
+                case 1:
+                PayOption1 = (String)jsonArray2.get(0);
+            }
+            /*
+            System.out.println(jsonArray1);
+            System.out.println(jsonArray1.size());
+            System.out.println(jsonArray2);
+            System.out.println(jsonArray2.size());
+            */
+
+        }catch (org.json.simple.parser.ParseException e) {
+            System.out.println("parse를 진행하는데 문제가 발생하였습니다. (ParseException)");
+            e.printStackTrace();
+        }
+
+        return roomDao.getRoomMapList(swLat, swLng, neLat, neLng, RoomOption1, RoomOption2, RoomOption3, PayOption1, PayOption2, PayOption3,
+        deposit , lease , monthRent , roomSpace, currentPage);
+    }
+
+    public int getRoomMapListCount(Double swLat, Double swLng, Double neLat, Double neLng, String roomTypeOption, String roomPayOption,
+    int deposit , int lease , int monthRent , int roomSpace) {
+
+        roomTypeOption = "{ \"roomTypeOption\":" + roomTypeOption + " }";
+        roomPayOption = "{ \"roomPayOption\":" + roomPayOption + " }";
+        
+
+        String RoomOption1 = "";
+        String RoomOption2 = "";
+        String RoomOption3 = "";
+        String PayOption1 = "";
+        String PayOption2 = "";
+        String PayOption3 = "";
+
+        try {
+            JSONParser parser1 = new JSONParser();
+            JSONParser parser2 = new JSONParser();
+            Object obj1 = parser1.parse(roomTypeOption);
+            JSONObject jsonObject1 = (JSONObject) obj1;
+            Object obj2 = parser2.parse(roomPayOption);
+            JSONObject jsonObject2 = (JSONObject) obj2;
+
+            JSONArray jsonArray1 = (JSONArray)jsonObject1.get("roomTypeOption");
+            JSONArray jsonArray2 = (JSONArray)jsonObject2.get("roomPayOption");
+
+            switch (jsonArray1.size()) {
+                case 3:
+                RoomOption3 = (String)jsonArray1.get(2);
+                case 2:
+                RoomOption2 = (String)jsonArray1.get(1);
+                case 1:
+                RoomOption1 = (String)jsonArray1.get(0);
+            }
+            switch (jsonArray2.size()) {
+                case 3:
+                PayOption3 = (String)jsonArray2.get(2);
+                case 2:
+                PayOption2 = (String)jsonArray2.get(1);
+                case 1:
+                PayOption1 = (String)jsonArray2.get(0);
+            }
+            /*
+            System.out.println(jsonArray1);
+            System.out.println(jsonArray1.size());
+            System.out.println(jsonArray2);
+            System.out.println(jsonArray2.size());
+            */
+
+        }catch (org.json.simple.parser.ParseException e) {
+            System.out.println("parse를 진행하는데 문제가 발생하였습니다. (ParseException)");
+            e.printStackTrace();
+        }
+
+        return roomDao.getRoomMapListCount(swLat, swLng, neLat, neLng, RoomOption1, RoomOption2, RoomOption3, PayOption1, PayOption2, PayOption3,
+        deposit , lease , monthRent , roomSpace);
     }
 
     public RoomDto getRoomDetail(RoomDto dto) {

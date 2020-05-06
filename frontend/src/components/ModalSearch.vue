@@ -8,21 +8,32 @@
               <div class="header-content">
                 <div class="header-content-popular">인기검색</div>
                 <div class="header-content-popular-search">
-                    <ul>
-                      <li v-for="res in searchList">
-                        <router-link style="border: none;" class="room-selector1" :to="`/search`">
-                          <button v-on:click="moveSearch(res.d_name , res.latitude , res.longitude)" class="router-item"> {{res.s_name}} {{res.g_name}} {{res.d_name}} </button>
-                        </router-link>
-                      </li>
-                    </ul>
+                  <ul>
+                    <li
+                      style="list-style:none; margin-top:10px;"
+                      v-for="(res,index) in searchList"
+                      :key="index"
+                    >
+                      <router-link
+                        style="border: none; color:#222;"
+                        class="room-selector1"
+                        :to="`/search`"
+                      >
+                        <div
+                          class="router-item router-item-search"
+                          v-on:click="moveSearch(res.d_name , res.latitude , res.longitude)"
+                        >{{res.s_name}} {{res.g_name}} {{res.d_name}}</div>
+                      </router-link>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </slot>
           </div>
 
           <div class="modal-body">
-            <slot name="body"
-              ><div class="content-wrapper">
+            <slot name="body">
+              <!-- <div class="content-wrapper">
                 <div class="content-recent-title">최근검색기록</div>
                 <div class="content-recent-wrapper">
                   <div class="content-recent-search">
@@ -30,8 +41,8 @@
                   </div>
                   <div class="content-recent-search">신림역</div>
                 </div>
-              </div></slot
-            >
+              </div>-->
+            </slot>
           </div>
         </div>
       </div>
@@ -47,18 +58,25 @@ export default {
     ...mapState(["searchList"])
   },
   methods: {
-    ...mapMutations(["SET_DONG_LATITUDE", "SET_DONG_LONGITUDE"] ),
+    ...mapMutations(["SET_DONG_LATITUDE", "SET_DONG_LONGITUDE"]),
 
     moveSearch(d_name, latitude, longitude) {
-      alert(d_name + " " + latitude + " " + longitude);
+      //alert(d_name + " " + latitude + " " + longitude);
       this.SET_DONG_LATITUDE(latitude);
       this.SET_DONG_LONGITUDE(longitude);
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style scoped>
+.router-item-search {
+  cursor: pointer;
+  margin-top: 3px;
+}
+.router-item-search:hover {
+  font-weight: bold;
+}
 * {
   box-sizing: border-box;
 }

@@ -60,8 +60,17 @@ public class RoomController {
     }
 
     @PostMapping("/getRoomMapList")
-    public List<RoomDto> getRoomMapList() {
-        return roomService.getRoomMapList();
+    public List<RoomDto> getRoomMapList(Double swLat, Double swLng, Double neLat, Double neLng, String roomTypeOption, String roomPayOption,
+    int deposit , int lease , int monthRent , int roomSpace, int currentPage) {
+        System.out.println("getRoomMapList 접근");
+        return roomService.getRoomMapList(swLat, swLng, neLat, neLng, roomTypeOption, roomPayOption, deposit, lease, monthRent, roomSpace, currentPage);
+    }
+
+    @PostMapping("/getRoomMapListCount")
+    public int getRoomMapListCount(Double swLat, Double swLng, Double neLat, Double neLng, String roomTypeOption, String roomPayOption,
+    int deposit , int lease , int monthRent , int roomSpace) {
+        System.out.println("getRoomMapListCount 접근");
+        return roomService.getRoomMapListCount(swLat, swLng, neLat, neLng, roomTypeOption, roomPayOption, deposit, lease, monthRent, roomSpace);
     }
 
     @PostMapping("/getRoomDetail/{id}")

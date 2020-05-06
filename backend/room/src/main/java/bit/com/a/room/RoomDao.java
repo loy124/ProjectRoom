@@ -3,6 +3,7 @@ package bit.com.a.room;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import bit.com.a.dummyData.DongDto;
@@ -22,7 +23,16 @@ public interface RoomDao {
 	public RoomDto getRoomMap(RoomDto dto);
 
 	// 전체 리스트 출력
-	public List<RoomDto> getRoomMapList();
+	public List<RoomDto> getRoomMapList(@Param("swLat") Double swLat, @Param("swLng") Double swLng, @Param("neLat") Double neLat, @Param("neLng") Double neLng,
+    @Param("RoomOption1") String RoomOption1, @Param("RoomOption2") String RoomOption2, @Param("RoomOption3") String RoomOption3,
+    @Param("PayOption1") String PayOption1, @Param("PayOption2") String PayOption2, @Param("PayOption3") String PayOption3,
+	@Param("deposit") int deposit, @Param("lease") int lease, @Param("monthRent") int monthRent, @Param("roomSpace") int roomSpace, @Param("currentPage") int currentPage);
+	
+	//리스트 갯수 출력
+	public int getRoomMapListCount(@Param("swLat") Double swLat, @Param("swLng") Double swLng, @Param("neLat") Double neLat, @Param("neLng") Double neLng,
+    @Param("RoomOption1") String RoomOption1, @Param("RoomOption2") String RoomOption2, @Param("RoomOption3") String RoomOption3,
+    @Param("PayOption1") String PayOption1, @Param("PayOption2") String PayOption2, @Param("PayOption3") String PayOption3,
+    @Param("deposit") int deposit, @Param("lease") int lease, @Param("monthRent") int monthRent, @Param("roomSpace") int roomSpace);
 
 	// room detail 출력
 	public RoomDto getRoomDetail(RoomDto dto);

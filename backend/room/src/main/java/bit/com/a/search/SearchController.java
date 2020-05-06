@@ -33,16 +33,25 @@ public class SearchController {
 	//getDong, getGu, getSi, getMarker 4개가 필요함.
 
 	@PostMapping("/getDong")
-	public List<DongDto> getDong(Double swLat, Double swLng, Double neLat, Double neLng) {
+	public List<DongDto> getDong(Double swLat, Double swLng, Double neLat, Double neLng, String roomTypeOption, String roomPayOption,
+	 int deposit , int lease , int monthRent , int roomSpace) {
 		System.out.println("SearchController , getDong 접근 확인");
-
-        return SearchService.getDong(swLat, swLng, neLat, neLng);
+		/*
+		System.out.println(roomTypeOption);
+		System.out.println(roomPayOption);
+		System.out.println(deposit);
+		System.out.println(lease);
+		System.out.println(monthRent);
+		System.out.println(roomSpace);
+		*/
+        return SearchService.getDong(swLat, swLng, neLat, neLng, roomTypeOption, roomPayOption, deposit, lease, monthRent, roomSpace);
 	}
 	@PostMapping("/getGu")
-	public List<GuDto> getGu(Double swLat, Double swLng, Double neLat, Double neLng) {
+	public List<GuDto> getGu(Double swLat, Double swLng, Double neLat, Double neLng, String roomTypeOption, String roomPayOption,
+	int deposit , int lease , int monthRent , int roomSpace) {
 		System.out.println("SearchController , getGu 접근 확인");
 
-        return SearchService.getGu(swLat, swLng, neLat, neLng);
+        return SearchService.getGu(swLat, swLng, neLat, neLng, roomTypeOption, roomPayOption, deposit, lease, monthRent, roomSpace);
 	}
 	@PostMapping("/getSi")
 	public List<SiDto> getSi(Double swLat, Double swLng, Double neLat, Double neLng) {

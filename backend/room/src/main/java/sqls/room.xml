@@ -84,7 +84,80 @@
 
 	<!-- 리스트 가져오기 -->
 	<select id="getRoomMapList" resultMap="RoomDtoMap">
-		select * from ROOM where del = 0 ORDER BY created_at DESC LIMIT 10 OFFSET 0;
+		select * from ROOM
+		where del = 0
+		<if test="(RoomOption1 != null and RoomOption1 != '') or (RoomOption2 != null and RoomOption2 != '') or (RoomOption3 != null and RoomOption3 != '')">
+			AND (1 = 0
+			<if test="(RoomOption1 == 'officetel') or (RoomOption2 == 'officetel') or (RoomOption3 == 'officetel')">
+				OR room_type = 'studio'
+			</if>
+			<if test="(RoomOption1 == 'one') or (RoomOption2 == 'one') or (RoomOption3 == 'one')">
+				OR room_count = 'one'
+			</if>
+			<if test="(RoomOption1 == 'twoOrThree') or (RoomOption2 == 'twoOrThree') or (RoomOption3 == 'twoOrThree')">
+				OR (room_count = 'two' OR room_count = 'three')
+			</if> )
+		</if>
+		<if test="(PayOption1 != null and PayOption1 != '') or (PayOption2 != null and PayOption2 != '') or (PayOption3 != null and PayOption3 != '')">
+			AND (1 = 0
+			<if test="(PayOption1 == 'monthly') or (PayOption2 == 'monthly') or (PayOption3 == 'monthly')">
+				OR (deposit != '' AND month_rent != '')
+			</if>
+			<if test="(PayOption1 == 'charter') or (PayOption2 == 'charter') or (PayOption3 == 'charter')">
+				OR lease != ''
+			</if>
+			<if test="(PayOption1 == 'Trading') or (PayOption2 == 'Trading') or (PayOption3 == 'Trading')">
+				<!--현재 매매는 없기 때문에 여기는 나오지 않음.-->
+				OR 1 = 0
+			</if> )
+		</if>
+		AND deposit >= #{deposit}
+		AND lease >= #{lease}
+		AND month_rent >= #{monthRent}
+		AND room_space >= #{roomSpace}
+		AND latitude > #{swLat} 
+		AND #{neLat} > latitude
+		AND longitude > #{swLng} 
+		AND #{neLng} > longitude 
+		ORDER BY created_at DESC LIMIT 10 OFFSET #{currentPage};
+	</select>
+
+	<select id="getRoomMapListCount" resultType="java.lang.Integer">
+		select count(*) from ROOM
+		where del = 0
+		<if test="(RoomOption1 != null and RoomOption1 != '') or (RoomOption2 != null and RoomOption2 != '') or (RoomOption3 != null and RoomOption3 != '')">
+			AND (1 = 0
+			<if test="(RoomOption1 == 'officetel') or (RoomOption2 == 'officetel') or (RoomOption3 == 'officetel')">
+				OR room_type = 'studio'
+			</if>
+			<if test="(RoomOption1 == 'one') or (RoomOption2 == 'one') or (RoomOption3 == 'one')">
+				OR room_count = 'one'
+			</if>
+			<if test="(RoomOption1 == 'twoOrThree') or (RoomOption2 == 'twoOrThree') or (RoomOption3 == 'twoOrThree')">
+				OR (room_count = 'two' OR room_count = 'three')
+			</if> )
+		</if>
+		<if test="(PayOption1 != null and PayOption1 != '') or (PayOption2 != null and PayOption2 != '') or (PayOption3 != null and PayOption3 != '')">
+			AND (1 = 0
+			<if test="(PayOption1 == 'monthly') or (PayOption2 == 'monthly') or (PayOption3 == 'monthly')">
+				OR (deposit != '' AND month_rent != '')
+			</if>
+			<if test="(PayOption1 == 'charter') or (PayOption2 == 'charter') or (PayOption3 == 'charter')">
+				OR lease != ''
+			</if>
+			<if test="(PayOption1 == 'Trading') or (PayOption2 == 'Trading') or (PayOption3 == 'Trading')">
+				<!--현재 매매는 없기 때문에 여기는 나오지 않음.-->
+				OR 1 = 0
+			</if> )
+		</if>
+		AND deposit >= #{deposit}
+		AND lease >= #{lease}
+		AND month_rent >= #{monthRent}
+		AND room_space >= #{roomSpace}
+		AND latitude > #{swLat} 
+		AND #{neLat} > latitude
+		AND longitude > #{swLng} 
+		AND #{neLng} > longitude 
 	</select>
 
 	<!-- 디테일 가져오기 -->

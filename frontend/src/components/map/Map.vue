@@ -18,6 +18,18 @@ let bounds = "";
 let swLatlng = "";
 // 영역정보의 북동쪽 정보를 얻어옵니다
 let neLatlng = "";
+let RoomOptionTemp = 0; //변화 감지용 임시 변수.
+let mapVar =  function() {};
+let centerSetting = function() {};
+
+
+
+let roomTypeOption;
+let roomPayOption;
+let deposit;
+let lease;
+let monthRent;
+let roomSpace;
 
 export default {
   name: "kakao-map",
@@ -27,12 +39,37 @@ export default {
   data() {
     return {};
   },
-  created: function() {},
+  computed: {
+    ...mapState(["dongLatitude", "dongLongitude" , "roomTypeOption" , "roomPayOption" , "deposit" , "lease" , "monthRent" , "roomSpace"])
+
+    /*
+        roomTypeOption: [ ],
+        roomPayOption: [ ],
+        deposit: 0, //보증금
+        lease: 0, //전세
+        monthRent: 0, //월세
+        roomSpace: 0, //몇평
+
+        computed:{ check_snackbar(){return this.$store.getters.get_snackbar} }, watch:{ check_snackbar(val){ this.snackbar = val } },
+    */
+  },
+  created: function() {
+    console.log(this.dongLatitude + " / " + this.dongLongitude);  //검색 단어가 넘어온거 세팅.
+  },
   methods: {
+    ...mapMutations(["SET_SW_LAT" , "SET_SW_LNG" , "SET_NE_LAT", "SET_NE_LNG" ]),
+
     say() {
       alert("test");
     },
     initMap() {
+      roomTypeOption = this.roomTypeOption;
+      roomPayOption = this.roomPayOption;
+      deposit = this.deposit;
+      lease = this.lease;
+      monthRent = this.monthRent;
+      roomSpace = this.roomSpace;
+
       //alert("init");
       let container = document.getElementById("kakao-map");
       //let options = { center: new kakao.maps.LatLng(33.450701, 126.570667), level: 3 };
@@ -70,6 +107,11 @@ export default {
       // 영역정보의 북동쪽 정보를 얻어옵니다
       neLatlng = bounds.getNorthEast();
 
+      this.SET_SW_LAT(swLatlng.getLat());
+      this.SET_SW_LNG(swLatlng.getLng());
+      this.SET_NE_LAT(neLatlng.getLat());
+      this.SET_NE_LNG(neLatlng.getLng());
+
       //json 데이터 로드
       request("post", "search/getJson")
         .then(res => {
@@ -84,14 +126,30 @@ export default {
 
       //지도 확대 축소 감지
       kakao.maps.event.addListener(map, "zoom_changed", function() {
-        mapChange();
+        mapVar();
       });
 
       //지도 이동 감지
       kakao.maps.event.addListener(map, "dragend", function() {
-        mapChange();
+        mapVar();
       });
 
+      if((this.dongLatitude != 0.0) && (this.dongLongitude != 0.0)) {
+        //alert("데이터 있음!");
+        map.setCenter(new kakao.maps.LatLng(this.dongLatitude, this.dongLongitude));
+        map.setLevel(6, {
+                          animate: {
+                            duration: 500
+                          }
+                        });
+      }else { 
+        map.setLevel(7, {
+                          animate: {
+                            duration: 500
+                          }
+                        });
+      }
+      const a = this;
       function reSetting() {
         //값 재 설정
         latlng = map.getCenter();
@@ -99,12 +157,19 @@ export default {
         bounds = map.getBounds();
         swLatlng = bounds.getSouthWest();
         neLatlng = bounds.getNorthEast();
+
+        a.SET_SW_LAT(swLatlng.getLat());
+        a.SET_SW_LNG(swLatlng.getLng());
+        a.SET_NE_LAT(neLatlng.getLat());
+        a.SET_NE_LNG(neLatlng.getLng());
+
       }
 
       function dongPrint(value) {
         //마우스 올릴경우 동에서 다각형 표시.
         //value에는 동 값이 넘어옴.
         //let temp = document.getElementById(value);
+        console.log("동프린트로 넘어옴!");
 
         console.log(jsonDongPath[value]);
         console.log(jsonDongPath[value].type);
@@ -174,21 +239,31 @@ export default {
         areas.length = 0; // 오버레이 배열 초기화
       }
 
-      function mapChange() {
+      centerSetting = function (Latitude, Longitude) {
+        //alert("센터 세팅 호출");
+        let moveLatLon = new kakao.maps.LatLng(Latitude, Longitude);
+        map.setCenter(moveLatLon);
+      }
+
+      mapVar = function() { 
+        
         reSetting(); //변수 재세팅
         let mapLevelTemp = level; //임시 변수 선언.
         let mapSwTemp = swLatlng;
         let mapNeTemp = neLatlng;
+        let RoomOptionTempTemp = RoomOptionTemp;
 
-        console.log("jsonData Check");
-        console.log(jsonDongPath);
+        //console.log("jsonData Check");
+        //console.log(jsonDongPath);
 
         setTimeout(function() {
           if (
             level == mapLevelTemp &&
             swLatlng == mapSwTemp &&
-            neLatlng == mapNeTemp
+            neLatlng == mapNeTemp &&
+            RoomOptionTemp == RoomOptionTempTemp
           ) {
+            console.log("맵 변환 감지!!!");
             //0.75초동안 변화가 없는가?
             //alert("level : " + level + " / temp : " + mapLevelTemp);
 
@@ -196,6 +271,7 @@ export default {
               overlay.setMap(null);
             }); //오버레이 초기화.
             customOverlay.length = 0; // 오버레이 배열 초기화
+            
             /*
             areas.forEach(function(area) {
               area.setMap(null);
@@ -227,7 +303,8 @@ export default {
                     let content =
                       '<div class="search-item-wrapper">' +
                       '<div class="search-item">' +
-                      response[i].count +
+                      //response[i].count +
+                      "+" + 
                       "</div>" +
                       '<div class="search-address">' +
                       response[i].name +
@@ -254,6 +331,13 @@ export default {
               params.append("neLat", neLatlng.getLat());
               params.append("neLng", neLatlng.getLng());
 
+              params.append("roomTypeOption", JSON.stringify(roomTypeOption));  //방 종류
+              params.append("roomPayOption", JSON.stringify(roomPayOption));  // 전세 매매 등
+              params.append("deposit", deposit);  // 보증금
+              params.append("lease", lease);  // 전세
+              params.append("monthRent", monthRent);  //월세
+              params.append("roomSpace", roomSpace);  //몇평
+
               request("post", "search/getGu", params)
                 .then(response => {
                   console.log(response);
@@ -267,12 +351,11 @@ export default {
                       response[i].longitude
                     );
                     let content =
-                      '<div class="search-item-wrapper" v-on:mouseover="say()">' +
-                      '<button v-on:click="say()">Add 1</button>' +
-                      '<div class="search-item" v-on:mouseover="say()">' +
+                      '<div class="search-item-wrapper">' +
+                      '<div class="search-item">' +
                       response[i].count +
                       "</div>" +
-                      '<div class="search-address" v-on:mouseover="say()">' +
+                      '<div class="search-address">' +
                       response[i].name +
                       "</div>" +
                       "</div>";
@@ -289,7 +372,7 @@ export default {
                   });
                 })
                 .catch(error => console.log(error));
-            } else if (level == 4 || level == 5 || level == 6) {
+            } else if (level >= 4) {
               //동단위
               let params = new URLSearchParams();
 
@@ -297,6 +380,15 @@ export default {
               params.append("swLng", swLatlng.getLng());
               params.append("neLat", neLatlng.getLat());
               params.append("neLng", neLatlng.getLng());
+
+              console.log(roomTypeOption);
+
+              params.append("roomTypeOption", JSON.stringify(roomTypeOption));  //방 종류
+              params.append("roomPayOption", JSON.stringify(roomPayOption));  // 전세 매매 등
+              params.append("deposit", deposit);  // 보증금
+              params.append("lease", lease);  // 전세
+              params.append("monthRent", monthRent);  //월세
+              params.append("roomSpace", roomSpace);  //몇평
 
               request("post", "search/getDong", params)
                 .then(response => {
@@ -325,20 +417,10 @@ export default {
                       content: content
                     });
                     // console.log(`"${response[i].name}"`);
-                    customOverlayTemp.setMap(map);
+                    //customOverlayTemp.setMap(map);
+                    customOverlay.push(customOverlayTemp);
 
-                    const searchItemWrapper = document.getElementById(
-                      response[i].name
-                    );
-                    searchItemWrapper.addEventListener("mouseover", function() {
-                      console.log("온다요!!");
-                      dongPrint(response[i].name);
-                    });
-                    searchItemWrapper.addEventListener("mouseout", function() {
-                      console.log("간다다요!!");
-                      dongPrintCancel(response[i].name);
-                    });
-                    console.log(searchItemWrapper);
+
                     // customOverlay.push(customOverlayTemp);
 
                     // const searchItemWrapper = document.querySelectorAll(
@@ -351,9 +433,26 @@ export default {
                     //   })
                     // );
                   }
-                  //   customOverlay.forEach(function(overlay) {
-                  //     overlay.setMap(map);
-                  //   });
+                  customOverlay.forEach(function(overlay) {
+                    overlay.setMap(map);
+                  });
+                  for (let i = 0; i < response.length; i++) {
+                    if (response[i].count == 0) {
+                      continue;
+                    }
+                    const searchItemWrapper = document.getElementById(
+                      response[i].name
+                    );
+                    searchItemWrapper.addEventListener("mouseover", function() {
+                      console.log("온다요!!");
+                      dongPrint(response[i].name);
+                    });
+                    searchItemWrapper.addEventListener("mouseout", function() {
+                      console.log("간다다요!!");
+                      dongPrintCancel(response[i].name);
+                    });
+                    console.log(searchItemWrapper);
+                  }
                 })
                 .catch(error => console.log(error));
             } else if (level >= 2) {
@@ -385,7 +484,52 @@ export default {
         "http://dapi.kakao.com/v2/maps/sdk.js?appkey=0fe1d5fd101ab6d2078168510cdb7237&libraries=services,clusterer,drawing&autoload=false";
       document.head.appendChild(script);
     }
-  }
+  },
+  watch: {
+    dongLatitude: function() {
+      centerSetting(this.dongLatitude, this.dongLongitude);
+      mapVar();
+    },
+    roomTypeOption: function () {
+      //alert("변경 감지!1");
+      RoomOptionTemp += 1;
+      roomTypeOption = this.roomTypeOption;
+      mapVar();
+      //this.initMap().mapChange();
+    },
+    roomPayOption: function () {
+      //alert("변경 감지!2");
+      RoomOptionTemp += 1;
+      roomPayOption = this.roomPayOption;
+      mapVar();
+      //this.initMap().mapChange();
+    },
+    deposit: function () {
+      //alert("변경 감지!3");
+      RoomOptionTemp += 1;
+      deposit = this.deposit;
+      mapVar();
+      ////this.initMap().mapChange();
+    },
+    lease: function () {
+      //alert("변경 감지!4");
+      RoomOptionTemp += 1;
+      lease = this.lease;
+      mapVar();
+    },
+    monthRent: function () {
+      //alert("변경 감지!5");
+      RoomOptionTemp += 1;
+      monthRent = this.monthRent;
+      mapVar();
+    },
+    roomSpace: function () {
+      //alert("변경 감지!6");
+      RoomOptionTemp += 1;
+      roomSpace = this.roomSpace;
+      mapVar();
+    },
+  },
 };
 </script>
 
