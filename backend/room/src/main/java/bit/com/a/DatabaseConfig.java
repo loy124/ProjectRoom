@@ -33,8 +33,13 @@ public class DatabaseConfig {
 		 */
 
 		Resource myBatisConfig = new PathMatchingResourcePatternResolver().getResource("classpath:mybatis-config.xml");
+		myBatisConfig.getInputStream().available();
 		sqlSessionFactoryBean.setConfigLocation(myBatisConfig);
 		Resource[] arrResource = new PathMatchingResourcePatternResolver().getResources("classpath:sqls/*.xml");
+		for (int i = 0; i < arrResource.length; i++) {
+			arrResource[i].getInputStream().available();
+		}
+
 		sqlSessionFactoryBean.setMapperLocations(arrResource);
 
 		return (SqlSessionFactory) sqlSessionFactoryBean.getObject();
