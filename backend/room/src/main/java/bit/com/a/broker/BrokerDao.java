@@ -22,4 +22,6 @@ public interface BrokerDao {
 
 	public Integer updateUser(BrokerDto user);
 
+	public Integer updateWriteCount(BrokerDto user);
+
 }

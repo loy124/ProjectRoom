@@ -4,6 +4,9 @@
 <!-- bit.com.a.dao.BbsDao -->
 <mapper namespace="bit.com.a.broker.BrokerDao">
 
+  <update id="updateWriteCount" parameterType="bit.com.a.broker.BrokerDto">
+  UPDATE BROKER SET write_count = write_count - 1 WHERE id = #{id}
+</update>
 
   <!-- now() = SYSOUT -->
   <insert id="register" parameterType="bit.com.a.broker.BrokerDto" useGeneratedKeys="true" keyProperty="id">

@@ -75,4 +75,9 @@ public class BrokerController {
 		return number > 0 ? "OK" : "FAIL";
 	}
 
+	@PostMapping("/updateWriteCount")
+	public Integer updateWriteCount(BrokerDto user) {
+		return brokerService.updateWriteCount(user);
+	}
+
 }

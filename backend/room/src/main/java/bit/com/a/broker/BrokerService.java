@@ -43,4 +43,8 @@ public class BrokerService {
 		System.out.println("옵니까?");
 		return brokerDao.updateUser(user);
 	}
+
+	public Integer updateWriteCount(BrokerDto user) {
+		return brokerDao.updateWriteCount(user);
+	}
 }
